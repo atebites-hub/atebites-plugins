@@ -1,6 +1,6 @@
 # atebites-plugins
 
-Multi-host plugin marketplace for **atebites-hub**. Cursor Import from Repo only indexes **in-repo directories**, so this catalog vendors the plugins as git submodules (plus thin host wrappers where a repo is not already a Cursor plugin). Remote GitHub URL sources are not used.
+Multi-host plugin marketplace for **atebites-hub**. Cursor Import from Repo only indexes **in-repo directories**, so this catalog vendors the plugins as git submodules (plus thin host wrappers where a repo is not already a Cursor plugin). Cursor, Grok, Codex, and ZCode use local path sources only. Claude Code uses GitHub plugin sources for the four forks because it clones this marketplace without initializing git submodules.
 
 This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite.
 
@@ -71,11 +71,19 @@ Enable plugins that default to off (`/plugins`, or `enabled` in `~/.grok/config.
 
 ## Claude Code
 
-Send these as **two separate prompts** (marketplace add, then each install):
+Send these as **separate prompts** (marketplace add, refresh if already added, then each install):
 
 ```text
 /plugin marketplace add atebites-hub/atebites-plugins
 ```
+
+If this marketplace is already added, refresh it so all five plugins appear:
+
+```text
+/plugin marketplace update atebites-plugins
+```
+
+Or remove the marketplace and add it again. Then install any of the five:
 
 ```text
 /plugin install open-dynamic-workflows@atebites-plugins
@@ -168,21 +176,21 @@ DSH-only ports are out of scope. compound-engineering and superpowers stay docum
 ```text
 .cursor-plugin/marketplace.json   # Cursor (official schema; local paths only)
 .grok-plugin/marketplace.json     # Grok Build (`source: { type: "local", path }`)
-.claude-plugin/marketplace.json   # Claude Code (Anthropic schema; path sources)
+.claude-plugin/marketplace.json   # Claude Code (GitHub plugin sources for forks; j-space local wrap)
 .agents/plugins/marketplace.json  # Codex (local path sources)
 marketplace.json                  # ZCode
 plugins/open-dynamic-workflows/   # submodule: atebites-hub/open-dynamic-workflows-plugin
 plugins/ponytail/                 # submodule: atebites-hub/ponytail
 plugins/sol-advisor/              # submodule: atebites-hub/sol-advisor
 plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap
-plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (Claude plugin lives here)
+plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill
 plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite
 ```
 
-Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Claude/Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.
+Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.
 
-Taskboard's Claude marketplace entry points at `plugins/taskboard/upstream` so MCP and fail-open hooks keep `${CLAUDE_PLUGIN_ROOT}` / `${CLAUDE_PROJECT_DIR}`. Other hosts use the wrap at `plugins/taskboard`, which points skills at `upstream/skills` and does not rewrite the Go binary.
+Claude Code does not use those local paths. `/plugin marketplace add` clones this catalog without initializing git submodules, so gitlink directories have no `.claude-plugin/plugin.json`. The Claude catalog therefore uses GitHub plugin sources for ODW, ponytail, Advisor, and taskboard (`source: { "source": "github", "repo": "atebites-hub/..." }`), pointing at each fork root rather than a nested package. j-space stays an in-repo wrap (`./plugins/j-space`); there is no atebites-hub/j-space plugin repo. Cursor, Grok, Codex, and ZCode stay local-path-only and use the wrap at `plugins/taskboard`, which points skills at `upstream/skills` and does not rewrite the Go binary.
 
 J-Space plugin manifests in this repo only expose the existing `j-space/SKILL.md` tree.
 

@@ -22,6 +22,13 @@ const FORBIDDEN_SOURCE_HOSTS = [
   "xz1220",
 ];
 
+const CLAUDE_GITHUB_REPOS = {
+  "open-dynamic-workflows": "atebites-hub/open-dynamic-workflows-plugin",
+  ponytail: "atebites-hub/ponytail",
+  "sol-advisor": "atebites-hub/sol-advisor",
+  taskboard: "atebites-hub/taskboard",
+};
+
 function readJson(relPath) {
   const full = join(root, relPath);
   assert.equal(existsSync(full), true, `missing ${relPath}`);
@@ -32,13 +39,8 @@ function sourceText(source) {
   return JSON.stringify(source);
 }
 
-function assertLocalSource(pluginName, source) {
+function assertForbiddenSourceHosts(pluginName, source) {
   const text = sourceText(source);
-  assert.equal(
-    /https?:\/\//i.test(text),
-    false,
-    `${pluginName} source must be a local path, got ${text}`,
-  );
   for (const host of FORBIDDEN_SOURCE_HOSTS) {
     assert.equal(
       text.includes(host),
@@ -46,6 +48,43 @@ function assertLocalSource(pluginName, source) {
       `${pluginName} source must not point at ${host}: ${text}`,
     );
   }
+}
+
+function assertLocalSource(pluginName, source) {
+  const text = sourceText(source);
+  assert.equal(
+    /https?:\/\//i.test(text),
+    false,
+    `${pluginName} source must be a local path, got ${text}`,
+  );
+  assertForbiddenSourceHosts(pluginName, source);
+}
+
+function assertClaudeSource(pluginName, source) {
+  assertForbiddenSourceHosts(pluginName, source);
+  if (pluginName === "j-space") {
+    assert.equal(
+      source,
+      "./plugins/j-space",
+      `j-space Claude source must stay the in-repo wrap, got ${sourceText(source)}`,
+    );
+    const pluginJson = join(root, "plugins/j-space/.claude-plugin/plugin.json");
+    assert.equal(
+      existsSync(pluginJson),
+      true,
+      "plugins/j-space/.claude-plugin/plugin.json must exist",
+    );
+    const manifest = JSON.parse(readFileSync(pluginJson, "utf8"));
+    assert.equal(manifest.name, "j-space");
+    return;
+  }
+  const expectedRepo = CLAUDE_GITHUB_REPOS[pluginName];
+  assert.ok(expectedRepo, `unexpected Claude plugin ${pluginName}`);
+  assert.deepEqual(
+    source,
+    { source: "github", repo: expectedRepo },
+    `${pluginName} Claude source must be the atebites-hub GitHub plugin source`,
+  );
 }
 
 function pluginNames(marketplace) {
@@ -121,16 +160,14 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("Claude marketplace matches the Anthropic path-source shape", () => {
+  it("Claude marketplace uses GitHub sources for forks and a local wrap for j-space", () => {
     const marketplace = readJson(".claude-plugin/marketplace.json");
     assert.ok(marketplace.$schema, "Claude marketplace needs $schema");
+    assert.equal(marketplace.name, "atebites-plugins");
+    assert.equal(marketplace.owner?.name, "atebites-hub");
     assertCatalogPlugins(marketplace, "Claude");
     for (const entry of marketplace.plugins) {
-      assert.equal(typeof entry.source, "string", `${entry.name} Claude source must be a path`);
-      assert.match(entry.source, /^\.\//, `${entry.name} Claude source must start with ./`);
-      assertLocalSource(entry.name, entry.source);
-      const rel = resolveLocalPath(entry.source);
-      assert.equal(existsSync(join(root, rel)), true, `Claude path missing: ${rel}`);
+      assertClaudeSource(entry.name, entry.source);
     }
   });
 
@@ -167,6 +204,9 @@ describe("README product surface", () => {
     assert.match(readme, /Import from Repo/);
     assert.match(readme, /grok plugin marketplace add atebites-hub\/atebites-plugins/);
     assert.match(readme, /\/plugin marketplace add atebites-hub\/atebites-plugins/);
+    assert.match(readme, /\/plugin marketplace update atebites-plugins/);
+    assert.match(readme, /without initializing git submodules/i);
+    assert.match(readme, /GitHub plugin sources/i);
     assert.match(readme, /codex plugin marketplace add atebites-hub\/atebites-plugins/);
     assert.match(readme, /\/plugins marketplace add atebites-hub\/atebites-plugins/);
     assert.match(readme, /hermes plugins install atebites-hub\/ponytail/);
