@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "j-space",
+  "version": "3.7.0",
+  "description": "Inference-time workspace control for long-horizon work. Wraps the upstream J-Space Cognition Suite skill; does not invent runtime behavior.",
+  "author": {
+    "name": "Tiger3807861189"
+  },
+  "homepage": "https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6",
+  "repository": "https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6",
+  "license": "Apache-2.0",
+  "keywords": ["j-space", "cognition", "workspace"]
+}

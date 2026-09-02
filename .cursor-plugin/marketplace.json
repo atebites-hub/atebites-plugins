@@ -1,0 +1,36 @@
+{
+  "name": "atebites-plugins",
+  "owner": {
+    "name": "atebites-hub"
+  },
+  "metadata": {
+    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor (sol-advisor), taskboard, and j-space. All sources are in-repo paths so Cursor Import from Repo can index them."
+  },
+  "plugins": [
+    {
+      "name": "open-dynamic-workflows",
+      "source": "plugins/open-dynamic-workflows/plugins/open-dynamic-workflows",
+      "description": "Dynamic workflow orchestration — workflow MCP tool, authoring skill, and /workflows command."
+    },
+    {
+      "name": "ponytail",
+      "source": "plugins/ponytail",
+      "description": "Lazy senior dev mode. Forces the simplest, shortest solution that actually works: YAGNI, stdlib first, no unrequested abstractions."
+    },
+    {
+      "name": "sol-advisor",
+      "source": "plugins/sol-advisor",
+      "description": "Advisor skills, slash commands, and doctor. Strict delegation stays disabled until runtime evidence matches the Advisor contract."
+    },
+    {
+      "name": "taskboard",
+      "source": "plugins/taskboard",
+      "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill."
+    },
+    {
+      "name": "j-space",
+      "source": "plugins/j-space",
+      "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery."
+    }
+  ]
+}

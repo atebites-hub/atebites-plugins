@@ -1,0 +1,6 @@
+{
+  "name": "taskboard",
+  "version": "1.0.0",
+  "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill.",
+  "skills": "./upstream/skills"
+}

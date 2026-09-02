@@ -1,0 +1,6 @@
+{
+  "name": "j-space",
+  "version": "3.7.0",
+  "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
+  "skills": "./vendor/j-space-cognition-suite"
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "taskboard": {
+      "command": "taskboard",
+      "args": [
+        "--db",
+        ".taskboard/taskboard.db",
+        "mcp"
+      ]
+    }
+  }
+}

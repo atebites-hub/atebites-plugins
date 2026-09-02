@@ -1,0 +1,12 @@
+J-Space Cognition Suite
+Copyright Tiger3807861189
+
+This catalog wraps the upstream skill from
+https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6
+as a multi-host plugin. The skill, modules, references, and optional
+stdlib controller remain Apache License 2.0. See
+vendor/j-space-cognition-suite/LICENSE and
+vendor/j-space-cognition-suite/THIRD_PARTY_NOTICES.md.
+
+The wrapper manifests in this directory are part of atebites-plugins (MIT)
+and do not change J-Space runtime behavior.

@@ -1,0 +1,14 @@
+{
+  "name": "atebites-plugins",
+  "private": true,
+  "description": "atebites-hub multi-host plugin marketplace catalog",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "validate": "node scripts/validate-marketplace.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

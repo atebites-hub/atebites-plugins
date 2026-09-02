@@ -1,0 +1,22 @@
+{
+  "name": "j-space",
+  "version": "3.7.0",
+  "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
+  "author": {
+    "name": "Tiger3807861189",
+    "url": "https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6"
+  },
+  "homepage": "https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6",
+  "repository": "https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6",
+  "license": "Apache-2.0",
+  "keywords": ["j-space", "cognition", "workspace", "codex"],
+  "skills": "./vendor/j-space-cognition-suite",
+  "interface": {
+    "displayName": "J-Space",
+    "shortDescription": "Inference-time workspace control for long-horizon work",
+    "developerName": "Tiger3807861189",
+    "category": "Productivity",
+    "capabilities": ["Instructions"],
+    "websiteURL": "https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6"
+  }
+}

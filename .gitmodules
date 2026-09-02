@@ -1,0 +1,20 @@
+[submodule "plugins/open-dynamic-workflows"]
+	path = plugins/open-dynamic-workflows
+	url = https://github.com/atebites-hub/open-dynamic-workflows-plugin.git
+	branch = main
+[submodule "plugins/ponytail"]
+	path = plugins/ponytail
+	url = https://github.com/atebites-hub/ponytail.git
+	branch = main
+[submodule "plugins/sol-advisor"]
+	path = plugins/sol-advisor
+	url = https://github.com/atebites-hub/sol-advisor.git
+	branch = main
+[submodule "plugins/taskboard/upstream"]
+	path = plugins/taskboard/upstream
+	url = https://github.com/atebites-hub/taskboard.git
+	branch = main
+[submodule "plugins/j-space/vendor/j-space-cognition-suite"]
+	path = plugins/j-space/vendor/j-space-cognition-suite
+	url = https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6.git
+	branch = main

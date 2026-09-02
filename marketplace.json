@@ -1,0 +1,51 @@
+{
+  "name": "atebites-plugins",
+  "description": "atebites-hub plugin catalog for ZCode: open-dynamic-workflows, ponytail, Advisor, taskboard, and j-space. Local path sources only.",
+  "owner": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/atebites-plugins"
+  },
+  "plugins": [
+    {
+      "name": "open-dynamic-workflows",
+      "version": "0.3.0",
+      "source": "./plugins/open-dynamic-workflows",
+      "description": "Dynamic workflow orchestration for ZCode — fan a deterministic script out across many zcode subagents.",
+      "category": "developer-tools",
+      "keywords": ["workflow", "orchestration", "subagent", "zcode"]
+    },
+    {
+      "name": "ponytail",
+      "version": "4.9.0",
+      "source": "./plugins/ponytail",
+      "description": "Forces the laziest solution that works. YAGNI, stdlib first, one line over fifty.",
+      "category": "productivity",
+      "keywords": ["yagni", "minimalism", "productivity"]
+    },
+    {
+      "name": "sol-advisor",
+      "version": "0.9.3",
+      "source": "./plugins/sol-advisor",
+      "description": "Advisor routing with strict ZCode runtime attestation.",
+      "category": "developer-tools",
+      "keywords": ["advisor", "routing", "zcode"]
+    },
+    {
+      "name": "taskboard",
+      "version": "1.0.0",
+      "source": "./plugins/taskboard",
+      "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill.",
+      "category": "productivity",
+      "keywords": ["taskboard", "kanban", "coordination"]
+    },
+    {
+      "name": "j-space",
+      "version": "3.7.0",
+      "source": "./plugins/j-space",
+      "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
+      "category": "productivity",
+      "keywords": ["j-space", "cognition", "workspace"]
+    }
+  ],
+  "version": 1
+}

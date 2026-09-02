@@ -1,0 +1,73 @@
+{
+  "name": "atebites-plugins",
+  "interface": {
+    "displayName": "atebites-hub plugins"
+  },
+  "plugins": [
+    {
+      "name": "open-dynamic-workflows",
+      "version": "0.3.0",
+      "source": {
+        "source": "local",
+        "path": "./plugins/open-dynamic-workflows"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "ponytail",
+      "version": "4.9.0",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ponytail"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "sol-advisor",
+      "version": "0.9.3",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sol-advisor/plugins/sol-advisor"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "taskboard",
+      "version": "1.0.0",
+      "source": {
+        "source": "local",
+        "path": "./plugins/taskboard"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "j-space",
+      "version": "3.7.0",
+      "source": {
+        "source": "local",
+        "path": "./plugins/j-space"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

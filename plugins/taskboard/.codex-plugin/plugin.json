@@ -1,0 +1,22 @@
+{
+  "name": "taskboard",
+  "version": "1.0.0",
+  "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill.",
+  "author": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/taskboard"
+  },
+  "homepage": "https://github.com/atebites-hub/taskboard",
+  "repository": "https://github.com/atebites-hub/taskboard",
+  "license": "MIT",
+  "keywords": ["taskboard", "kanban", "coordination", "codex"],
+  "skills": "./upstream/skills",
+  "interface": {
+    "displayName": "Taskboard",
+    "shortDescription": "Per-repo sprint tickets on a local SQLite board",
+    "developerName": "atebites-hub",
+    "category": "Productivity",
+    "capabilities": ["Instructions"],
+    "websiteURL": "https://github.com/atebites-hub/taskboard"
+  }
+}

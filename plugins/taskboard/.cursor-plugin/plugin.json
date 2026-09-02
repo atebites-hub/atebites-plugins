@@ -1,0 +1,15 @@
+{
+  "name": "taskboard",
+  "displayName": "Taskboard",
+  "version": "1.0.0",
+  "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill. The Go binary is not vendored; install it on PATH.",
+  "author": {
+    "name": "atebites-hub"
+  },
+  "homepage": "https://github.com/atebites-hub/taskboard",
+  "repository": "https://github.com/atebites-hub/taskboard",
+  "license": "MIT",
+  "keywords": ["taskboard", "kanban", "mcp", "coordination"],
+  "skills": "./upstream/skills",
+  "mcpServers": "./mcp.json"
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "atebites-plugins",
+  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, and j-space. Local path sources only.",
+  "owner": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/atebites-plugins"
+  },
+  "plugins": [
+    {
+      "name": "open-dynamic-workflows",
+      "description": "Dynamic workflow orchestration — workflow MCP tool and authoring skill. Omitted executor runs on claude.",
+      "source": "./plugins/open-dynamic-workflows",
+      "category": "developer-tools"
+    },
+    {
+      "name": "ponytail",
+      "description": "Forces the laziest solution that works. YAGNI, stdlib first, one line over fifty.",
+      "source": "./plugins/ponytail",
+      "category": "productivity"
+    },
+    {
+      "name": "sol-advisor",
+      "description": "Advisor guidance for Claude Code: experimental detection; strict delegation disabled until resolved effort is authoritative.",
+      "source": "./plugins/sol-advisor",
+      "category": "developer-tools"
+    },
+    {
+      "name": "taskboard",
+      "description": "Per-repo Taskboard MCP, sprint-ticket skill, and fail-open session/commit hooks.",
+      "source": "./plugins/taskboard/upstream",
+      "category": "productivity"
+    },
+    {
+      "name": "j-space",
+      "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
+      "source": "./plugins/j-space",
+      "category": "productivity"
+    }
+  ]
+}

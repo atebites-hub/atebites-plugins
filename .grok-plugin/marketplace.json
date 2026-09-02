@@ -1,0 +1,51 @@
+{
+  "name": "atebites-plugins",
+  "description": "atebites-hub plugin catalog for Grok Build: open-dynamic-workflows, ponytail, Advisor, taskboard, and j-space. Local path sources only.",
+  "owner": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/atebites-plugins"
+  },
+  "plugins": [
+    {
+      "name": "open-dynamic-workflows",
+      "version": "0.3.0",
+      "description": "Dynamic workflow orchestration — fan a deterministic script out across grok, claude, codex, and zcode subagents. Provides a workflow MCP tool, an authoring skill, and a /workflows command.",
+      "category": "developer-tools",
+      "source": { "type": "local", "path": "./plugins/open-dynamic-workflows/plugins/open-dynamic-workflows" },
+      "keywords": ["workflow", "orchestration", "subagent", "fan-out", "grok"]
+    },
+    {
+      "name": "ponytail",
+      "version": "4.9.0",
+      "description": "Forces the laziest solution that works. YAGNI, stdlib first, one line over fifty.",
+      "category": "productivity",
+      "source": { "type": "local", "path": "./plugins/ponytail" },
+      "keywords": ["yagni", "minimalism", "productivity"]
+    },
+    {
+      "name": "sol-advisor",
+      "version": "0.9.3",
+      "description": "Advisor guidance for Grok Build: experimental detection; strict delegation disabled because hook failures are fail-open.",
+      "category": "developer-tools",
+      "source": { "type": "local", "path": "./plugins/sol-advisor" },
+      "keywords": ["advisor", "routing", "grok"]
+    },
+    {
+      "name": "taskboard",
+      "version": "1.0.0",
+      "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill.",
+      "category": "productivity",
+      "source": { "type": "local", "path": "./plugins/taskboard" },
+      "keywords": ["taskboard", "kanban", "coordination"]
+    },
+    {
+      "name": "j-space",
+      "version": "3.7.0",
+      "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
+      "category": "productivity",
+      "source": { "type": "local", "path": "./plugins/j-space" },
+      "keywords": ["j-space", "cognition", "workspace"]
+    }
+  ],
+  "version": 1
+}

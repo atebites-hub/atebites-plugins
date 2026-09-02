@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "taskboard",
+  "version": "1.0.0",
+  "description": "Per-repo Taskboard coordination skill wrapping atebites-hub/taskboard. Install the Taskboard binary on PATH; this package does not vendor the Go CLI.",
+  "author": {
+    "name": "atebites-hub"
+  },
+  "homepage": "https://github.com/atebites-hub/taskboard",
+  "repository": "https://github.com/atebites-hub/taskboard",
+  "license": "MIT",
+  "keywords": ["taskboard", "kanban", "coordination"]
+}
