@@ -1,0 +1,6 @@
+{
+  "name": "llm-as-a-verifier",
+  "version": "0.2.0",
+  "description": "Skill + MCP for LLM-as-a-Verifier: rank high-stakes ODW leaves and best-of-N with logprob scores.",
+  "skills": "./skills"
+}

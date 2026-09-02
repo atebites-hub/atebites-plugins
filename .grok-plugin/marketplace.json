@@ -1,6 +1,6 @@
 {
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Grok Build: open-dynamic-workflows, ponytail, Advisor, taskboard, and j-space. Local path sources only.",
+  "description": "atebites-hub plugin catalog for Grok Build: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, and llm-as-a-verifier. Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -45,6 +45,14 @@
       "category": "productivity",
       "source": { "type": "local", "path": "./plugins/j-space" },
       "keywords": ["j-space", "cognition", "workspace"]
+    },
+    {
+      "name": "llm-as-a-verifier",
+      "version": "0.2.0",
+      "description": "Wrapped skill+MCP for high-stakes ODW / best-of-N logprob verification. Not an upstream Grok plugin; TurboAgent remains the Claude API proxy. Not Advisor evidence.",
+      "category": "developer-tools",
+      "source": { "type": "local", "path": "./plugins/llm-as-a-verifier" },
+      "keywords": ["verifier", "best-of-n", "odw", "logprob"]
     }
   ],
   "version": 1

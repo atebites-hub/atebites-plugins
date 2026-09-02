@@ -18,3 +18,11 @@
 	path = plugins/j-space/vendor/j-space-cognition-suite
 	url = https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6.git
 	branch = main
+[submodule "plugins/llm-as-a-verifier/vendor/llm-as-a-verifier"]
+	path = plugins/llm-as-a-verifier/vendor/llm-as-a-verifier
+	url = https://github.com/llm-as-a-verifier/llm-as-a-verifier.git
+	branch = main
+[submodule "plugins/llm-as-a-verifier/vendor/turbo-agent"]
+	path = plugins/llm-as-a-verifier/vendor/turbo-agent
+	url = https://github.com/llm-as-a-verifier/TurboAgent.git
+	branch = main

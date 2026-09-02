@@ -1,6 +1,6 @@
 {
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for ZCode: open-dynamic-workflows, ponytail, Advisor, taskboard, and j-space. Local path sources only.",
+  "description": "atebites-hub plugin catalog for ZCode: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, and llm-as-a-verifier. Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -45,6 +45,14 @@
       "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
       "category": "productivity",
       "keywords": ["j-space", "cognition", "workspace"]
+    },
+    {
+      "name": "llm-as-a-verifier",
+      "version": "0.2.0",
+      "source": "./plugins/llm-as-a-verifier",
+      "description": "Wrapped skill+MCP for high-stakes ODW / best-of-N logprob verification. Not an upstream ZCode plugin; not Advisor evidence.",
+      "category": "developer-tools",
+      "keywords": ["verifier", "best-of-n", "odw", "logprob"]
     }
   ],
   "version": 1

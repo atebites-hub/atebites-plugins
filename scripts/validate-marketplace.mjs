@@ -3,7 +3,7 @@
  * Validate host marketplace catalogs.
  *
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
- * schema. All catalogs must list the five in-repo plugins with local paths.
+ * schema. All catalogs must list the six in-repo plugins with local paths.
  */
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -20,6 +20,7 @@ const EXPECTED = [
   "sol-advisor",
   "taskboard",
   "j-space",
+  "llm-as-a-verifier",
 ];
 
 function fail(message) {
@@ -51,7 +52,7 @@ function namesOf(marketplace) {
   return (marketplace.plugins || []).map((plugin) => plugin.name).sort();
 }
 
-function assertFive(marketplace, label) {
+function assertCatalog(marketplace, label) {
   const names = namesOf(marketplace);
   const expected = [...EXPECTED].sort();
   if (JSON.stringify(names) !== JSON.stringify(expected)) {
@@ -80,7 +81,7 @@ if (cursorMarketplace.name !== "atebites-plugins") {
 if (cursorMarketplace.owner?.name !== "atebites-hub") {
   fail(`Cursor marketplace owner.name must be atebites-hub`);
 }
-assertFive(cursorMarketplace, "Cursor");
+assertCatalog(cursorMarketplace, "Cursor");
 
 for (const entry of cursorMarketplace.plugins) {
   const keys = Object.keys(entry).sort();
@@ -102,7 +103,7 @@ for (const entry of cursorMarketplace.plugins) {
 }
 
 const grok = readJson(".grok-plugin/marketplace.json");
-assertFive(grok, "Grok");
+assertCatalog(grok, "Grok");
 for (const entry of grok.plugins) {
   if (entry.source?.type !== "local") {
     fail(`Grok ${entry.name} source.type must be local`);
@@ -112,7 +113,7 @@ for (const entry of grok.plugins) {
 
 const claude = readJson(".claude-plugin/marketplace.json");
 if (!claude.$schema) fail("Claude marketplace missing $schema");
-assertFive(claude, "Claude");
+assertCatalog(claude, "Claude");
 for (const entry of claude.plugins) {
   if (typeof entry.source !== "string" || !entry.source.startsWith("./")) {
     fail(`Claude ${entry.name} source must be a ./ path`);
@@ -121,7 +122,7 @@ for (const entry of claude.plugins) {
 }
 
 const codex = readJson(".agents/plugins/marketplace.json");
-assertFive(codex, "Codex");
+assertCatalog(codex, "Codex");
 for (const entry of codex.plugins) {
   if (entry.source?.source !== "local") {
     fail(`Codex ${entry.name} source.source must be local`);
@@ -130,7 +131,7 @@ for (const entry of codex.plugins) {
 }
 
 const zcode = readJson("marketplace.json");
-assertFive(zcode, "ZCode");
+assertCatalog(zcode, "ZCode");
 for (const entry of zcode.plugins) {
   if (typeof entry.source !== "string") {
     fail(`ZCode ${entry.name} source must be a local path string`);
@@ -138,4 +139,4 @@ for (const entry of zcode.plugins) {
   assertLocal(entry.name, entry.source, "ZCode");
 }
 
-console.log("ok: Cursor schema + five local-path catalogs");
+console.log("ok: Cursor schema + six local-path catalogs");

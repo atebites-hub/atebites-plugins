@@ -1,0 +1,23 @@
+{
+  "name": "llm-as-a-verifier",
+  "version": "0.2.0",
+  "description": "Skill + MCP for LLM-as-a-Verifier: rank high-stakes ODW leaves and best-of-N with logprob scores. Wrapped framework, not Advisor evidence.",
+  "author": {
+    "name": "llm-as-a-verifier",
+    "url": "https://github.com/llm-as-a-verifier/llm-as-a-verifier"
+  },
+  "homepage": "https://github.com/llm-as-a-verifier/llm-as-a-verifier",
+  "repository": "https://github.com/llm-as-a-verifier/llm-as-a-verifier",
+  "license": "MIT",
+  "keywords": ["verifier", "best-of-n", "odw", "codex"],
+  "skills": "./skills",
+  "mcpServers": "./.codex-mcp.json",
+  "interface": {
+    "displayName": "LLM-as-a-Verifier",
+    "shortDescription": "Best-of-N and progress scoring via logprob verification",
+    "developerName": "llm-as-a-verifier",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive"],
+    "websiteURL": "https://github.com/llm-as-a-verifier/llm-as-a-verifier"
+  }
+}

@@ -4,7 +4,7 @@
     "name": "atebites-hub"
   },
   "metadata": {
-    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor (sol-advisor), taskboard, and j-space. All sources are in-repo paths so Cursor Import from Repo can index them."
+    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor (sol-advisor), taskboard, j-space, and llm-as-a-verifier. All sources are in-repo paths so Cursor Import from Repo can index them."
   },
   "plugins": [
     {
@@ -31,6 +31,11 @@
       "name": "j-space",
       "source": "plugins/j-space",
       "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery."
+    },
+    {
+      "name": "llm-as-a-verifier",
+      "source": "plugins/llm-as-a-verifier",
+      "description": "Wrapped skill+MCP for high-stakes ODW / best-of-N logprob verification. Not an upstream Cursor plugin; not Advisor evidence."
     }
   ]
 }

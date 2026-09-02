@@ -13,6 +13,7 @@ const EXPECTED_PLUGINS = [
   "sol-advisor",
   "taskboard",
   "j-space",
+  "llm-as-a-verifier",
 ];
 
 const FORBIDDEN_SOURCE_HOSTS = [
@@ -53,7 +54,7 @@ function pluginNames(marketplace) {
   return marketplace.plugins.map((p) => p.name);
 }
 
-function assertFivePlugins(marketplace, label) {
+function assertCatalogPlugins(marketplace, label) {
   const names = pluginNames(marketplace);
   assert.deepEqual(
     [...names].sort(),
@@ -84,11 +85,11 @@ describe("Cursor marketplace", () => {
     assert.match(result.stdout, /ok/i);
   });
 
-  it("lists five in-repo plugins with only name, source, and description", () => {
+  it("lists six in-repo plugins with only name, source, and description", () => {
     const marketplace = readJson(".cursor-plugin/marketplace.json");
     assert.equal(marketplace.name, "atebites-plugins");
     assert.equal(marketplace.owner?.name, "atebites-hub");
-    assertFivePlugins(marketplace, "Cursor");
+    assertCatalogPlugins(marketplace, "Cursor");
     for (const entry of marketplace.plugins) {
       assert.deepEqual(
         Object.keys(entry).sort(),
@@ -110,9 +111,9 @@ describe("Cursor marketplace", () => {
 });
 
 describe("Grok, Claude, Codex, and ZCode catalogs", () => {
-  it("Grok marketplace uses local path objects for all five plugins", () => {
+  it("Grok marketplace uses local path objects for all six plugins", () => {
     const marketplace = readJson(".grok-plugin/marketplace.json");
-    assertFivePlugins(marketplace, "Grok");
+    assertCatalogPlugins(marketplace, "Grok");
     for (const entry of marketplace.plugins) {
       assert.equal(entry.source?.type, "local", `${entry.name} Grok source.type`);
       assertLocalSource(entry.name, entry.source);
@@ -124,7 +125,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
   it("Claude marketplace matches the Anthropic path-source shape", () => {
     const marketplace = readJson(".claude-plugin/marketplace.json");
     assert.ok(marketplace.$schema, "Claude marketplace needs $schema");
-    assertFivePlugins(marketplace, "Claude");
+    assertCatalogPlugins(marketplace, "Claude");
     for (const entry of marketplace.plugins) {
       assert.equal(typeof entry.source, "string", `${entry.name} Claude source must be a path`);
       assert.match(entry.source, /^\.\//, `${entry.name} Claude source must start with ./`);
@@ -136,7 +137,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
 
   it("Codex marketplace uses local sources, not remote git URLs", () => {
     const marketplace = readJson(".agents/plugins/marketplace.json");
-    assertFivePlugins(marketplace, "Codex");
+    assertCatalogPlugins(marketplace, "Codex");
     for (const entry of marketplace.plugins) {
       assert.equal(entry.source?.source, "local", `${entry.name} Codex source.source`);
       assertLocalSource(entry.name, entry.source);
@@ -145,9 +146,9 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("ZCode marketplace lists all five with local path sources", () => {
+  it("ZCode marketplace lists all six with local path sources", () => {
     const marketplace = readJson("marketplace.json");
-    assertFivePlugins(marketplace, "ZCode");
+    assertCatalogPlugins(marketplace, "ZCode");
     for (const entry of marketplace.plugins) {
       assert.equal(typeof entry.source, "string", `${entry.name} ZCode source must be a path`);
       assertLocalSource(entry.name, entry.source);
@@ -158,7 +159,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
 });
 
 describe("README product surface", () => {
-  it("documents install commands for five plugins and the verifier non-plugin", () => {
+  it("documents install commands for six plugins and the wrapped-framework note", () => {
     const readme = readFileSync(join(root, "README.md"), "utf8");
     for (const name of EXPECTED_PLUGINS) {
       assert.match(readme, new RegExp(name), `README must mention ${name}`);
@@ -176,7 +177,48 @@ describe("README product surface", () => {
       /https:\/\/github.com\/llm-as-a-verifier\/llm-as-a-verifier/,
     );
     assert.match(readme, /https:\/\/github.com\/llm-as-a-verifier\/TurboAgent/);
-    assert.match(readme, /not a plugin/i);
+    assert.match(readme, /grok plugin install llm-as-a-verifier --trust/);
+    assert.match(readme, /\/plugin install llm-as-a-verifier@atebites-plugins/);
+    assert.match(readme, /codex plugin add llm-as-a-verifier@atebites-plugins/);
+    assert.match(readme, /\/plugins install llm-as-a-verifier/);
+    assert.match(readme, /agent --plugin-dir "\$PWD\/plugins\/llm-as-a-verifier"/);
+    assert.match(readme, /wrapped framework/i);
+    assert.match(readme, /not an upstream/i);
     assert.doesNotMatch(readme, /DietrichGebert\/ponytail/);
+    assert.doesNotMatch(readme, /Do not add it to this marketplace/);
+  });
+});
+
+describe("llm-as-a-verifier wrap", () => {
+  it("ships a skill that teaches ODW use, MCP tools, and no always-on hooks", () => {
+    const pluginRoot = join(root, "plugins/llm-as-a-verifier");
+    const skill = join(pluginRoot, "skills/llm-as-a-verifier/SKILL.md");
+    assert.equal(existsSync(skill), true, "missing llm-as-a-verifier SKILL.md");
+    const text = readFileSync(skill, "utf8");
+    assert.match(text, /high-stakes/i);
+    assert.match(text, /best-of-N/i);
+    assert.match(text, /llm_verifier\.select/);
+    assert.match(text, /turbo-agent/);
+    assert.match(text, /odw_verifier/);
+    assert.match(text, /Advisor/);
+    assert.match(text, /logprob/);
+    assert.match(text, /DEEPSEEK_API_KEY|VERTEX_API_KEY/);
+    assert.match(text, /\bselect\b/);
+    assert.match(text, /\bcompare\b/);
+    assert.match(text, /\btrack\b/);
+    assert.doesNotMatch(text, /SessionStart/);
+    const manifest = JSON.parse(
+      readFileSync(join(pluginRoot, ".cursor-plugin/plugin.json"), "utf8"),
+    );
+    assert.equal(manifest.name, "llm-as-a-verifier");
+    assert.ok(manifest.mcpServers, "Cursor plugin must declare MCP");
+    assert.equal(manifest.hooks, undefined, "no always-on hooks on the Cursor plugin");
+    assert.equal(
+      existsSync(join(pluginRoot, "hooks/hooks.json")),
+      false,
+      "must not ship a default hooks/hooks.json",
+    );
+    assert.equal(existsSync(join(pluginRoot, "mcp.json")), true);
+    assert.equal(existsSync(join(pluginRoot, "mcp/server.py")), true);
   });
 });

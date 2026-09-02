@@ -13,6 +13,7 @@ Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_sta
 | `sol-advisor` | Advisor | [atebites-hub/sol-advisor](https://github.com/atebites-hub/sol-advisor) |
 | `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard)) |
 | `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork) |
+| `llm-as-a-verifier` | LLM-as-a-Verifier | wrapped framework: [llm-as-a-verifier/llm-as-a-verifier](https://github.com/llm-as-a-verifier/llm-as-a-verifier) (`pip install llm-verifier`); Claude proxy [TurboAgent](https://github.com/llm-as-a-verifier/TurboAgent) (not an upstream Cursor/Claude marketplace plugin) |
 
 Clone with submodules:
 
@@ -34,7 +35,7 @@ Dashboard → **Plugins** → **Import from Repo** → paste:
 https://github.com/atebites-hub/atebites-plugins
 ```
 
-Then install all five: **open-dynamic-workflows**, **ponytail**, **sol-advisor** (Advisor), **taskboard**, **j-space**.
+Then install all six: **open-dynamic-workflows**, **ponytail**, **sol-advisor** (Advisor), **taskboard**, **j-space**, **llm-as-a-verifier**.
 
 Cursor CLI (`agent`) does not install from this marketplace the way Grok/Codex do. Use each plugin's own installer or `--plugin-dir` after a submodule clone:
 
@@ -52,6 +53,7 @@ agent --plugin-dir "$HOME/.cursor/plugins/local/sol-advisor"
 
 agent --plugin-dir "$PWD/plugins/taskboard"
 agent --plugin-dir "$PWD/plugins/j-space"
+agent --plugin-dir "$PWD/plugins/llm-as-a-verifier"
 ```
 
 You can also clone an individual fork and point `--plugin-dir` at that checkout. Taskboard still needs the `taskboard` binary on `PATH` (`brew tap tcarac/taskboard && brew install taskboard` or `make build` in the fork).
@@ -65,6 +67,7 @@ grok plugin install ponytail --trust
 grok plugin install sol-advisor --trust
 grok plugin install taskboard --trust
 grok plugin install j-space --trust
+grok plugin install llm-as-a-verifier --trust
 ```
 
 Enable plugins that default to off (`/plugins`, or `enabled` in `~/.grok/config.toml`), then start a new session.
@@ -97,6 +100,10 @@ Send these as **two separate prompts** (marketplace add, then each install):
 /plugin install j-space@atebites-plugins
 ```
 
+```text
+/plugin install llm-as-a-verifier@atebites-plugins
+```
+
 ## Codex / ChatGPT Codex
 
 ```bash
@@ -106,6 +113,7 @@ codex plugin add ponytail@atebites-plugins
 codex plugin add sol-advisor@atebites-plugins
 codex plugin add taskboard@atebites-plugins
 codex plugin add j-space@atebites-plugins
+codex plugin add llm-as-a-verifier@atebites-plugins
 ```
 
 Open a new Codex thread. Trust lifecycle hooks from `/hooks` where a plugin ships them (ponytail, Advisor).
@@ -136,6 +144,10 @@ Open a new Codex thread. Trust lifecycle hooks from `/hooks` where a plugin ship
 /plugins install j-space
 ```
 
+```text
+/plugins install llm-as-a-verifier
+```
+
 CLI equivalent used by Advisor: `zcode plugins marketplace add atebites-hub/atebites-plugins` then `zcode plugins install sol-advisor@sol-advisor` (coordinate stays `sol-advisor@sol-advisor` inside that plugin). From this catalog, install `sol-advisor@atebites-plugins` if the host namespaces by marketplace name.
 
 ## Hermes / Pi
@@ -150,18 +162,28 @@ hermes plugins install atebites-hub/ponytail --enable
 pi install git:github.com/atebites-hub/ponytail
 ```
 
-Restart Hermes after installing. `open-dynamic-workflows`, Advisor, taskboard, and j-space do not ship Hermes/Pi marketplace manifests here. Use the Cursor/Grok/Claude/Codex/ZCode catalogs above, or install from the plugin repos listed in the table.
+Restart Hermes after installing. `open-dynamic-workflows`, Advisor, taskboard, j-space, and llm-as-a-verifier do not ship Hermes/Pi marketplace manifests here. Use the Cursor/Grok/Claude/Codex/ZCode catalogs above, or install from the plugin repos listed in the table.
 
-## Not a plugin: LLM-as-a-Verifier
+## LLM-as-a-Verifier (wrapped framework)
 
-LLM-as-a-Verifier is an optional **ODW quality layer** (`odw_verifier` in PJTemplate), not a host plugin. Do not add it to this marketplace.
+This catalog ships **skill + MCP** around the Python library. It is **not an upstream** Cursor or Claude marketplace plugin. Upstream is `pip install llm-verifier` (`llm_verifier.select` / `.compare` / `.track`). High-stakes ODW leaves and best-of-N only — never wrap every `agent()` call.
 
-| Piece | URL |
+| Host | How to use it |
 | --- | --- |
-| Framework | https://github.com/llm-as-a-verifier/llm-as-a-verifier |
-| TurboAgent proxy | https://github.com/llm-as-a-verifier/TurboAgent |
+| Cursor / Grok / Codex / ZCode | This marketplace plugin's MCP (`select`, `compare`, `track`) |
+| Claude Code | Same MCP, **or** the official [TurboAgent](https://github.com/llm-as-a-verifier/TurboAgent) proxy (`turbo-agent` then `ANTHROPIC_BASE_URL=http://localhost:8888 claude`) |
 
-Use it to rank high-stakes ODW trajectories. DSH-only ports are out of scope. compound-engineering and superpowers stay documented in PJTemplate; they are not vendored here.
+Default is skill + MCP only. There is **no always-on hook**; scoring every turn compounds verifier cost.
+
+Needs `pip install llm-verifier` and one logprobs backend: `DEEPSEEK_API_KEY`, `VERTEX_API_KEY`, or an OpenAI-compatible `OPENAI_BASE_URL`. Not Advisor evidence.
+
+`vendor/llm-as-a-verifier/data/` is a ~350MB benchmark dump. After a full submodule init, drop it with:
+
+```bash
+sh plugins/llm-as-a-verifier/scripts/exclude-benchmark-data.sh
+```
+
+DSH-only Harmony ports stay out of this marketplace. compound-engineering and superpowers stay documented in PJTemplate; they are not vendored here.
 
 ## Layout
 
@@ -178,6 +200,9 @@ plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap
 plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (Claude plugin lives here)
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill
 plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite
+plugins/llm-as-a-verifier/        # skill + MCP wrap (no hooks)
+plugins/llm-as-a-verifier/vendor/llm-as-a-verifier/  # submodule: Python library (data/ excluded)
+plugins/llm-as-a-verifier/vendor/turbo-agent/        # submodule: Claude API proxy (optional)
 ```
 
 Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Claude/Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.
@@ -188,7 +213,7 @@ J-Space plugin manifests in this repo only expose the existing `j-space/SKILL.md
 
 ## Licenses
 
-This catalog is MIT. Submodule plugins keep their own licenses (MIT for ODW, ponytail, Advisor, and taskboard; Apache-2.0 for J-Space — see `plugins/j-space/NOTICE`).
+This catalog is MIT. Submodule plugins keep their own licenses (MIT for ODW, ponytail, Advisor, taskboard, and the llm-verifier library; Apache-2.0 for J-Space and TurboAgent — see `plugins/j-space/NOTICE` and `plugins/llm-as-a-verifier/NOTICE`).
 
 ## Validate
 

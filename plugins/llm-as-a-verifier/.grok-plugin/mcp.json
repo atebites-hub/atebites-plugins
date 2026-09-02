@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "llm-as-a-verifier": {
+      "type": "stdio",
+      "command": "python3",
+      "args": ["${GROK_PLUGIN_ROOT}/mcp/server.py"],
+      "enabled": true,
+      "startup_timeout_sec": 30,
+      "tool_timeout_sec": 28800,
+      "env": {
+        "LLM_VERIFIER_HOST": "grok"
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, and j-space. Local path sources only.",
+  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, and llm-as-a-verifier. Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -36,6 +36,12 @@
       "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
       "source": "./plugins/j-space",
       "category": "productivity"
+    },
+    {
+      "name": "llm-as-a-verifier",
+      "description": "Wrapped skill+MCP for high-stakes ODW / best-of-N. Claude can also use the TurboAgent proxy. Not an upstream Claude plugin; not Advisor evidence.",
+      "source": "./plugins/llm-as-a-verifier",
+      "category": "developer-tools"
     }
   ]
 }
