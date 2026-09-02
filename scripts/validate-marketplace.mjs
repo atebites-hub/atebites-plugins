@@ -3,7 +3,7 @@
  * Validate host marketplace catalogs.
  *
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
- * schema. All catalogs must list the six in-repo plugins with local paths.
+ * schema. All catalogs must list the five in-repo plugins with local paths.
  */
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -20,7 +20,6 @@ const EXPECTED = [
   "sol-advisor",
   "taskboard",
   "j-space",
-  "llm-as-a-verifier",
 ];
 
 function fail(message) {
@@ -139,4 +138,4 @@ for (const entry of zcode.plugins) {
   assertLocal(entry.name, entry.source, "ZCode");
 }
 
-console.log("ok: Cursor schema + six local-path catalogs");
+console.log("ok: Cursor schema + five local-path catalogs");

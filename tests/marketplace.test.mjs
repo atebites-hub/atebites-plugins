@@ -13,7 +13,6 @@ const EXPECTED_PLUGINS = [
   "sol-advisor",
   "taskboard",
   "j-space",
-  "llm-as-a-verifier",
 ];
 
 const FORBIDDEN_SOURCE_HOSTS = [
@@ -85,7 +84,7 @@ describe("Cursor marketplace", () => {
     assert.match(result.stdout, /ok/i);
   });
 
-  it("lists six in-repo plugins with only name, source, and description", () => {
+  it("lists five in-repo plugins with only name, source, and description", () => {
     const marketplace = readJson(".cursor-plugin/marketplace.json");
     assert.equal(marketplace.name, "atebites-plugins");
     assert.equal(marketplace.owner?.name, "atebites-hub");
@@ -111,7 +110,7 @@ describe("Cursor marketplace", () => {
 });
 
 describe("Grok, Claude, Codex, and ZCode catalogs", () => {
-  it("Grok marketplace uses local path objects for all six plugins", () => {
+  it("Grok marketplace uses local path objects for all five plugins", () => {
     const marketplace = readJson(".grok-plugin/marketplace.json");
     assertCatalogPlugins(marketplace, "Grok");
     for (const entry of marketplace.plugins) {
@@ -146,7 +145,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("ZCode marketplace lists all six with local path sources", () => {
+  it("ZCode marketplace lists all five with local path sources", () => {
     const marketplace = readJson("marketplace.json");
     assertCatalogPlugins(marketplace, "ZCode");
     for (const entry of marketplace.plugins) {
@@ -159,7 +158,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
 });
 
 describe("README product surface", () => {
-  it("documents install commands for six plugins and the wrapped-framework note", () => {
+  it("documents install commands for five plugins and keeps verifier out of the catalog", () => {
     const readme = readFileSync(join(root, "README.md"), "utf8");
     for (const name of EXPECTED_PLUGINS) {
       assert.match(readme, new RegExp(name), `README must mention ${name}`);
@@ -177,70 +176,33 @@ describe("README product surface", () => {
       /https:\/\/github.com\/llm-as-a-verifier\/llm-as-a-verifier/,
     );
     assert.match(readme, /https:\/\/github.com\/llm-as-a-verifier\/TurboAgent/);
-    assert.match(readme, /grok plugin install llm-as-a-verifier --trust/);
-    assert.match(readme, /\/plugin install llm-as-a-verifier@atebites-plugins/);
-    assert.match(readme, /codex plugin add llm-as-a-verifier@atebites-plugins/);
-    assert.match(readme, /\/plugins install llm-as-a-verifier/);
-    assert.match(readme, /agent --plugin-dir "\$PWD\/plugins\/llm-as-a-verifier"/);
-    assert.match(readme, /wrapped framework/i);
-    assert.match(readme, /not an upstream/i);
+    assert.match(readme, /Do not add it to this marketplace/);
     assert.doesNotMatch(readme, /DietrichGebert\/ponytail/);
-    assert.doesNotMatch(readme, /Do not add it to this marketplace/);
+    assert.doesNotMatch(readme, /grok plugin install llm-as-a-verifier --trust/);
+    assert.doesNotMatch(readme, /\/plugin install llm-as-a-verifier@atebites-plugins/);
+    assert.doesNotMatch(readme, /codex plugin add llm-as-a-verifier@atebites-plugins/);
+    assert.doesNotMatch(readme, /\/plugins install llm-as-a-verifier/);
+    assert.doesNotMatch(readme, /agent --plugin-dir "\$PWD\/plugins\/llm-as-a-verifier"/);
+    assert.doesNotMatch(readme, /install all six/i);
   });
 });
 
-describe("llm-as-a-verifier wrap", () => {
-  it("ships a skill that teaches ODW use, MCP tools, and no always-on hooks", () => {
-    const pluginRoot = join(root, "plugins/llm-as-a-verifier");
-    const skill = join(pluginRoot, "skills/llm-as-a-verifier/SKILL.md");
-    assert.equal(existsSync(skill), true, "missing llm-as-a-verifier SKILL.md");
-    const text = readFileSync(skill, "utf8");
-    assert.match(text, /high-stakes/i);
-    assert.match(text, /best-of-N/i);
-    assert.match(text, /llm_verifier\.select/);
-    assert.match(text, /turbo-agent/);
-    assert.match(text, /odw_verifier/);
-    assert.match(text, /Advisor/);
-    assert.match(text, /logprob/);
-    assert.match(text, /DEEPSEEK_API_KEY|VERTEX_API_KEY/);
-    assert.match(text, /\bselect\b/);
-    assert.match(text, /\bcompare\b/);
-    assert.match(text, /\btrack\b/);
-    assert.doesNotMatch(text, /SessionStart/);
-    const manifest = JSON.parse(
-      readFileSync(join(pluginRoot, ".cursor-plugin/plugin.json"), "utf8"),
-    );
-    assert.equal(manifest.name, "llm-as-a-verifier");
-    assert.ok(manifest.mcpServers, "Cursor plugin must declare MCP");
-    assert.equal(manifest.hooks, undefined, "no always-on hooks on the Cursor plugin");
+describe("llm-as-a-verifier is not a catalog plugin", () => {
+  it("does not ship wrap files, MCP tests, or a catalog source tree", () => {
     assert.equal(
-      existsSync(join(pluginRoot, "hooks/hooks.json")),
+      existsSync(join(root, "plugins/llm-as-a-verifier")),
       false,
-      "must not ship a default hooks/hooks.json",
-    );
-    assert.equal(existsSync(join(pluginRoot, "mcp.json")), true);
-    assert.equal(existsSync(join(pluginRoot, "mcp/server.py")), true);
-    const cursorMcp = JSON.parse(readFileSync(join(pluginRoot, "mcp.json"), "utf8"));
-    assert.match(JSON.stringify(cursorMcp), /\$\{PLUGIN_ROOT\}\/mcp\/server\.py/);
-    const grokMcp = JSON.parse(readFileSync(join(pluginRoot, ".grok-plugin/mcp.json"), "utf8"));
-    assert.match(JSON.stringify(grokMcp), /\$\{GROK_PLUGIN_ROOT\}\/mcp\/server\.py/);
-    const claudePlugin = JSON.parse(
-      readFileSync(join(pluginRoot, ".claude-plugin/plugin.json"), "utf8"),
-    );
-    assert.match(JSON.stringify(claudePlugin.mcpServers), /\$\{CLAUDE_PLUGIN_ROOT\}\/mcp\/server\.py/);
-    const zcodeMcp = JSON.parse(readFileSync(join(pluginRoot, ".mcp.json"), "utf8"));
-    assert.match(JSON.stringify(zcodeMcp), /\$\{ZCODE_PLUGIN_ROOT\}\/mcp\/server\.py/);
-    const codexMcp = JSON.parse(readFileSync(join(pluginRoot, ".codex-mcp.json"), "utf8"));
-    assert.equal(codexMcp.mcpServers["llm-as-a-verifier"].args[0], "./mcp/server.py");
-    assert.equal(
-      existsSync(join(pluginRoot, "vendor/llm-as-a-verifier")),
-      false,
-      "do not submodule the framework (benchmark data dump)",
+      "plugins/llm-as-a-verifier must be deleted",
     );
     assert.equal(
-      existsSync(join(pluginRoot, "vendor/turbo-agent")),
+      existsSync(join(root, "tests/llm-verifier-mcp.test.mjs")),
       false,
-      "TurboAgent is pip/proxy, not a catalog submodule",
+      "tests/llm-verifier-mcp.test.mjs must be deleted",
+    );
+    assert.equal(
+      existsSync(join(root, "tests/fixtures/fake-llm-verifier")),
+      false,
+      "tests/fixtures/fake-llm-verifier must be deleted",
     );
   });
 });
