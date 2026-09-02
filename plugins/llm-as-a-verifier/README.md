@@ -19,6 +19,10 @@ skill + MCP**. Claude can use TurboAgent instead of (or in addition to) the
 MCP. Default is skill + MCP only — **no hooks**. Do not add always-on session
 or stop hooks that score every turn; verifier cost compounds.
 
+This wrap does **not** git-submodule the framework. Upstream `data/` is a
+~350MB SWE-bench / Terminal-Bench dump; `git clone --recurse-submodules`
+must not pull it.
+
 ## Install from atebites-plugins
 
 Catalog name: `llm-as-a-verifier`. Local source: `plugins/llm-as-a-verifier`.
@@ -53,18 +57,6 @@ Host MCP files match Open Dynamic Workflows:
 | Claude | `.claude-plugin/plugin.json` `mcpServers` (`${CLAUDE_PLUGIN_ROOT}`) |
 | ZCode | `.mcp.json` (`${ZCODE_PLUGIN_ROOT}`) |
 | Codex | `.codex-mcp.json` |
-
-## Benchmark dump
-
-`vendor/llm-as-a-verifier/data/` is SWE-bench / Terminal-Bench trajectories
-(~350MB). This wrap's default worktree **excludes** it:
-
-```bash
-sh plugins/llm-as-a-verifier/scripts/exclude-benchmark-data.sh
-```
-
-`git submodule update --init --recursive` still clones the full objects
-unless you run that script (or sparse-checkout) after init.
 
 ## DSH
 

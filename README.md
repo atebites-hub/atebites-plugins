@@ -177,11 +177,7 @@ Default is skill + MCP only. There is **no always-on hook**; scoring every turn 
 
 Needs `pip install llm-verifier` and one logprobs backend: `DEEPSEEK_API_KEY`, `VERTEX_API_KEY`, or an OpenAI-compatible `OPENAI_BASE_URL`. Not Advisor evidence.
 
-`vendor/llm-as-a-verifier/data/` is a ~350MB benchmark dump. After a full submodule init, drop it with:
-
-```bash
-sh plugins/llm-as-a-verifier/scripts/exclude-benchmark-data.sh
-```
+This wrap does **not** git-submodule the framework. Upstream `data/` is a ~350MB benchmark dump; do not clone that tree into this catalog.
 
 DSH-only Harmony ports stay out of this marketplace. compound-engineering and superpowers stay documented in PJTemplate; they are not vendored here.
 
@@ -200,9 +196,7 @@ plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap
 plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (Claude plugin lives here)
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill
 plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite
-plugins/llm-as-a-verifier/        # skill + MCP wrap (no hooks)
-plugins/llm-as-a-verifier/vendor/llm-as-a-verifier/  # submodule: Python library (data/ excluded)
-plugins/llm-as-a-verifier/vendor/turbo-agent/        # submodule: Claude API proxy (optional)
+plugins/llm-as-a-verifier/        # skill + MCP wrap (no hooks; pip install llm-verifier)
 ```
 
 Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Claude/Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.

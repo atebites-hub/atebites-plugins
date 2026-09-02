@@ -69,8 +69,9 @@ COMPARE_TOOL = {
 TRACK_TOOL = {
     "name": "track",
     "description": (
-        "Score progress after each step of a finished trajectory. Use on long "
-        "high-stakes jobs, not every turn. Not Advisor runtime evidence."
+        "Score progress at selected checkpoints of a finished trajectory "
+        "(default: interior steps). Use on long high-stakes jobs, not every "
+        "turn. Not Advisor runtime evidence."
     ),
     "inputSchema": {
         "type": "object",
@@ -140,8 +141,7 @@ def tool_ok(payload) -> dict:
 def load_library():
     if os.environ.get("LLM_VERIFIER_TEST_UNAVAILABLE") == "1":
         return None, (
-            "llm-verifier is not installed. pip install llm-verifier "
-            "(or pip install -e plugins/llm-as-a-verifier/vendor/llm-as-a-verifier)."
+            "llm-verifier is not installed. pip install llm-verifier"
         )
     try:
         import llm_verifier  # type: ignore
@@ -157,12 +157,10 @@ def load_library():
             except ImportError as exc:
                 return None, (
                     f"llm-verifier import failed ({exc}). "
-                    "pip install llm-verifier "
-                    f"(or pip install -e {VENDOR})."
+                    "pip install llm-verifier"
                 )
         return None, (
-            "llm-verifier is not installed. pip install llm-verifier "
-            "(or pip install -e plugins/llm-as-a-verifier/vendor/llm-as-a-verifier)."
+            "llm-verifier is not installed. pip install llm-verifier"
         )
 
 
@@ -270,8 +268,7 @@ def run_tool(name: str, args: dict) -> dict:
         return tool_error(missing_key_message(exc))
     except ModuleNotFoundError as exc:
         return tool_error(
-            f"Missing Python dependency ({exc}). pip install llm-verifier "
-            f"(or pip install -e {VENDOR})."
+            f"Missing Python dependency ({exc}). pip install llm-verifier"
         )
     except Exception as exc:
         return tool_error(f"{type(exc).__name__}: {exc}\n{traceback.format_exc()}")
@@ -331,11 +328,24 @@ def handle_raw(raw: str) -> None:
     handle_request(msg)
 
 
+def read_stdin_chunk() -> bytes:
+    """Return available stdin bytes without waiting for a full 4096-byte block.
+
+    ``BufferedReader.read(n)`` blocks until n bytes or EOF, which hangs MCP
+    hosts that keep stdin open and send small JSON-RPC frames.
+    """
+    try:
+        return os.read(sys.stdin.fileno(), 4096)
+    except InterruptedError:
+        return b""
+
+
 def main() -> None:
     global buffer, response_framing
     sys.stderr.write("[llm-as-a-verifier] MCP server ready (select, compare, track)\n")
+    sys.stderr.flush()
     while True:
-        chunk = sys.stdin.buffer.read(4096)
+        chunk = read_stdin_chunk()
         if not chunk:
             if buffer:
                 handle_raw(buffer.decode("utf-8", errors="replace"))

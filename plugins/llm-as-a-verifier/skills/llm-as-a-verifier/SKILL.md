@@ -50,13 +50,6 @@ verifier-model calls. Use on **leaves that matter**, not chat glue.
 pip install llm-verifier
 ```
 
-Or install the vendored checkout (this clone **omits** `data/`, the SWE-bench
-dump — see the plugin README):
-
-```bash
-pip install -e "${PLUGIN_ROOT}/vendor/llm-as-a-verifier"
-```
-
 Set **one** of:
 
 | Variable | Backend |
@@ -78,7 +71,7 @@ PPT.
 |------|-----|
 | `select` | Best-of-N. Args: `problem`, `candidates` (string array), `criteria`, optional `n_evaluations` (default 4), `pivots`, `model`. Returns the winning **index**, ranking, scores. |
 | `compare` | Pairwise. Args: `problem`, `trace_a`, `trace_b`, `criteria`, optional `n_evaluations`, `model`. Returns `reward_a` / `reward_b`. |
-| `track` | Sequential steps. Args: `problem`, `steps` (string array), optional `checkpoint_steps`, `n_evaluations` (library default 1), `model`. Returns per-step scores. |
+| `track` | Sequential steps. Args: `problem`, `steps` (string array), optional `checkpoint_steps`, `n_evaluations` (library default 1), `model`. Returns scores at each selected/default checkpoint. |
 
 `criteria` is a `{name: description}` dict, a bundled name (e.g. `swe_bench`),
 or a criteria file path.

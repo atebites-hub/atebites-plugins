@@ -1,11 +1,10 @@
 LLM-as-a-Verifier
 Copyright the llm-as-a-verifier authors
 
-This catalog wrap ships skill + MCP around:
+This catalog wrap ships skill + MCP around the published packages:
   https://github.com/llm-as-a-verifier/llm-as-a-verifier  (MIT, pip package llm-verifier)
   https://github.com/llm-as-a-verifier/TurboAgent         (Apache-2.0, optional proxy)
 
 The Python library and TurboAgent keep their upstream licenses. This wrap does
-not reimplement the probabilistic pivot tournament. Benchmark dumps under
-vendor/llm-as-a-verifier/data/ are optional and excluded from the default
-sparse worktree.
+not reimplement the probabilistic pivot tournament and does not vendor the
+upstream benchmark dump (`data/`).

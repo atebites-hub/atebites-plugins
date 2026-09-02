@@ -220,5 +220,27 @@ describe("llm-as-a-verifier wrap", () => {
     );
     assert.equal(existsSync(join(pluginRoot, "mcp.json")), true);
     assert.equal(existsSync(join(pluginRoot, "mcp/server.py")), true);
+    const cursorMcp = JSON.parse(readFileSync(join(pluginRoot, "mcp.json"), "utf8"));
+    assert.match(JSON.stringify(cursorMcp), /\$\{PLUGIN_ROOT\}\/mcp\/server\.py/);
+    const grokMcp = JSON.parse(readFileSync(join(pluginRoot, ".grok-plugin/mcp.json"), "utf8"));
+    assert.match(JSON.stringify(grokMcp), /\$\{GROK_PLUGIN_ROOT\}\/mcp\/server\.py/);
+    const claudePlugin = JSON.parse(
+      readFileSync(join(pluginRoot, ".claude-plugin/plugin.json"), "utf8"),
+    );
+    assert.match(JSON.stringify(claudePlugin.mcpServers), /\$\{CLAUDE_PLUGIN_ROOT\}\/mcp\/server\.py/);
+    const zcodeMcp = JSON.parse(readFileSync(join(pluginRoot, ".mcp.json"), "utf8"));
+    assert.match(JSON.stringify(zcodeMcp), /\$\{ZCODE_PLUGIN_ROOT\}\/mcp\/server\.py/);
+    const codexMcp = JSON.parse(readFileSync(join(pluginRoot, ".codex-mcp.json"), "utf8"));
+    assert.equal(codexMcp.mcpServers["llm-as-a-verifier"].args[0], "./mcp/server.py");
+    assert.equal(
+      existsSync(join(pluginRoot, "vendor/llm-as-a-verifier")),
+      false,
+      "do not submodule the framework (benchmark data dump)",
+    );
+    assert.equal(
+      existsSync(join(pluginRoot, "vendor/turbo-agent")),
+      false,
+      "TurboAgent is pip/proxy, not a catalog submodule",
+    );
   });
 });
