@@ -3,7 +3,9 @@
  * Validate host marketplace catalogs.
  *
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
- * schema. All catalogs must list the five in-repo plugins with local paths.
+ * schema. Cursor, Grok, Codex, and ZCode must list the five plugins with
+ * local paths. Claude may use GitHub plugin sources for the four atebites-hub
+ * forks; j-space stays the in-repo wrap.
  */
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -21,6 +23,12 @@ const EXPECTED = [
   "taskboard",
   "j-space",
 ];
+const CLAUDE_GITHUB_REPOS = {
+  "open-dynamic-workflows": "atebites-hub/open-dynamic-workflows-plugin",
+  ponytail: "atebites-hub/ponytail",
+  "sol-advisor": "atebites-hub/sol-advisor",
+  taskboard: "atebites-hub/taskboard",
+};
 
 function fail(message) {
   console.error(message);
@@ -37,13 +45,42 @@ function readJson(relPath) {
   }
 }
 
+function assertForbiddenHosts(name, source, label) {
+  const text = JSON.stringify(source);
+  if (/DietrichGebert|imsai-sh|xz1220/i.test(text)) {
+    fail(`${label} ${name}: source must use atebites-hub (or in-repo wrap), got ${text}`);
+  }
+}
+
 function assertLocal(name, source, label) {
   const text = JSON.stringify(source);
   if (/https?:\/\//i.test(text)) {
     fail(`${label} ${name}: remote URL sources are not allowed: ${text}`);
   }
-  if (/DietrichGebert|imsai-sh|xz1220/i.test(text)) {
-    fail(`${label} ${name}: source must use atebites-hub (or in-repo wrap), got ${text}`);
+  assertForbiddenHosts(name, source, label);
+}
+
+function assertClaudeSource(name, source) {
+  assertForbiddenHosts(name, source, "Claude");
+  if (name === "j-space") {
+    if (source !== "./plugins/j-space") {
+      fail(`Claude j-space source must be ./plugins/j-space, got ${JSON.stringify(source)}`);
+    }
+    return;
+  }
+  const expectedRepo = CLAUDE_GITHUB_REPOS[name];
+  if (!expectedRepo) {
+    fail(`Claude unexpected plugin ${name}`);
+  }
+  if (
+    source == null ||
+    typeof source !== "object" ||
+    source.source !== "github" ||
+    source.repo !== expectedRepo
+  ) {
+    fail(
+      `Claude ${name} source must be { "source": "github", "repo": "${expectedRepo}" }, got ${JSON.stringify(source)}`,
+    );
   }
 }
 
@@ -112,12 +149,15 @@ for (const entry of grok.plugins) {
 
 const claude = readJson(".claude-plugin/marketplace.json");
 if (!claude.$schema) fail("Claude marketplace missing $schema");
+if (claude.name !== "atebites-plugins") {
+  fail(`Claude marketplace name must be atebites-plugins`);
+}
+if (claude.owner?.name !== "atebites-hub") {
+  fail(`Claude marketplace owner.name must be atebites-hub`);
+}
 assertCatalog(claude, "Claude");
 for (const entry of claude.plugins) {
-  if (typeof entry.source !== "string" || !entry.source.startsWith("./")) {
-    fail(`Claude ${entry.name} source must be a ./ path`);
-  }
-  assertLocal(entry.name, entry.source, "Claude");
+  assertClaudeSource(entry.name, entry.source);
 }
 
 const codex = readJson(".agents/plugins/marketplace.json");
@@ -138,4 +178,4 @@ for (const entry of zcode.plugins) {
   assertLocal(entry.name, entry.source, "ZCode");
 }
 
-console.log("ok: Cursor schema + five local-path catalogs");
+console.log("ok: Cursor schema + five-plugin catalogs");
