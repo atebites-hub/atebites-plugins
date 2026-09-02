@@ -85,9 +85,9 @@ TRACK_TOOL = {
             "checkpoint_steps": {
                 "type": "array",
                 "items": {"type": "integer"},
-                "description": "1-based checkpoints; default is every step.",
+                "description": "1-based checkpoints; default is interior steps 2..T-1 (every step if T<3).",
             },
-            "n_evaluations": {"type": "integer", "default": 4},
+            "n_evaluations": {"type": "integer", "default": 1},
             "model": {"type": "string"},
         },
     },
