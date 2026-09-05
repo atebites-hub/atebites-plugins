@@ -13,7 +13,16 @@ const EXPECTED_PLUGINS = [
   "sol-advisor",
   "taskboard",
   "j-space",
+  "superpowers",
 ];
+
+const SUPERPOWERS_PIN_SHA = "b36e0829c6d0140e93cfef2ca599b1b07d4a7797";
+const SUPERPOWERS_CLAUDE_SOURCE = {
+  source: "github",
+  repo: "obra/superpowers",
+  ref: "v6.3.0",
+  sha: SUPERPOWERS_PIN_SHA,
+};
 
 const FORBIDDEN_SOURCE_HOSTS = [
   "DietrichGebert",
@@ -78,6 +87,14 @@ function assertClaudeSource(pluginName, source) {
     assert.equal(manifest.name, "j-space");
     return;
   }
+  if (pluginName === "superpowers") {
+    assert.deepEqual(
+      source,
+      SUPERPOWERS_CLAUDE_SOURCE,
+      "superpowers Claude source must pin obra/superpowers @ v6.3.0",
+    );
+    return;
+  }
   const expectedRepo = CLAUDE_GITHUB_REPOS[pluginName];
   assert.ok(expectedRepo, `unexpected Claude plugin ${pluginName}`);
   assert.deepEqual(
@@ -123,7 +140,7 @@ describe("Cursor marketplace", () => {
     assert.match(result.stdout, /ok/i);
   });
 
-  it("lists five in-repo plugins with only name, source, and description", () => {
+  it("lists catalog plugins with only name, source, and description", () => {
     const marketplace = readJson(".cursor-plugin/marketplace.json");
     assert.equal(marketplace.name, "atebites-plugins");
     assert.equal(marketplace.owner?.name, "atebites-hub");
@@ -149,7 +166,7 @@ describe("Cursor marketplace", () => {
 });
 
 describe("Grok, Claude, Codex, and ZCode catalogs", () => {
-  it("Grok marketplace uses local path objects for all five plugins", () => {
+  it("Grok marketplace uses local path objects for all catalog plugins", () => {
     const marketplace = readJson(".grok-plugin/marketplace.json");
     assertCatalogPlugins(marketplace, "Grok");
     for (const entry of marketplace.plugins) {
@@ -160,7 +177,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("Claude marketplace uses GitHub sources for forks and a local wrap for j-space", () => {
+  it("Claude marketplace uses GitHub sources for forks and Superpowers, and a local wrap for j-space", () => {
     const marketplace = readJson(".claude-plugin/marketplace.json");
     assert.ok(marketplace.$schema, "Claude marketplace needs $schema");
     assert.equal(marketplace.name, "atebites-plugins");
@@ -182,7 +199,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("ZCode marketplace lists all five with local path sources", () => {
+  it("ZCode marketplace lists all catalog plugins with local path sources", () => {
     const marketplace = readJson("marketplace.json");
     assertCatalogPlugins(marketplace, "ZCode");
     for (const entry of marketplace.plugins) {
@@ -195,7 +212,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
 });
 
 describe("README product surface", () => {
-  it("documents install commands for five plugins and keeps verifier out of the catalog", () => {
+  it("documents install commands for catalog plugins and keeps verifier out of the catalog", () => {
     const readme = readFileSync(join(root, "README.md"), "utf8");
     for (const name of EXPECTED_PLUGINS) {
       assert.match(readme, new RegExp(name), `README must mention ${name}`);
@@ -223,7 +240,31 @@ describe("README product surface", () => {
     assert.doesNotMatch(readme, /codex plugin add llm-as-a-verifier@atebites-plugins/);
     assert.doesNotMatch(readme, /\/plugins install llm-as-a-verifier/);
     assert.doesNotMatch(readme, /agent --plugin-dir "\$PWD\/plugins\/llm-as-a-verifier"/);
-    assert.doesNotMatch(readme, /install all six/i);
+    assert.doesNotMatch(readme, /install all seven/i);
+  });
+});
+
+describe("Superpowers pin", () => {
+  it("vendors obra/superpowers at v6.3.0 without a floating branch", () => {
+    const gitmodules = readFileSync(join(root, ".gitmodules"), "utf8");
+    const section = gitmodules.match(/\[submodule "plugins\/superpowers"\]([^\[]*)/);
+    assert.ok(section, "plugins/superpowers submodule must be listed in .gitmodules");
+    assert.match(section[1], /url = https:\/\/github.com\/obra\/superpowers\.git/);
+    assert.doesNotMatch(section[1], /^\s*branch\s*=/m);
+
+    const recorded = spawnSync("git", ["ls-files", "-s", "plugins/superpowers"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    assert.equal(recorded.status, 0, recorded.stderr);
+    assert.match(recorded.stdout, new RegExp(`160000 ${SUPERPOWERS_PIN_SHA} `));
+
+    const head = spawnSync("git", ["-C", "plugins/superpowers", "rev-parse", "HEAD"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    assert.equal(head.status, 0, head.stderr);
+    assert.equal(head.stdout.trim(), SUPERPOWERS_PIN_SHA);
   });
 });
 

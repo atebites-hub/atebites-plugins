@@ -3,9 +3,9 @@
  * Validate host marketplace catalogs.
  *
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
- * schema. Cursor, Grok, Codex, and ZCode must list the five plugins with
+ * schema. Cursor, Grok, Codex, and ZCode must list the catalog plugins with
  * local paths. Claude may use GitHub plugin sources for the four atebites-hub
- * forks; j-space stays the in-repo wrap.
+ * forks and the Superpowers pin; j-space stays the in-repo wrap.
  */
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -22,7 +22,14 @@ const EXPECTED = [
   "sol-advisor",
   "taskboard",
   "j-space",
+  "superpowers",
 ];
+const SUPERPOWERS_PIN = {
+  source: "github",
+  repo: "obra/superpowers",
+  ref: "v6.3.0",
+  sha: "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
+};
 const CLAUDE_GITHUB_REPOS = {
   "open-dynamic-workflows": "atebites-hub/open-dynamic-workflows-plugin",
   ponytail: "atebites-hub/ponytail",
@@ -65,6 +72,14 @@ function assertClaudeSource(name, source) {
   if (name === "j-space") {
     if (source !== "./plugins/j-space") {
       fail(`Claude j-space source must be ./plugins/j-space, got ${JSON.stringify(source)}`);
+    }
+    return;
+  }
+  if (name === "superpowers") {
+    if (JSON.stringify(source) !== JSON.stringify(SUPERPOWERS_PIN)) {
+      fail(
+        `Claude superpowers source must be ${JSON.stringify(SUPERPOWERS_PIN)}, got ${JSON.stringify(source)}`,
+      );
     }
     return;
   }
@@ -178,4 +193,4 @@ for (const entry of zcode.plugins) {
   assertLocal(entry.name, entry.source, "ZCode");
 }
 
-console.log("ok: Cursor schema + five-plugin catalogs");
+console.log("ok: Cursor schema + catalog plugins");
