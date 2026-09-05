@@ -194,6 +194,10 @@ Claude Code does not use those local paths. `/plugin marketplace add` clones thi
 
 J-Space plugin manifests in this repo only expose the existing `j-space/SKILL.md` tree.
 
+## Fork maintenance
+
+Submodule and nested-fork status: [docs/FORK-INDEX.md](docs/FORK-INDEX.md). Binding policy: [docs/FORK-MAINTENANCE.md](docs/FORK-MAINTENANCE.md).
+
 ## Licenses
 
 This catalog is MIT. Submodule plugins keep their own licenses (MIT for ODW, ponytail, Advisor, and taskboard; Apache-2.0 for J-Space — see `plugins/j-space/NOTICE`).
