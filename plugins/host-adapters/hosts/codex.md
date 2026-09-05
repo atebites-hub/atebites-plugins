@@ -57,10 +57,7 @@ Fail-closed. Doctor expects:
 - `open-dynamic-workflows@open-dynamic-workflows` at **0.3.0**
 - installed **and** enabled
 
-The marketplace twin `open-dynamic-workflows@atebites-plugins` **does not
-satisfy doctor alone**. A marketplace `package.json` at 0.3.0 is not
-enough. If `checks.odwPlugin.compatible` is false, install/enable the
-canonical id at 0.3.0. Do not edit ODW or its cache to force a pass.
+The marketplace twin `open-dynamic-workflows@atebites-plugins` **does not satisfy doctor alone**. A marketplace `package.json` at 0.3.0 is not enough. If `checks.odwPlugin.compatible` is false, install/enable the canonical id at 0.3.0. Do not edit ODW or its cache to force a pass.
 
 ```text
 $advisor doctor --host codex

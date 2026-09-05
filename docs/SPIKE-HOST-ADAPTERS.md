@@ -41,8 +41,7 @@ Advisor seating facts used here are copied from Advisor (not invented):
   installed and **enabled**.
 - ZCode `plugins list --json` shape is **`.plugins[].id`** (plus `version`,
   `enabled`).
-- Marketplace twin **`open-dynamic-workflows@atebites-plugins` does not
-  satisfy doctor alone**.
+- Marketplace twin **`open-dynamic-workflows@atebites-plugins` does not satisfy doctor alone**.
 - Advisor tip **after [#12](https://github.com/atebites-hub/advisor/pull/12)**
   (`8fc0bcf017fc19559e0117a47be5dec2558ed43a`): doctor reads ZCode
   `.plugins[]`. This catalog's Advisor gitlink stays

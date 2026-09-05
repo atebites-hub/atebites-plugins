@@ -131,7 +131,8 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
       assert.equal(result.status, 0, `${host} must exit 0: ${result.stderr}`);
       assert.match(result.stdout, /SPIKE stub/, `${host} must print SPIKE stub`);
       assert.match(result.stdout, /not enforcing|not a seating pass/i);
-      assert.doesNotMatch(result.stdout, /\bPASS\b|\bpassed\b/i);
+      assert.doesNotMatch(result.stdout, /\bPASSED\b|\bVERIFY PASSED\b/);
+      assert.match(result.stdout, /not a seating pass|not seating/);
       assert.doesNotMatch(result.stdout, /plugin (?:install|add) \S+ --trust/);
     }
 

@@ -92,9 +92,7 @@ Fail-closed. Doctor expects:
 
 ZCode `plugins list --json` shape is **`.plugins[].id`** (with `version`,
 `enabled`). Marketplace twin
-`open-dynamic-workflows@atebites-plugins` **does not satisfy doctor
-alone**. Installing from this catalog is not enough if the list row is
-the twin id.
+`open-dynamic-workflows@atebites-plugins` **does not satisfy doctor alone**. Installing from this catalog is not enough if the list row is the twin id.
 
 ```text
 $sol-advisor:advisor doctor --host zcode
