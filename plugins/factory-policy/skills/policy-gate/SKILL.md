@@ -13,6 +13,9 @@ description: >
 named check. It is not a reasoning procedure. Native models reason. Do not
 invoke `sequentialthinking` or `reasoning-system`.
 
+C3–C7 SoT is exactly `factory-01-policy-layer.md`, `policy-gate.md`, and
+Build Sheet §5 (PJTemplate handoff). Do not invent extra checks.
+
 Hooks in this plugin are stubs. They do **not** enforce these checks. Do not
 claim a stub exit 0 as a pass.
 

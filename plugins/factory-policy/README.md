@@ -8,6 +8,8 @@ Not a submodule. Not listed in host catalogs. Not wired into project-factory
 enforce C3–C7. Do not treat stub success as a pass (no soft-pass).
 
 Normative spike scope: [`docs/SPIKE-FACTORY-POLICY.md`](../../docs/SPIKE-FACTORY-POLICY.md).
+C3–C7 SoT: `factory-01-policy-layer.md`, `policy-gate.md`, Build Sheet §5
+(PJTemplate handoff).
 
 ## What this is
 

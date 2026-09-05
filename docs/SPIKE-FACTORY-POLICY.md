@@ -8,8 +8,24 @@ plugin (not a submodule). Host marketplaces do **not** list it. Do not wire
 project-factory `enabledPlugins`. Do not treat stub exit 0 as a C3–C7 pass
 (no soft-pass).
 
-Binding SoT: Project Factory decisions (Jay 2026-09-05) plus PJTemplate
-investigation IDs named below. Do not invent further checks.
+## Binding SoT (do not invent)
+
+C3–C7 source of truth is **exactly** the PJTemplate handoff trio:
+
+1. `factory-01-policy-layer.md`
+2. `policy-gate.md`
+3. **Build Sheet §5** (PJTemplate handoff)
+
+This catalog has no local PJTemplate clone. Those files are **not** on
+[atebites-hub/PJTemplate](https://github.com/atebites-hub/PJTemplate) `main`
+as of this spike (2026-09-05); they are cited **by name** as the Assistant
+lock. Check IDs, hook names, and the memory-field contract below come from
+that trio plus Project Factory decisions (Jay 2026-09-05). Do not add
+checks those documents do not name.
+
+Jay 2026-09-05 (Factory): factory-policy (+ memory gate) is the P2 upgraded
+reasoning-system; `memory-system` remains the ledger (`docs/memories/`);
+CE / taskboard / j-space are discarded from Factory (not defaults).
 
 ## Goal
 

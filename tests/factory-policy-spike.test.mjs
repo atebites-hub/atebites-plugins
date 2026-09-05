@@ -101,6 +101,9 @@ describe("factory-policy P2 spike (not a catalog / Factory default)", () => {
     assert.match(spike, /guard-bash/);
     assert.match(spike, /No CE/);
     assert.match(spike, /taskboard \/ j-space/);
+    assert.match(spike, /factory-01-policy-layer\.md/);
+    assert.match(spike, /policy-gate\.md/);
+    assert.match(spike, /Build Sheet §5/);
   });
 
   it("stub scripts exit 0 and print SPIKE stub without claiming a pass", () => {
