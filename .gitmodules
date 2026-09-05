@@ -6,9 +6,9 @@
 	path = plugins/ponytail
 	url = https://github.com/atebites-hub/ponytail.git
 	branch = main
-[submodule "plugins/sol-advisor"]
-	path = plugins/sol-advisor
-	url = https://github.com/atebites-hub/sol-advisor.git
+[submodule "plugins/advisor"]
+	path = plugins/advisor
+	url = https://github.com/atebites-hub/advisor.git
 	branch = main
 [submodule "plugins/taskboard/upstream"]
 	path = plugins/taskboard/upstream

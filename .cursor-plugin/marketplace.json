@@ -4,7 +4,7 @@
     "name": "atebites-hub"
   },
   "metadata": {
-    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor (sol-advisor), taskboard, j-space, and superpowers. All sources are in-repo paths so Cursor Import from Repo can index them."
+    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, and superpowers. All sources are in-repo paths so Cursor Import from Repo can index them."
   },
   "plugins": [
     {
@@ -18,8 +18,8 @@
       "description": "Lazy senior dev mode. Forces the simplest, shortest solution that actually works: YAGNI, stdlib first, no unrequested abstractions."
     },
     {
-      "name": "sol-advisor",
-      "source": "plugins/sol-advisor",
+      "name": "advisor",
+      "source": "plugins/advisor",
       "description": "Advisor skills, slash commands, and doctor. Strict delegation stays disabled until runtime evidence matches the Advisor contract."
     },
     {

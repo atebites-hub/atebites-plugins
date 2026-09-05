@@ -23,9 +23,9 @@
       "keywords": ["yagni", "minimalism", "productivity"]
     },
     {
-      "name": "sol-advisor",
+      "name": "advisor",
       "version": "0.9.3",
-      "source": "./plugins/sol-advisor",
+      "source": "./plugins/advisor",
       "description": "Advisor routing with strict ZCode runtime attestation.",
       "category": "developer-tools",
       "keywords": ["advisor", "routing", "zcode"]

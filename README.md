@@ -10,7 +10,7 @@ Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_sta
 | --- | --- | --- |
 | `open-dynamic-workflows` | Open Dynamic Workflows | [atebites-hub/open-dynamic-workflows-plugin](https://github.com/atebites-hub/open-dynamic-workflows-plugin) |
 | `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) |
-| `sol-advisor` | Advisor | [atebites-hub/sol-advisor](https://github.com/atebites-hub/sol-advisor) |
+| `advisor` | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) (renamed from `atebites-hub/sol-advisor`; parent [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) unchanged) |
 | `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard)) |
 | `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork) |
 | `superpowers` | Superpowers | [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; factory-default pin, not an atebites fork) |
@@ -35,7 +35,7 @@ Dashboard → **Plugins** → **Import from Repo** → paste:
 https://github.com/atebites-hub/atebites-plugins
 ```
 
-Then install the catalog plugins: **open-dynamic-workflows**, **ponytail**, **sol-advisor** (Advisor), **taskboard**, **j-space**, **superpowers**.
+Then install the catalog plugins: **open-dynamic-workflows**, **ponytail**, **advisor** (Advisor), **taskboard**, **j-space**, **superpowers**. The catalog slug was `sol-advisor` before the GitHub rename.
 
 Cursor CLI (`agent`) does not install from this marketplace the way Grok/Codex do. Use each plugin's own installer or `--plugin-dir` after a submodule clone:
 
@@ -48,7 +48,7 @@ agent mcp enable open-dynamic-workflows
 
 agent --plugin-dir "$PWD/plugins/ponytail"
 
-sh plugins/sol-advisor/plugins/sol-advisor/scripts/install-cursor.sh
+sh plugins/advisor/plugins/sol-advisor/scripts/install-cursor.sh
 agent --plugin-dir "$HOME/.cursor/plugins/local/sol-advisor"
 
 agent --plugin-dir "$PWD/plugins/taskboard"
@@ -56,7 +56,7 @@ agent --plugin-dir "$PWD/plugins/j-space"
 agent --plugin-dir "$PWD/plugins/superpowers"
 ```
 
-You can also clone an individual fork and point `--plugin-dir` at that checkout. Taskboard still needs the `taskboard` binary on `PATH` (`brew tap tcarac/taskboard && brew install taskboard` or `make build` in the fork).
+The install script still lives at `plugins/advisor/plugins/sol-advisor/scripts/install-cursor.sh` and still symlinks to `~/.cursor/plugins/local/sol-advisor` until the Advisor productize scrub lands. You can also clone [atebites-hub/advisor](https://github.com/atebites-hub/advisor) and point `--plugin-dir` at that checkout. Taskboard still needs the `taskboard` binary on `PATH` (`brew tap tcarac/taskboard && brew install taskboard` or `make build` in the fork).
 
 ## Grok Build
 
@@ -64,7 +64,7 @@ You can also clone an individual fork and point `--plugin-dir` at that checkout.
 grok plugin marketplace add atebites-hub/atebites-plugins
 grok plugin install open-dynamic-workflows --trust
 grok plugin install ponytail --trust
-grok plugin install sol-advisor --trust
+grok plugin install advisor --trust
 grok plugin install taskboard --trust
 grok plugin install j-space --trust
 grok plugin install superpowers --trust
@@ -97,7 +97,7 @@ Or remove the marketplace and add it again. Then install any catalog plugin:
 ```
 
 ```text
-/plugin install sol-advisor@atebites-plugins
+/plugin install advisor@atebites-plugins
 ```
 
 ```text
@@ -118,7 +118,7 @@ Or remove the marketplace and add it again. Then install any catalog plugin:
 codex plugin marketplace add atebites-hub/atebites-plugins
 codex plugin add open-dynamic-workflows@atebites-plugins
 codex plugin add ponytail@atebites-plugins
-codex plugin add sol-advisor@atebites-plugins
+codex plugin add advisor@atebites-plugins
 codex plugin add taskboard@atebites-plugins
 codex plugin add j-space@atebites-plugins
 codex plugin add superpowers@atebites-plugins
@@ -141,7 +141,7 @@ Open a new Codex thread. Trust lifecycle hooks from `/hooks` where a plugin ship
 ```
 
 ```text
-/plugins install sol-advisor
+/plugins install advisor
 ```
 
 ```text
@@ -156,7 +156,7 @@ Open a new Codex thread. Trust lifecycle hooks from `/hooks` where a plugin ship
 /plugins install superpowers
 ```
 
-CLI equivalent used by Advisor: `zcode plugins marketplace add atebites-hub/atebites-plugins` then `zcode plugins install sol-advisor@sol-advisor` (coordinate stays `sol-advisor@sol-advisor` inside that plugin). From this catalog, install `sol-advisor@atebites-plugins` if the host namespaces by marketplace name.
+CLI equivalent used by Advisor: `zcode plugins marketplace add atebites-hub/atebites-plugins` then `zcode plugins install advisor@atebites-plugins` if the host namespaces by marketplace name. The package coordinate inside the pinned fork is still `sol-advisor@sol-advisor` until the productize scrub.
 
 ## Hermes / Pi
 
@@ -195,7 +195,7 @@ DSH-only ports are out of scope. Superpowers is the factory-default pin (obra/su
 marketplace.json                  # ZCode
 plugins/open-dynamic-workflows/   # submodule: atebites-hub/open-dynamic-workflows-plugin
 plugins/ponytail/                 # submodule: atebites-hub/ponytail
-plugins/sol-advisor/              # submodule: atebites-hub/sol-advisor
+plugins/advisor/                  # submodule: atebites-hub/advisor (GitHub rename from sol-advisor)
 plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap
 plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill
@@ -204,6 +204,8 @@ plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e08
 ```
 
 Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.
+
+Advisor checkout path is `plugins/advisor` (GitHub repo `atebites-hub/advisor`). Codex still points at the nested package `plugins/advisor/plugins/sol-advisor`; Cursor/Grok/ZCode use the submodule root. Catalog name is `advisor`. The pinned fork's `plugin.json` name and package coordinate remain `sol-advisor` until productize.
 
 Claude Code does not use those local paths. `/plugin marketplace add` clones this catalog without initializing git submodules, so gitlink directories have no `.claude-plugin/plugin.json`. The Claude catalog therefore uses GitHub plugin sources for ODW, ponytail, Advisor, and taskboard (`source: { "source": "github", "repo": "atebites-hub/..." }`), pointing at each fork root rather than a nested package. Superpowers uses `obra/superpowers` with `ref: v6.3.0` and SHA `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` so Claude does not float on `main`. j-space stays an in-repo wrap (`./plugins/j-space`); there is no atebites-hub/j-space plugin repo. Cursor, Grok, Codex, and ZCode stay local-path-only and use the wrap at `plugins/taskboard`, which points skills at `upstream/skills` and does not rewrite the Go binary.
 

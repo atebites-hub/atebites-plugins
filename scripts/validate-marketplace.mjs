@@ -19,7 +19,7 @@ const SCHEMA_URL =
 const EXPECTED = [
   "open-dynamic-workflows",
   "ponytail",
-  "sol-advisor",
+  "advisor",
   "taskboard",
   "j-space",
   "superpowers",
@@ -33,9 +33,18 @@ const SUPERPOWERS_PIN = {
 const CLAUDE_GITHUB_REPOS = {
   "open-dynamic-workflows": "atebites-hub/open-dynamic-workflows-plugin",
   ponytail: "atebites-hub/ponytail",
-  "sol-advisor": "atebites-hub/sol-advisor",
+  advisor: "atebites-hub/advisor",
   taskboard: "atebites-hub/taskboard",
 };
+
+/** Catalog slug → allowed plugin.json names (sol-advisor until productize). */
+const MANIFEST_NAMES = {
+  advisor: ["advisor", "sol-advisor"],
+};
+
+function allowedManifestNames(catalogName) {
+  return MANIFEST_NAMES[catalogName] ?? [catalogName];
+}
 
 function fail(message) {
   console.error(message);
@@ -148,8 +157,9 @@ for (const entry of cursorMarketplace.plugins) {
     fail(`Cursor source ${entry.source} has no .cursor-plugin/plugin.json`);
   }
   const manifest = JSON.parse(readFileSync(pluginJson, "utf8"));
-  if (manifest.name !== entry.name) {
-    fail(`Cursor ${entry.name} plugin.json name is ${manifest.name}`);
+  const allowed = allowedManifestNames(entry.name);
+  if (!allowed.includes(manifest.name)) {
+    fail(`Cursor ${entry.name} plugin.json name is ${manifest.name} (allowed ${allowed.join(", ")})`);
   }
 }
 
