@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/policy-gate.sh\"",
+            "timeout": 10,
+            "statusMessage": "SPIKE factory-policy PreToolUse (not enforcing)"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/stop-verify.sh\"",
+            "timeout": 10,
+            "statusMessage": "SPIKE factory-policy Stop (not enforcing)"
+          }
+        ]
+      }
+    ]
+  }
+}

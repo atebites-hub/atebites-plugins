@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "bash plugins/factory-policy/scripts/policy-gate.sh",
+        "timeout": 10
+      }
+    ],
+    "stop": [
+      {
+        "command": "bash plugins/factory-policy/scripts/stop-verify.sh",
+        "timeout": 10
+      }
+    ]
+  }
+}

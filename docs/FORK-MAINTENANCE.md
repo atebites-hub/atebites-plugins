@@ -1,6 +1,6 @@
 # Fork maintenance
 
-atebites-hub forks in this marketplace follow the Project Factory fork-maintenance policy. This catalog does not vendor factory-policy/gitnexus yet; the rules below are still binding.
+atebites-hub forks in this marketplace follow the Project Factory fork-maintenance policy. factory-policy exists only as an in-repo **P2 SPIKE stub** (`plugins/factory-policy/`) — not a catalog plugin, not a Factory default, not a submodule. GitNexus is still not vendored. The rules below are still binding.
 
 Owners: **Jaskarn**, **Factory Plugins bot**.
 
