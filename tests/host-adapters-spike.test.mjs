@@ -107,6 +107,40 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
     assert.match(checklist, /Parked|parked|placeholder/i);
   });
 
+  it("seats Factory ponytail at intensity full and does not recommend lite", () => {
+    const readme = read("README.md");
+    const index = read("docs/FORK-INDEX.md");
+    const spike = read("docs/SPIKE-HOST-ADAPTERS.md");
+    const packReadme = readFileSync(join(packRoot, "README.md"), "utf8");
+    const codex = readFileSync(join(packRoot, "hosts/codex.md"), "utf8");
+    const zcode = readFileSync(join(packRoot, "hosts/zcode.md"), "utf8");
+    const checklist = readFileSync(join(packRoot, "hosts/CHECKLIST.md"), "utf8");
+
+    for (const [label, text] of [
+      ["README.md", readme],
+      ["docs/FORK-INDEX.md", index],
+      ["docs/SPIKE-HOST-ADAPTERS.md", spike],
+      ["host-adapters README", packReadme],
+      ["codex.md", codex],
+      ["zcode.md", zcode],
+      ["CHECKLIST.md", checklist],
+    ]) {
+      assert.match(text, /intensity \*\*full\*\*/i, `${label} must lock ponytail intensity full`);
+      assert.doesNotMatch(text, /PONYTAIL_DEFAULT_MODE=lite/, `${label} must not set lite`);
+      assert.doesNotMatch(
+        text,
+        /defaultMode["']?\s*[:=]\s*["']lite["']/,
+        `${label} must not config lite`,
+      );
+      assert.doesNotMatch(text, /\/ponytail lite/, `${label} must not recommend /ponytail lite`);
+    }
+
+    assert.match(codex, /PONYTAIL_DEFAULT_MODE=full/);
+    assert.match(zcode, /PONYTAIL_DEFAULT_MODE=full/);
+    assert.match(codex, /"defaultMode": "full"/);
+    assert.match(zcode, /"defaultMode": "full"/);
+  });
+
   it("names ownership and seating facts in the spike doc", () => {
     const spike = read("docs/SPIKE-HOST-ADAPTERS.md");
     assert.match(spike, /SPIKE/);
@@ -139,6 +173,8 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
       assert.match(result.stdout, /not enforcing|not a seating pass/i);
       assert.doesNotMatch(result.stdout, /\bPASSED\b|\bVERIFY PASSED\b/);
       assert.match(result.stdout, /not a seating pass|not seating/);
+      assert.match(result.stdout, /intensity full/, `${host} must seat ponytail at full`);
+      assert.doesNotMatch(result.stdout, /PONYTAIL_DEFAULT_MODE=lite/);
       assert.doesNotMatch(result.stdout, /plugin (?:install|add) \S+ --trust/);
     }
 

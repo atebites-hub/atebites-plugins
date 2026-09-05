@@ -256,6 +256,9 @@ describe("README product surface", () => {
     );
     assert.match(readme, /https:\/\/github.com\/llm-as-a-verifier\/TurboAgent/);
     assert.match(readme, /Do not add it to this marketplace/);
+    assert.match(readme, /intensity \*\*full\*\* always/);
+    assert.match(readme, /never lite/);
+    assert.doesNotMatch(readme, /PONYTAIL_DEFAULT_MODE=lite/);
     assert.doesNotMatch(readme, /DietrichGebert\/ponytail/);
     assert.doesNotMatch(readme, /grok plugin install llm-as-a-verifier --trust/);
     assert.doesNotMatch(readme, /\/plugin install llm-as-a-verifier@atebites-plugins/);

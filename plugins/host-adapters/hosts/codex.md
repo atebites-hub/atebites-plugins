@@ -45,6 +45,21 @@ codex plugin add superpowers@atebites-plugins
 Open a **new** Codex thread after install. Enabling in the catalog is not
 the same as doctor-compatible ODW (see step 3).
 
+Factory seats ponytail at intensity **full** always. Persist that default
+(do not recommend lite):
+
+```bash
+export PONYTAIL_DEFAULT_MODE=full
+```
+
+or `~/.config/ponytail/config.json`:
+
+```json
+{ "defaultMode": "full" }
+```
+
+Confirm the session with `@ponytail full` or `/ponytail full`.
+
 Advisor's own Codex coordinate remains `sol-advisor@sol-advisor` inside the
 pinned fork. The catalog slug is `advisor`. Use whichever the host actually
 installed; doctor still keys ODW on the **canonical** ODW id, not the
