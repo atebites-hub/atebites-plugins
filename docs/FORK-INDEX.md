@@ -37,7 +37,7 @@ Nested under the ODW plugin pin above (`9ddd39a59877`, which is that repo's `mai
 | Path | URL | Pin |
 | --- | --- | --- |
 | `open-dynamic-workflows` | [atebites-hub/open-dynamic-workflows](https://github.com/atebites-hub/open-dynamic-workflows) | `036701b1fddd` |
-| `zcode-cli` | [atebites-hub/zcode-cli](https://github.com/atebites-hub/zcode-cli) | `a97033febe28` |
+| `zcode-cli` | [atebites-hub/zcode-cli](https://github.com/atebites-hub/zcode-cli) | `a97033febe28` (not on current orphan; `upload-pack: not our ref`) |
 
 ## P1 next
 
