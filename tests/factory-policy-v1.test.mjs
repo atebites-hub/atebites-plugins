@@ -125,7 +125,7 @@ describe("factory-policy v1 (warn-default, not a catalog / Factory default)", ()
   it("v1 docs name the checks and retire SPIKE-stub-as-pass", () => {
     const v1 = read("docs/POLICY-V1.md");
     assert.match(v1, /v1 warn-default/i);
-    assert.match(v1, /no soft-pass/);
+    assert.match(v1, /no soft-pass/i);
     assert.match(v1, /memory-system/);
     for (const id of CHECK_IDS) {
       assert.match(v1, new RegExp(id.replace(".", "\\.")), `POLICY-V1 must name ${id}`);
@@ -244,14 +244,13 @@ describe("factory-policy checker + policy-gate integration", () => {
     assert.equal(srcWarn.status, 0, srcWarn.stderr);
   });
 
-  it("edit mode fail overlay blocks src/** with exit 2", () => {
-    const blocked = run("bash", [gate, "edit"], {
+  it("edit mode on src/** passes when the in_progress memory is compliant", () => {
+    const ok = run("bash", [gate, "edit"], {
       input: JSON.stringify({ tool_input: { path: "src/example.py" } }),
       config: failAll,
       env: { FACTORY_POLICY_CONFIG: failAll },
     });
-    // pass-all.md is in_progress and satisfies fail-all, so this should pass.
-    assert.equal(blocked.status, 0, blocked.stderr);
+    assert.equal(ok.status, 0, ok.stderr);
   });
 
   it("edit mode fail overlay blocks when the in_progress memory is bad", () => {

@@ -2,6 +2,7 @@
 
 **Status:** v1 warn-default enforcement. **Not** a Factory default. **Not**
 listed in host catalogs. **Not** wired into project-factory `enabledPlugins`.
+No soft-pass: a skipped hook or warn-only finding is not a C3–C7 pass.
 
 Assistant seats the template; QA verifies before anyone dials fail or promotes
 this plugin to a catalog / Factory default.
