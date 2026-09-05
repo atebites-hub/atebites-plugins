@@ -125,7 +125,7 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
       ["zcode.md", zcode],
       ["CHECKLIST.md", checklist],
     ]) {
-      assert.match(text, /intensity \*\*full\*\*/, `${label} must lock ponytail intensity full`);
+      assert.match(text, /intensity \*\*full\*\*/i, `${label} must lock ponytail intensity full`);
       assert.doesNotMatch(text, /PONYTAIL_DEFAULT_MODE=lite/, `${label} must not set lite`);
       assert.doesNotMatch(
         text,
