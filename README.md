@@ -2,17 +2,21 @@
 
 Multi-host plugin marketplace for **atebites-hub**. Cursor Import from Repo only indexes **in-repo directories**, so this catalog vendors the plugins as git submodules (plus thin host wrappers where a repo is not already a Cursor plugin). Cursor, Grok, Codex, and ZCode use local path sources only. Claude Code uses GitHub plugin sources for the four forks because it clones this marketplace without initializing git submodules.
 
-This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite. Ponytail is the **Factory-required** default candidate (Jay). Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Assistant will wire project-factory `enabledPlugins` to include ponytail alongside Superpowers.
+This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite.
 
-Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_stack.md`](https://github.com/atebites-hub/PJTemplate/blob/main/docs/agents/agent_stack.md).
+**Factory story (Jay 2026-09-05).** Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Ponytail is **Factory-required** @ `911022dc`. Advisor is Factory @ `6d2b562e`. ODW is Factory-required; native alignment is unproven until QA. Assistant will wire project-factory `enabledPlugins` for Superpowers and ponytail only.
+
+**Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Marketplace keeps their repos/submodules as catalog entries for optional install only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
+
+Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_stack.md`](https://github.com/atebites-hub/PJTemplate/blob/main/docs/agents/agent_stack.md). Factory defaults are the Jay 2026-09-05 lock above, not the older PJTemplate keep/strip optional stack.
 
 | Plugin | Product | Source |
 | --- | --- | --- |
-| `open-dynamic-workflows` | Open Dynamic Workflows | [atebites-hub/open-dynamic-workflows-plugin](https://github.com/atebites-hub/open-dynamic-workflows-plugin) |
-| `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) (**Factory-required** default candidate) |
-| `advisor` | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) (renamed from `atebites-hub/sol-advisor`; parent [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) unchanged) |
-| `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard)) |
-| `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork) |
+| `open-dynamic-workflows` | Open Dynamic Workflows | [atebites-hub/open-dynamic-workflows-plugin](https://github.com/atebites-hub/open-dynamic-workflows-plugin) (Factory-required; native alignment unproven until QA) |
+| `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) (**Factory-required** @ `911022dc`) |
+| `advisor` | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) (Factory @ `6d2b562e`; renamed from `atebites-hub/sol-advisor`; parent [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) unchanged) |
+| `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard); catalog-only, **not** a Factory default) |
+| `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork; catalog-only, **not** a Factory default) |
 | `superpowers` | Superpowers | [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; factory-default pin, not an atebites fork) |
 
 Clone with submodules:
@@ -35,7 +39,7 @@ Dashboard → **Plugins** → **Import from Repo** → paste:
 https://github.com/atebites-hub/atebites-plugins
 ```
 
-Then install the catalog plugins: **open-dynamic-workflows**, **ponytail**, **advisor** (Advisor), **taskboard**, **j-space**, **superpowers**. The catalog slug was `sol-advisor` before the GitHub rename.
+Then install the Factory story plugins: **open-dynamic-workflows**, **ponytail**, **advisor**, **superpowers**. **taskboard** and **j-space** remain catalog entries for optional install only (not Factory defaults; not wired into project-factory). There is no CE plugin. The catalog slug was `sol-advisor` before the GitHub rename.
 
 Cursor CLI (`agent`) does not install from this marketplace the way Grok/Codex do. Use each plugin's own installer or `--plugin-dir` after a submodule clone:
 
@@ -172,7 +176,11 @@ pi install git:github.com/atebites-hub/ponytail
 pi install git:github.com/obra/superpowers
 ```
 
-Restart Hermes after installing. `open-dynamic-workflows`, Advisor, taskboard, and j-space do not ship Hermes/Pi marketplace manifests here. Use the Cursor/Grok/Claude/Codex/ZCode catalogs above, or install from the plugin repos listed in the table.
+Restart Hermes after installing. `open-dynamic-workflows`, Advisor, taskboard, and j-space do not ship Hermes/Pi marketplace manifests here. Use the Cursor/Grok/Claude/Codex/ZCode catalogs above, or install from the plugin repos listed in the table. taskboard and j-space are catalog-only (not Factory); CE is not in this marketplace.
+
+## Not a plugin: CE
+
+**CE** (Compound Engineering / `compound-engineering` / EveryInc) is discarded entirely from Factory and from this catalog (Jay 2026-09-05). No default, no thin opt-in, no marketplace CE entry. Do not add a CE product.
 
 ## Not a plugin: LLM-as-a-Verifier
 
@@ -183,7 +191,7 @@ Out of this marketplace. It scores how transcripts look (logprob preference); it
 | Framework | https://github.com/llm-as-a-verifier/llm-as-a-verifier |
 | TurboAgent proxy | https://github.com/llm-as-a-verifier/TurboAgent |
 
-DSH-only ports are out of scope. Superpowers is the factory-default pin (obra/superpowers @ v6.3.0 / `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`).
+DSH-only ports are out of scope. Superpowers is the factory-default pin (obra/superpowers @ v6.3.0 / `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`). taskboard and j-space are catalog-only (discarded from Factory). CE is not in this marketplace.
 
 ## Layout
 
@@ -196,11 +204,11 @@ marketplace.json                  # ZCode
 plugins/open-dynamic-workflows/   # submodule: atebites-hub/open-dynamic-workflows-plugin
 plugins/ponytail/                 # submodule: atebites-hub/ponytail
 plugins/advisor/                  # submodule: atebites-hub/advisor (GitHub rename from sol-advisor)
-plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap
-plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard
-plugins/j-space/                  # thin multi-host wrap of the J-Space skill
-plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite
-plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e082…; no floating branch)
+plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap (catalog-only; not Factory)
+plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (non-Factory catalog)
+plugins/j-space/                  # thin multi-host wrap of the J-Space skill (catalog-only; not Factory)
+plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite (non-Factory catalog)
+plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e082…; factory-default pin; no floating branch)
 ```
 
 Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.
