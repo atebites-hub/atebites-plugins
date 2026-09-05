@@ -16,7 +16,9 @@ with the bot), `factory-host-adapters` (alias).
 ## What this is
 
 Per-host install/seat recipes for **existing** Factory defaults
-(Superpowers, ponytail, Advisor, ODW). Codex and ZCode ship first — they
+(Superpowers, ponytail, Advisor, ODW). Factory seats ponytail at intensity
+**full** always (`PONYTAIL_DEFAULT_MODE=full`, `defaultMode: "full"`, or
+`/ponytail full`). Do not recommend lite. Codex and ZCode ship first — they
 are the current seating pain. Cursor / Claude / Antigravity are honest
 placeholders.
 

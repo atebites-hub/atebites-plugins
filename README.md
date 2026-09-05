@@ -4,7 +4,7 @@ Multi-host plugin marketplace for **atebites-hub**. Cursor Import from Repo only
 
 This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite.
 
-**Factory story (Jay 2026-09-05).** Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Ponytail is **Factory-required** @ `911022dc`. Advisor is Factory @ `296cd0b9`. ODW is Factory-required @ `9708a77a` (hard fix for orphan nested SHA after D3-A; native alignment unproven until QA). Assistant will wire project-factory `enabledPlugins` for Superpowers and ponytail only.
+**Factory story (Jay 2026-09-05).** Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Ponytail is **Factory-required** @ `911022dc`, intensity **full** always (never lite). Advisor is Factory @ `296cd0b9`. ODW is Factory-required @ `9708a77a` (hard fix for orphan nested SHA after D3-A; native alignment unproven until QA). Assistant will wire project-factory `enabledPlugins` for Superpowers and ponytail only.
 
 **Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Marketplace keeps their repos/submodules as catalog entries for optional install only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
 
@@ -17,7 +17,7 @@ Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_sta
 | Plugin | Product | Source |
 | --- | --- | --- |
 | `open-dynamic-workflows` | Open Dynamic Workflows | [atebites-hub/open-dynamic-workflows-plugin](https://github.com/atebites-hub/open-dynamic-workflows-plugin) (Factory-required @ `9708a77a`; native alignment unproven until QA) |
-| `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) (**Factory-required** @ `911022dc`) |
+| `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) (**Factory-required** @ `911022dc`; intensity **full** always, never lite) |
 | `advisor` | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) (Factory @ `296cd0b9`; renamed from `atebites-hub/sol-advisor`; parent [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) unchanged) |
 | `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard); catalog-only, **not** a Factory default) |
 | `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork; catalog-only, **not** a Factory default) |

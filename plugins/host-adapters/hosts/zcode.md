@@ -71,6 +71,21 @@ zcode plugins install superpowers@atebites-plugins
 The Advisor package coordinate inside the pinned fork is still
 `sol-advisor@sol-advisor`. Catalog slug is `advisor`.
 
+Factory seats ponytail at intensity **full** always. Persist that default
+(do not recommend lite):
+
+```bash
+export PONYTAIL_DEFAULT_MODE=full
+```
+
+or `~/.config/ponytail/config.json`:
+
+```json
+{ "defaultMode": "full" }
+```
+
+Confirm the session with `/ponytail full`.
+
 Empty advisor/grunt model+effort in `~/.zcode/cli/config.json` is
 `plugin_settings_required`. Write factory-sane settings with the packaged
 helper (Advisor-owned; copied here, not invented):

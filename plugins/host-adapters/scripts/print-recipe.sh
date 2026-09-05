@@ -26,6 +26,7 @@ case "${host}" in
       '1. Pin SHA — catalog pins only (do not bump from this pack)' \
       '   Superpowers b36e0829… / ponytail 911022dc… / Advisor bdcf8d5d… / ODW 9708a77a…' \
       '2. Install/enable Factory defaults (codex plugin add …@atebites-plugins)' \
+      '   Seat ponytail at intensity full (PONYTAIL_DEFAULT_MODE=full / defaultMode full / /ponytail full). Never lite.' \
       '3. advisor doctor --host codex' \
       '   expects open-dynamic-workflows@open-dynamic-workflows at 0.3.0 enabled' \
       '   marketplace twin @atebites-plugins does not satisfy doctor alone' \
@@ -42,6 +43,7 @@ case "${host}" in
       '1. Pin SHA — catalog pins only (do not bump from this pack)' \
       '   Advisor catalog pin bdcf8d5d… includes .plugins[] matcher + launch-then --run-dir docs' \
       '2. Install/enable Factory defaults; advisor apply --host zcode if settings empty' \
+      '   Seat ponytail at intensity full (PONYTAIL_DEFAULT_MODE=full / defaultMode full / /ponytail full). Never lite.' \
       '3. advisor doctor --host zcode' \
       '   ZCode list shape .plugins[].id' \
       '   expects open-dynamic-workflows@open-dynamic-workflows at 0.3.0 enabled' \
@@ -55,6 +57,7 @@ case "${host}" in
       'SPIKE stub: host-adapters shared checklist — not enforcing, not a seating pass' \
       'Not a bot. Not a Factory default. Does not replace Factory Harness bot.' \
       'Cursor / Claude / Antigravity are parked placeholders. No invented doctor.' \
+      'Seat ponytail at intensity full (PONYTAIL_DEFAULT_MODE=full / defaultMode full / /ponytail full). Never lite.' \
       'Does not auto-trust hooks. Does not launch a run. No soft-pass.'
     ;;
   *)

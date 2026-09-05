@@ -18,6 +18,8 @@ When a host leaves "parked", the recipe should answer:
 3. What does `advisor doctor --host <that-host>` report? Fail-closed.
 4. Is there a user-gated hook-trust UI? If yes, operator reviews it. No bypass.
 5. Optional one-leaf: launch `workflow()` first, then `--run-dir`. No auto-launch.
+6. Is ponytail seated at intensity **full** (`PONYTAIL_DEFAULT_MODE=full` /
+   `defaultMode: "full"` / `/ponytail full`)? Never lite.
 
 Until those answers exist from live QA, keep the row parked.
 

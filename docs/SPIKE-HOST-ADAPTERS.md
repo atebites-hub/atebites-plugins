@@ -26,7 +26,7 @@ new owners, bots, or Factory defaults.
 | --- | --- | --- |
 | **Factory Harness bot** | Box installs / ops only | Per-host seating recipes; marketplace product; this pack |
 | **`host-adapters` pack** | Docs + scripts that walk an operator through pin → install/enable → `advisor doctor --host X` → user-gated hook trust → optional one-leaf | Being a bot; replacing Factory Harness bot; being a Factory default until QA; Lane B attestation |
-| **Factory defaults** (Superpowers, ponytail, Advisor, ODW) | Product pins already in this catalog | Promotion of `host-adapters`; CE / taskboard / j-space |
+| **Factory defaults** (Superpowers, ponytail, Advisor, ODW) | Product pins already in this catalog. Factory seats ponytail at intensity **full** always (never lite). | Promotion of `host-adapters`; CE / taskboard / j-space |
 | **Advisor `doctor --host`** | Compatibility / seating checks, including the canonical ODW plugin id | Treating the marketplace twin as equivalent; auto-trust; inventing attestation |
 | **Codex `/hooks`** | User-gated lifecycle-hook trust | Bypass / `--trust` from this pack's scripts |
 | **ODW one-leaf** | Operator launches `workflow()` (workflow MCP or equivalent), then points `--run-dir` at that run | Auto-launch; soft-pass on `compatible=false` |
