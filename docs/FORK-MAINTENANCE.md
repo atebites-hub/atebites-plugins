@@ -1,6 +1,6 @@
 # Fork maintenance
 
-atebites-hub forks of marketplace products follow this binding policy. Owners: **Jaskarn** and the **Factory Plugins** bot.
+Marketplace product forks in atebites-hub follow this binding policy. Owners: **Jaskarn** and the **Factory Plugins** bot.
 
 Status of every catalog submodule and nested pin: [FORK-INDEX.md](FORK-INDEX.md).
 
@@ -8,7 +8,7 @@ Status of every catalog submodule and nested pin: [FORK-INDEX.md](FORK-INDEX.md)
 
 - **GitHub fork parent** when possible. `origin` is atebites-hub; `upstream` is the canonical repo.
 - Each fork ships **`UPSTREAM.md`**: upstream URL, base SHA, divergence list, and sync instructions.
-- **Weekly weekday sync.** If upstream moved, open a PR titled `chore: sync upstream`.
+- **Weekly sync on a weekday.** If upstream moved, open a PR titled `chore: sync upstream`.
 - **Security sync within 24h** of a known upstream security fix.
 - **Marketplace pin bumps** in this catalog only after the fork's CI is green and host smoke (below) passes.
 
