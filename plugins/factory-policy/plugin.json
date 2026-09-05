@@ -1,13 +1,13 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "factory-policy",
-  "version": "0.0.0-spike",
-  "description": "SPIKE stub: factory-policy (+ memory gate). Not a Factory default until v1. Does not enforce C3–C7.",
+  "version": "0.1.0",
+  "description": "v1 warn-default factory-policy (+ memory gate). Not a Factory default. Not catalog-listed.",
   "author": {
     "name": "atebites-hub"
   },
   "homepage": "https://github.com/atebites-hub/atebites-plugins",
   "repository": "https://github.com/atebites-hub/atebites-plugins",
   "license": "MIT",
-  "keywords": ["factory-policy", "memory-system", "spike"]
+  "keywords": ["factory-policy", "memory-system", "v1"]
 }

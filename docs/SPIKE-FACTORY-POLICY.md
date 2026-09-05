@@ -1,12 +1,19 @@
 # SPIKE: factory-policy (+ memory gate)
 
-**Status:** SPIKE. Structure + normative field contract + stub skills/hooks.
-**Not** a Factory default. **Not** production-enforcing. **Not** a multi-host ship.
+**Superseded (2026-09-05).** v1 warn-default enforcement landed in
+[`plugins/factory-policy/`](../plugins/factory-policy/). Current status:
+[POLICY-V1.md](POLICY-V1.md). Scripts no longer print `SPIKE stub` as a
+treatable pass. This file is the historical scaffold note.
 
-This catalog spike scaffolds `plugins/factory-policy/` as an **inline** marketplace
-plugin (not a submodule). Host marketplaces do **not** list it. Do not wire
-project-factory `enabledPlugins`. Do not treat stub exit 0 as a C3–C7 pass
-(no soft-pass).
+**Status at spike time:** SPIKE. Structure + normative field contract + stub
+skills/hooks. That stub era is over for the checkers named below. The plugin
+is still **not** a Factory default, **not** catalog-listed, and **not** wired
+into project-factory `enabledPlugins`.
+
+This catalog spike scaffolded `plugins/factory-policy/` as an **inline**
+marketplace plugin (not a submodule). Host marketplaces do **not** list it.
+Do not wire project-factory `enabledPlugins`. Do not treat stub exit 0 as a
+C3–C7 pass (no soft-pass).
 
 ## Binding SoT (do not invent)
 
@@ -46,22 +53,22 @@ plugins/factory-policy/
   skills/policy-gate/      # field contract + how to satisfy C3.x–C7
   skills/memory-system/    # ledger skill (keep the name)
     assets/memory_template.md
-  hooks/                   # placeholders → scripts/
-  scripts/                 # SPIKE stubs (exit 0, print "SPIKE stub")
+  hooks/                   # pointers → scripts/
+  scripts/                 # v1 checkers (see POLICY-V1.md)
 ```
 
 | Piece | Owns | Does not own |
 | --- | --- | --- |
 | `memory-system` | How to read/write `docs/memories/` | Enforcement, sequential thinking |
 | `policy-gate` | Memory field contract; named checks | Reasoning procedure (native models reason) |
-| Hooks / `guard-bash` | When a check *will* run (v1) | Nothing in this spike — stubs only |
+| Hooks / `guard-bash` | When a check runs | Catalog promotion / Factory default |
 
 Native models fill the fields. The skill does not call `sequentialthinking`.
-v1 checkers will read the same fields; they will not judge prose quality.
+v1 checkers read the same fields; they do not judge prose quality.
 
 ## Check IDs (C3–C7)
 
-Named investigation IDs. This spike documents them; stubs do **not** enforce them.
+Named investigation IDs. v1 enforces C3.1–C3.3, C5, and C6 (warn-default).
 
 | ID | Name | Field / artifact | Satisfy by |
 | --- | --- | --- | --- |
@@ -82,50 +89,52 @@ IDs. factory-policy's named scope is **C3.x–C7**.
 
 Authoritative local spine is **Tier 1 `guard-bash`** (git), same three-tier
 idea as PJTemplate `enforcement_matrix`. Tier 2 harness hooks are accelerators
-only. This spike ships placeholders; none enforce.
+only.
 
-| Event | Claude Code | Codex | Cursor | v1 intent | This spike |
-| --- | --- | --- | --- | --- | --- |
-| Policy gate on `src/**` edits | `PreToolUse` (plugin `hooks/claude-codex-hooks.json`) | `PreToolUse` (same JSON shape) | `preToolUse` (`hooks/cursor-hooks.json`) | Inspect tool path; if `src/**`, require C3.x–C7 on the task memory | Stub: `scripts/policy-gate.sh` exits 0 |
-| Stop verify + hop cap | `Stop` | `Stop` | `stop` | Re-check ledger; bounce the model until hop cap, then stop looping | Stub: `scripts/stop-verify.sh` exits 0; cap not set |
-| Tier 1 git | n/a (host-agnostic) | n/a | n/a | `.githooks` / `core.hooksPath` runs `guard-bash` on staged `src/**` | Stub: `scripts/guard-bash.sh` exits 0 |
+| Event | Claude Code | Codex | Cursor | v1 intent |
+| --- | --- | --- | --- | --- |
+| Policy gate on `src/**` edits | `PreToolUse` | `PreToolUse` | `preToolUse` | Inspect tool path; if `src/**`, require C3.x–C6 on the task memory |
+| Stop verify + hop cap | `Stop` | `Stop` | `stop` | Re-check ledger; hop-cap numeric limit still TBD |
+| Tier 1 git | n/a | n/a | n/a | `.githooks` / `core.hooksPath` runs `guard-bash` on staged `src/**` |
 
-v1 PreToolUse must filter to `src/**` (matcher is tool-name; the script reads
-stdin JSON for the path). Hop-cap numeric limit is **TBD in v1** — do not
-invent a number here.
+v1 PreToolUse filters to `src/**` (matcher is tool-name; the script reads
+stdin JSON for the path). Hop-cap numeric limit is **TBD** — do not invent
+a number here.
 
-Grok / ZCode / Hermes / Pi adapters are **later**. Copy-paste scaffolds in
-PJTemplate are not this plugin.
+Grok / ZCode / Hermes / Pi adapters are **later**.
 
-## Stub vs later
+## Stub vs later (historical)
 
-**In this PR (stub):**
+**In the spike PR (done):**
 
-- Spike doc + plugin README labeled SPIKE / not Factory-default until v1
+- Spike doc + plugin README labeled SPIKE / not Factory-default
 - Skills: `policy-gate` (contract only) and `memory-system` (ledger)
 - Host plugin manifests pointing at `./skills`
 - `hooks/*.json` pointing at `scripts/`
-- Scripts that print `SPIKE stub` and exit 0
+- Scripts that printed `SPIKE stub` and exited 0
 - README / FORK-INDEX **Upcoming / P2 spike** mention only
 
-**Later (not this PR):**
+**v1 (landed; this catalog PR):** real C3.1–C3.3 / C5 / C6 checkers, warn
+default, fail via config. See [POLICY-V1.md](POLICY-V1.md).
 
-- Real C3.1–C3.3 / C5 / C6 / C7 checkers
-- Hop-cap implementation
-- `src/**` path filter that can block
+**Still later:**
+
+- Hop-cap numeric implementation
 - Catalog entries, marketplace install commands
 - project-factory `enabledPlugins`
 - Separate factory-policy git repo / submodule
 - Grok/ZCode/Hermes hook adapters
 - linear-tracking pin; GitNexus wrap
+- C7 Approved-by git-history check
 - Pin bumps of Superpowers / ponytail / Advisor / ODW
 
 ## Out of scope
 
 - **No CE** (Compound Engineering). Discarded from Factory. Not a gate.
 - **No taskboard / j-space** as defaults or as this plugin's dependencies.
-- **No soft-pass.** Stub exit 0 means "not enforcing," not "checks passed."
-- **No Factory-default / catalog listing** until v1 is explicitly promoted.
+- **No soft-pass.** Stub exit 0 meant "not enforcing," not "checks passed."
+  v1 must not revive that.
+- **No Factory-default / catalog listing** until explicitly promoted.
 - **No `reasoning-system` / `sequentialthinking` reintroduction.**
 - **No `enabledPlugins` wiring** in project-factory from this catalog.
 - **No Superpowers / ponytail / Advisor / ODW pin bumps.**
@@ -134,9 +143,4 @@ PJTemplate are not this plugin.
 
 Host `marketplace.json` files still list exactly the six catalog plugins.
 `plugins/factory-policy/` is in-tree so a later PR can point sources at it
-without a submodule. Until v1: document under Upcoming / P2 spike only.
-
-## Success for this spike
-
-PR with this doc + plugin stub; SPIKE labels; memory-system nested;
-C3–C7 named; not merged; checks not claimed as production-enforcing.
+without a submodule. Until promotion: document under Upcoming / P2 v1 only.
