@@ -1,0 +1,158 @@
+import assert from "node:assert/strict";
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { describe, it } from "node:test";
+import { spawnSync } from "node:child_process";
+
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const packRoot = join(root, "plugins/host-adapters");
+
+const CATALOGS = [
+  ".cursor-plugin/marketplace.json",
+  ".grok-plugin/marketplace.json",
+  ".claude-plugin/marketplace.json",
+  ".agents/plugins/marketplace.json",
+  "marketplace.json",
+];
+
+const FORBIDDEN_NAMES = ["factory-harness", "factory-host-adapters"];
+
+function read(relPath) {
+  return readFileSync(join(root, relPath), "utf8");
+}
+
+function catalogNames(relPath) {
+  const marketplace = JSON.parse(read(relPath));
+  return (marketplace.plugins || []).map((plugin) => plugin.name);
+}
+
+describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", () => {
+  it("is absent from every host marketplace catalog", () => {
+    for (const rel of CATALOGS) {
+      const names = catalogNames(rel);
+      assert.equal(
+        names.includes("host-adapters"),
+        false,
+        `${rel} must not list host-adapters (spike is non-default)`,
+      );
+      for (const forbidden of FORBIDDEN_NAMES) {
+        assert.equal(
+          names.includes(forbidden),
+          false,
+          `${rel} must not list killed/rejected name ${forbidden}`,
+        );
+      }
+    }
+  });
+
+  it("does not appear in the Factory story kept list", () => {
+    const index = read("docs/FORK-INDEX.md");
+    const keptBlock = index.split("Discarded from Factory")[0];
+    assert.match(keptBlock, /Kept in the Factory story/);
+    assert.doesNotMatch(keptBlock, /host-adapters/);
+    assert.doesNotMatch(keptBlock, /factory-harness/);
+    assert.match(index, /Upcoming \/ P2–P3 spike/);
+    assert.match(index, /plugins\/host-adapters/);
+    assert.match(index, /not a bot/);
+  });
+
+  it("does not scaffold factory-harness and names the rejected aliases", () => {
+    assert.equal(existsSync(join(root, "plugins/factory-harness")), false);
+    assert.equal(existsSync(join(root, "plugins/factory-host-adapters")), false);
+
+    const spike = read("docs/SPIKE-HOST-ADAPTERS.md");
+    assert.match(spike, /host-adapters/);
+    assert.match(spike, /factory-harness/);
+    assert.match(spike, /factory-host-adapters/);
+    assert.match(spike, /Killed|killed/);
+    assert.match(spike, /Rejected alias|rejected alias/);
+    assert.match(spike, /Factory Harness bot/);
+    assert.match(spike, /never/i);
+  });
+
+  it("ships Codex/ZCode recipes, shared checklist, and SPIKE labels", () => {
+    assert.equal(existsSync(join(packRoot, "README.md")), true);
+    const readme = readFileSync(join(packRoot, "README.md"), "utf8");
+    assert.match(readme, /SPIKE/);
+    assert.match(readme, /not a Factory default/i);
+    assert.match(readme, /Not a bot|not a bot/);
+
+    const codex = readFileSync(join(packRoot, "hosts/codex.md"), "utf8");
+    const zcode = readFileSync(join(packRoot, "hosts/zcode.md"), "utf8");
+    const checklist = readFileSync(join(packRoot, "hosts/CHECKLIST.md"), "utf8");
+
+    for (const text of [codex, zcode]) {
+      assert.match(text, /Pin SHA|pin SHA/);
+      assert.match(text, /advisor doctor --host/);
+      assert.match(text, /open-dynamic-workflows@open-dynamic-workflows/);
+      assert.match(text, /0\.3\.0/);
+      assert.match(text, /atebites-plugins/);
+      assert.match(text, /does not satisfy doctor alone/);
+      assert.match(text, /--run-dir/);
+      assert.match(text, /workflow MCP|workflow\(\)/);
+    }
+
+    assert.match(codex, /\/hooks/);
+    assert.match(codex, /user-gated|no bypass/);
+    assert.match(zcode, /\.plugins\[\]\.id/);
+    assert.match(zcode, /after #12|#12/);
+
+    assert.match(checklist, /Cursor/);
+    assert.match(checklist, /Claude/);
+    assert.match(checklist, /Antigravity/);
+    assert.match(checklist, /Parked|parked|placeholder/i);
+  });
+
+  it("names ownership and seating facts in the spike doc", () => {
+    const spike = read("docs/SPIKE-HOST-ADAPTERS.md");
+    assert.match(spike, /SPIKE/);
+    assert.match(spike, /no soft-pass/);
+    assert.match(spike, /Factory Harness bot/);
+    assert.match(spike, /box installs/);
+    assert.match(spike, /open-dynamic-workflows@open-dynamic-workflows/);
+    assert.match(spike, /\.plugins\[\]/);
+    assert.match(spike, /atebites-plugins/);
+    assert.match(spike, /does not satisfy doctor alone/);
+    assert.match(spike, /\/hooks/);
+    assert.match(spike, /no bypass|user-gated/);
+    assert.match(spike, /--run-dir/);
+    assert.match(spike, /No CE/);
+    assert.match(spike, /taskboard \/ j-space|taskboard/);
+    assert.match(spike, /does not bump/i);
+  });
+
+  it("stub script prints recipe steps, exits 0, and does not auto-trust or claim a pass", () => {
+    const path = join(packRoot, "scripts/print-recipe.sh");
+    assert.equal(existsSync(path), true, "missing print-recipe.sh");
+
+    for (const host of ["codex", "zcode", "checklist"]) {
+      const result = spawnSync("bash", [path, "--host", host], { encoding: "utf8" });
+      assert.equal(result.status, 0, `${host} must exit 0: ${result.stderr}`);
+      assert.match(result.stdout, /SPIKE stub/, `${host} must print SPIKE stub`);
+      assert.match(result.stdout, /not enforcing|not a seating pass/i);
+      assert.doesNotMatch(result.stdout, /\bPASS\b|\bpassed\b/i);
+      assert.doesNotMatch(result.stdout, /plugin (?:install|add) \S+ --trust/);
+    }
+
+    const script = readFileSync(path, "utf8");
+    assert.doesNotMatch(script, /plugin (?:install|add) \S+ --trust/);
+    assert.match(script, /user-gated|no bypass|never passes a trust flag|no --trust/);
+
+    const bad = spawnSync("bash", [path, "--host", "unknown"], { encoding: "utf8" });
+    assert.notEqual(bad.status, 0, "unknown host must not exit 0");
+  });
+
+  it("README Upcoming section mentions the spike without catalog install commands", () => {
+    const readme = read("README.md");
+    assert.match(readme, /Upcoming \/ P2–P3 spike/);
+    assert.match(readme, /plugins\/host-adapters/);
+    assert.match(readme, /docs\/SPIKE-HOST-ADAPTERS\.md/);
+    assert.match(readme, /not a bot/i);
+    assert.doesNotMatch(readme, /grok plugin install host-adapters --trust/);
+    assert.doesNotMatch(readme, /\/plugin install host-adapters@atebites-plugins/);
+    assert.doesNotMatch(readme, /codex plugin add host-adapters@atebites-plugins/);
+    assert.doesNotMatch(readme, /\/plugins install host-adapters/);
+    assert.doesNotMatch(readme, /factory-harness@atebites-plugins/);
+  });
+});
