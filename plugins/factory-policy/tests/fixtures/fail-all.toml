@@ -1,0 +1,8 @@
+# Overlay that dials v1 named checks to fail (C7 stays warn stub).
+[checks]
+"C3.1" = "fail"
+"C3.2" = "fail"
+"C3.3" = "fail"
+C5 = "fail"
+C6 = "fail"
+C7 = "fail"

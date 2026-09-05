@@ -8,7 +8,7 @@ This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac /
 
 **Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Marketplace keeps their repos/submodules as catalog entries for optional install only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
 
-**Upcoming / P2 spike (not a catalog plugin, not a Factory default).** `plugins/factory-policy/` is an inline SPIKE stub: factory-policy (+ nested `memory-system`) to replace `reasoning-system` / `sequentialthinking`. It is **not** listed in host marketplaces, **not** factory-default, and **not** wired into project-factory `enabledPlugins`. Hooks/scripts print `SPIKE stub` and do not enforce C3–C7. See [docs/SPIKE-FACTORY-POLICY.md](docs/SPIKE-FACTORY-POLICY.md).
+**Upcoming / P2 v1 warn-default (not a catalog plugin, not a Factory default).** `plugins/factory-policy/` is inline factory-policy (+ nested `memory-system`) to replace `reasoning-system` / `sequentialthinking`. It is **not** listed in host marketplaces, **not** factory-default, and **not** wired into project-factory `enabledPlugins`. Checkers for C3.1–C3.3, C5, and C6 default to **warn** (fail via config). C7 is a warn stub. Do not treat a skipped hook as a pass. See [docs/POLICY-V1.md](docs/POLICY-V1.md).
 
 **Upcoming / P2–P3 spike (not a catalog plugin, not a Factory default, not a bot).** `plugins/host-adapters/` is an inline SPIKE stub: docs+scripts for per-host install/seat of Factory defaults (Codex + ZCode first). It is **not** listed in host marketplaces, **not** factory-default, **not** wired into project-factory `enabledPlugins`, and **not** the Factory Harness bot (box installs/ops only). Scripts print `SPIKE stub` and do not seat, auto-trust, or attest. Rejected names: `factory-harness`, `factory-host-adapters`. See [docs/SPIKE-HOST-ADAPTERS.md](docs/SPIKE-HOST-ADAPTERS.md).
 
@@ -213,7 +213,7 @@ plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (non-Facto
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill (catalog-only; not Factory)
 plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite (non-Factory catalog)
 plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e082…; factory-default pin; no floating branch)
-plugins/factory-policy/           # inline SPIKE stub (P2); not a submodule; not a catalog plugin; not factory-default
+plugins/factory-policy/           # inline v1 warn-default (P2); not a submodule; not a catalog plugin; not factory-default
 plugins/host-adapters/            # inline SPIKE stub (P2–P3); docs+scripts; not a bot; not a catalog plugin; not factory-default
 ```
 

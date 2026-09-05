@@ -1,0 +1,25 @@
+# factory-policy v1 — shipped defaults (warn-default).
+#
+# Per-check mode: warn | fail | off
+# Default: C3.1, C3.2, C3.3, C5, C6 are warn. C7 is a warn-only stub
+# (plan-approved is not implemented in v1). C4 is not a v1 check — do not add it.
+#
+# This plugin is not a Factory default and is not listed in host catalogs.
+# Assistant seats the project-factory template; QA verifies before fail-mode
+# promotion. Do not treat a warn-only exit 0 as "checks were skipped."
+#
+# Consumer overlay (copy/edit; later keys win):
+#   1. Copy this file to <repo>/config/factory-policy.toml
+#   2. Change selected checks to fail (or off)
+#   3. Or set FACTORY_POLICY_CONFIG=/absolute/path/to.toml
+#
+# Search order: --config, $FACTORY_POLICY_CONFIG, <repo>/config/factory-policy.toml,
+# then this shipped file.
+
+[checks]
+"C3.1" = "warn"
+"C3.2" = "warn"
+"C3.3" = "warn"
+C5 = "warn"
+C6 = "warn"
+C7 = "warn"

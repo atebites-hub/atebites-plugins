@@ -1,6 +1,6 @@
 {
   "name": "factory-policy",
-  "version": "0.0.0-spike",
-  "description": "SPIKE stub: P2 factory-policy + nested memory-system. Not a Factory default until v1. Hooks do not enforce C3–C7.",
+  "version": "0.1.0",
+  "description": "v1 warn-default factory-policy + nested memory-system. Not a Factory default. Not catalog-listed.",
   "skills": "./skills"
 }

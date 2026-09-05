@@ -1,14 +1,14 @@
 {
   "name": "factory-policy",
-  "displayName": "factory-policy (SPIKE)",
-  "version": "0.0.0-spike",
-  "description": "SPIKE stub: P2 factory-policy + nested memory-system. Not a Factory default until v1. Hooks do not enforce C3–C7.",
+  "displayName": "factory-policy (v1 warn-default)",
+  "version": "0.1.0",
+  "description": "v1 warn-default factory-policy + nested memory-system. Not a Factory default. Not catalog-listed.",
   "author": {
     "name": "atebites-hub"
   },
   "homepage": "https://github.com/atebites-hub/atebites-plugins",
   "repository": "https://github.com/atebites-hub/atebites-plugins",
   "license": "MIT",
-  "keywords": ["factory-policy", "memory-system", "spike"],
+  "keywords": ["factory-policy", "memory-system", "v1"],
   "skills": "./skills"
 }

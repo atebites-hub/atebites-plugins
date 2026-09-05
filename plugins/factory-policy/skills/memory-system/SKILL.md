@@ -7,7 +7,7 @@ description: Read and write task memories in docs/memories/. Use when planning, 
 
 **Nested in factory-policy.** This skill is the ledger. It does not enforce
 C3.x–C7. Enforcement belongs to `policy-gate` (v1 hooks / `guard-bash`).
-This copy is a SPIKE skill inside a non-default plugin.
+This copy is nested inside factory-policy v1 (warn-default; not a Factory default).
 
 Project task memories live in **`docs/memories/`** as Markdown files. This is
 separate from any host-level memory. Follow this skill when the consumer repo
