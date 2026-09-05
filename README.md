@@ -169,7 +169,7 @@ Out of this marketplace. It scores how transcripts look (logprob preference); it
 | Framework | https://github.com/llm-as-a-verifier/llm-as-a-verifier |
 | TurboAgent proxy | https://github.com/llm-as-a-verifier/TurboAgent |
 
-DSH-only ports are out of scope. compound-engineering and superpowers stay documented in PJTemplate; they are not vendored here.
+DSH-only ports are out of scope. Superpowers stays documented in PJTemplate; it is not vendored here.
 
 ## Layout
 
