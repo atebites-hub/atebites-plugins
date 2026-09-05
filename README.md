@@ -2,7 +2,7 @@
 
 Multi-host plugin marketplace for **atebites-hub**. Cursor Import from Repo only indexes **in-repo directories**, so this catalog vendors the plugins as git submodules (plus thin host wrappers where a repo is not already a Cursor plugin). Cursor, Grok, Codex, and ZCode use local path sources only. Claude Code uses GitHub plugin sources for the four forks because it clones this marketplace without initializing git submodules.
 
-This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite. Superpowers is a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0, not an atebites fork.
+This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite. Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Project-factory `enabledPlugins` wiring is pending Assistant.
 
 Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_stack.md`](https://github.com/atebites-hub/PJTemplate/blob/main/docs/agents/agent_stack.md).
 
@@ -13,7 +13,7 @@ Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_sta
 | `sol-advisor` | Advisor | [atebites-hub/sol-advisor](https://github.com/atebites-hub/sol-advisor) |
 | `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard)) |
 | `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork) |
-| `superpowers` | Superpowers | [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; pin-only, not an atebites fork) |
+| `superpowers` | Superpowers | [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; factory-default pin, not an atebites fork) |
 
 Clone with submodules:
 
@@ -183,7 +183,7 @@ Out of this marketplace. It scores how transcripts look (logprob preference); it
 | Framework | https://github.com/llm-as-a-verifier/llm-as-a-verifier |
 | TurboAgent proxy | https://github.com/llm-as-a-verifier/TurboAgent |
 
-DSH-only ports are out of scope. Superpowers is vendored here as a pin-only submodule (obra/superpowers @ v6.3.0).
+DSH-only ports are out of scope. Superpowers is the factory-default pin (obra/superpowers @ v6.3.0 / `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`).
 
 ## Layout
 
