@@ -13,6 +13,7 @@ Verified **2026-09-05** via GitHub API (`parent`, `fork`, `UPSTREAM.md`, compare
 | sol-advisor | [atebites-hub/sol-advisor](https://github.com/atebites-hub/sol-advisor) | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | yes | yes | yes (workflow present) | Marketplace. [PR #7](https://github.com/atebites-hub/sol-advisor/pull/7) merged `UPSTREAM.md` + weekday `.github/workflows/sync-upstream.yml`. |
 | taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) | [tcarac/taskboard](https://github.com/tcarac/taskboard) | yes | yes | yes (workflow present) | Parent linked. [PR #1](https://github.com/atebites-hub/taskboard/pull/1) merged `UPSTREAM.md` + weekday `.github/workflows/sync-upstream.yml`. |
 | j-space | vendor only | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) | n/a | n/a | n/a | No atebites fork by design |
+| Superpowers | pin only (not an atebites fork) | [obra/superpowers](https://github.com/obra/superpowers) | n/a | n/a | n/a | Pin-only. [obra/superpowers](https://github.com/obra/superpowers) annotated tag **v6.3.0** peels to `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`. |
 
 ## Nested pins (ODW plugin)
 
@@ -36,8 +37,9 @@ This repo (`atebites-plugins`):
 | `plugins/sol-advisor` | https://github.com/atebites-hub/sol-advisor.git |
 | `plugins/taskboard/upstream` | https://github.com/atebites-hub/taskboard.git |
 | `plugins/j-space/vendor/j-space-cognition-suite` | https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6.git |
+| `plugins/superpowers` | https://github.com/obra/superpowers.git |
 
-Pin bumps here only after fork CI + [smoke](FORK-MAINTENANCE.md#smoke-matrix). This index does not change SHAs.
+`plugins/superpowers` is a commit pin, not a floating `branch = main`. Gitlink SHA is `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` (annotated tag v6.3.0). Pin bumps here only after fork CI + [smoke](FORK-MAINTENANCE.md#smoke-matrix). This index does not change other marketplace SHAs.
 
 ## P1 next
 
