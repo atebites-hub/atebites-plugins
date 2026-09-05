@@ -2,14 +2,14 @@
 
 Multi-host plugin marketplace for **atebites-hub**. Cursor Import from Repo only indexes **in-repo directories**, so this catalog vendors the plugins as git submodules (plus thin host wrappers where a repo is not already a Cursor plugin). Cursor, Grok, Codex, and ZCode use local path sources only. Claude Code uses GitHub plugin sources for the four forks because it clones this marketplace without initializing git submodules.
 
-This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite. Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Project-factory `enabledPlugins` wiring is pending Assistant.
+This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite. Ponytail is the **Factory-required** default candidate (Jay). Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Assistant will wire project-factory `enabledPlugins` to include ponytail alongside Superpowers.
 
 Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_stack.md`](https://github.com/atebites-hub/PJTemplate/blob/main/docs/agents/agent_stack.md).
 
 | Plugin | Product | Source |
 | --- | --- | --- |
 | `open-dynamic-workflows` | Open Dynamic Workflows | [atebites-hub/open-dynamic-workflows-plugin](https://github.com/atebites-hub/open-dynamic-workflows-plugin) |
-| `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) |
+| `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) (**Factory-required** default candidate) |
 | `advisor` | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) (renamed from `atebites-hub/sol-advisor`; parent [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) unchanged) |
 | `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard)) |
 | `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork) |
