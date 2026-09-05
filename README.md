@@ -12,6 +12,8 @@ This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac /
 
 **Upcoming / P2–P3 spike (not a catalog plugin, not a Factory default, not a bot).** `plugins/host-adapters/` is an inline SPIKE stub: docs+scripts for per-host install/seat of Factory defaults (Codex + ZCode first). It is **not** listed in host marketplaces, **not** factory-default, **not** wired into project-factory `enabledPlugins`, and **not** the Factory Harness bot (box installs/ops only). Scripts print `SPIKE stub` and do not seat, auto-trust, or attest. Rejected names: `factory-harness`, `factory-host-adapters`. See [docs/SPIKE-HOST-ADAPTERS.md](docs/SPIKE-HOST-ADAPTERS.md).
 
+**Upcoming / P2 spike (not a catalog plugin, not a Factory default).** `plugins/linear-tracking/` is an inline SPIKE stub: Linear tracker placement that replaces discarded `taskboard-workflow`. It is **not** listed in host marketplaces, **not** factory-default, and **not** wired into project-factory `enabledPlugins`. Prefer a vendored pin of an existing skill/plugin (upstream maintain; not necessarily atebites-authored). Do not invent Linear API secrets or soft-pass. Do not claim Linear Agent skills installed. See [docs/SPIKE-LINEAR-TRACKING.md](docs/SPIKE-LINEAR-TRACKING.md).
+
 Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_stack.md`](https://github.com/atebites-hub/PJTemplate/blob/main/docs/agents/agent_stack.md). Factory defaults are the Jay 2026-09-05 lock above, not the older PJTemplate keep/strip optional stack.
 
 | Plugin | Product | Source |
@@ -215,6 +217,7 @@ plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.
 plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e082…; factory-default pin; no floating branch)
 plugins/factory-policy/           # inline v1 warn-default (P2); not a submodule; not a catalog plugin; not factory-default
 plugins/host-adapters/            # inline SPIKE stub (P2–P3); docs+scripts; not a bot; not a catalog plugin; not factory-default
+plugins/linear-tracking/          # inline SPIKE stub (P2); not a submodule; not a catalog plugin; not factory-default
 ```
 
 Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.

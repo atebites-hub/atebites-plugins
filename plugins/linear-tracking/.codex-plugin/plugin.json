@@ -1,0 +1,22 @@
+{
+  "name": "linear-tracking",
+  "version": "0.0.0-spike",
+  "description": "SPIKE stub: Linear tracker placement. Upcoming / not a Factory default. Not catalog-listed.",
+  "author": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/atebites-plugins"
+  },
+  "homepage": "https://github.com/atebites-hub/atebites-plugins",
+  "repository": "https://github.com/atebites-hub/atebites-plugins",
+  "license": "MIT",
+  "keywords": ["linear-tracking", "spike", "codex"],
+  "skills": "./skills",
+  "interface": {
+    "displayName": "linear-tracking (SPIKE)",
+    "shortDescription": "SPIKE stub: find issue, Closes BLA-n. Not a Factory default.",
+    "developerName": "atebites-hub",
+    "category": "Developer Tools",
+    "capabilities": ["Instructions"],
+    "websiteURL": "https://github.com/atebites-hub/atebites-plugins"
+  }
+}
