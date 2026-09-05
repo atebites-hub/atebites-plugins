@@ -23,6 +23,8 @@ Verified **2026-09-05** via GitHub API (`parent`, `fork`, `UPSTREAM.md`). Matche
 | `open-dynamic-workflows` | https://github.com/atebites-hub/open-dynamic-workflows.git |
 | `zcode-cli` | https://github.com/atebites-hub/zcode-cli.git |
 
+The `zcode-cli` gitlink is pinned to `a97033febe288e2e15ff3e4fd5517aef5a42e369`, which is **not on** `atebites-hub/zcode-cli` (orphan history). Recursive `git submodule update --init` fails at that ref. Do not retarget the pin from this catalog; fix it in the ODW plugin after D3-A or a SHA that exists on the fork.
+
 ## Marketplace `.gitmodules`
 
 This repo (`atebites-plugins`):
