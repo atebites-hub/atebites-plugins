@@ -31,11 +31,11 @@
       "category": "Productivity"
     },
     {
-      "name": "sol-advisor",
+      "name": "advisor",
       "version": "0.9.3",
       "source": {
         "source": "local",
-        "path": "./plugins/sol-advisor/plugins/sol-advisor"
+        "path": "./plugins/advisor/plugins/sol-advisor"
       },
       "policy": {
         "installation": "AVAILABLE",

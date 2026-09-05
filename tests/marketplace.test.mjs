@@ -10,10 +10,15 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const EXPECTED_PLUGINS = [
   "open-dynamic-workflows",
   "ponytail",
-  "sol-advisor",
+  "advisor",
   "taskboard",
   "j-space",
 ];
+
+/** Catalog slug → allowed plugin.json names (sol-advisor until productize). */
+const MANIFEST_NAMES = {
+  advisor: ["advisor", "sol-advisor"],
+};
 
 const FORBIDDEN_SOURCE_HOSTS = [
   "DietrichGebert",
@@ -25,7 +30,7 @@ const FORBIDDEN_SOURCE_HOSTS = [
 const CLAUDE_GITHUB_REPOS = {
   "open-dynamic-workflows": "atebites-hub/open-dynamic-workflows-plugin",
   ponytail: "atebites-hub/ponytail",
-  "sol-advisor": "atebites-hub/sol-advisor",
+  advisor: "atebites-hub/advisor",
   taskboard: "atebites-hub/taskboard",
 };
 
@@ -143,7 +148,12 @@ describe("Cursor marketplace", () => {
         `Cursor source ${entry.source} must contain .cursor-plugin/plugin.json`,
       );
       const manifest = JSON.parse(readFileSync(pluginJson, "utf8"));
-      assert.equal(manifest.name, entry.name);
+      const allowed = MANIFEST_NAMES[entry.name] ?? [entry.name];
+      assert.equal(
+        allowed.includes(manifest.name),
+        true,
+        `${entry.name} plugin.json name is ${manifest.name} (allowed ${allowed.join(", ")})`,
+      );
     }
   });
 });
@@ -179,6 +189,18 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
       assertLocalSource(entry.name, entry.source);
       const rel = resolveLocalPath(entry.source);
       assert.equal(existsSync(join(root, rel)), true, `Codex path missing: ${rel}`);
+      if (entry.name === "advisor") {
+        assert.equal(
+          rel,
+          "plugins/advisor/plugins/sol-advisor",
+          "Codex advisor source stays the nested package until productize",
+        );
+        assert.equal(
+          existsSync(join(root, rel, ".codex-plugin/plugin.json")),
+          true,
+          "Codex advisor nested package must contain .codex-plugin/plugin.json",
+        );
+      }
     }
   });
 
@@ -224,6 +246,27 @@ describe("README product surface", () => {
     assert.doesNotMatch(readme, /\/plugins install llm-as-a-verifier/);
     assert.doesNotMatch(readme, /agent --plugin-dir "\$PWD\/plugins\/llm-as-a-verifier"/);
     assert.doesNotMatch(readme, /install all six/i);
+  });
+});
+
+describe("Advisor submodule cutover", () => {
+  it("points .gitmodules at atebites-hub/advisor on plugins/advisor", () => {
+    const text = readFileSync(join(root, ".gitmodules"), "utf8");
+    assert.match(text, /\[submodule "plugins\/advisor"\]/);
+    assert.match(text, /path = plugins\/advisor/);
+    assert.match(text, /url = https:\/\/github.com\/atebites-hub\/advisor\.git/);
+    assert.doesNotMatch(text, /path = plugins\/sol-advisor/);
+    assert.doesNotMatch(text, /atebites-hub\/sol-advisor\.git/);
+  });
+
+  it("keeps the gitlink at plugins/advisor", () => {
+    const result = spawnSync("git", ["ls-files", "-s", "plugins/advisor", "plugins/sol-advisor"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /^160000 [0-9a-f]{40} 0\tplugins\/advisor$/m);
+    assert.doesNotMatch(result.stdout, /plugins\/sol-advisor/);
   });
 });
 

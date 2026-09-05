@@ -26,11 +26,11 @@
       "category": "productivity"
     },
     {
-      "name": "sol-advisor",
+      "name": "advisor",
       "description": "Advisor guidance for Claude Code: experimental detection; strict delegation disabled until resolved effort is authoritative.",
       "source": {
         "source": "github",
-        "repo": "atebites-hub/sol-advisor"
+        "repo": "atebites-hub/advisor"
       },
       "category": "developer-tools"
     },
