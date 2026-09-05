@@ -24,7 +24,7 @@ case "${host}" in
       'Does not auto-trust /hooks. Does not launch a run. No soft-pass.' \
       '' \
       '1. Pin SHA — catalog pins only (do not bump from this pack)' \
-      '   Superpowers b36e0829… / ponytail 911022dc… / Advisor 39bc5f1d… / ODW 9708a77a…' \
+      '   Superpowers b36e0829… / ponytail 911022dc… / Advisor bdcf8d5d… / ODW 9708a77a…' \
       '2. Install/enable Factory defaults (codex plugin add …@atebites-plugins)' \
       '3. advisor doctor --host codex' \
       '   expects open-dynamic-workflows@open-dynamic-workflows at 0.3.0 enabled' \
@@ -40,7 +40,7 @@ case "${host}" in
       'Does not auto-trust hooks. Does not launch a run. No soft-pass.' \
       '' \
       '1. Pin SHA — catalog pins only (do not bump from this pack)' \
-      '   Advisor catalog pin 39bc5f1d… lacks #12 .plugins[] matcher; tip 8fc0bcf0… has it' \
+      '   Advisor catalog pin bdcf8d5d… includes .plugins[] matcher + launch-then --run-dir docs' \
       '2. Install/enable Factory defaults; advisor apply --host zcode if settings empty' \
       '3. advisor doctor --host zcode' \
       '   ZCode list shape .plugins[].id' \

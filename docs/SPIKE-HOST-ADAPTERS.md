@@ -42,14 +42,15 @@ Advisor seating facts used here are copied from Advisor (not invented):
 - ZCode `plugins list --json` shape is **`.plugins[].id`** (plus `version`,
   `enabled`).
 - Marketplace twin **`open-dynamic-workflows@atebites-plugins` does not satisfy doctor alone**.
-- Advisor tip **after [#12](https://github.com/atebites-hub/advisor/pull/12)**
-  (`8fc0bcf017fc19559e0117a47be5dec2558ed43a`): doctor reads ZCode
-  `.plugins[]`. This catalog's Advisor gitlink stays
-  `39bc5f1d6ce31265f0667f4c11d0b66a4fe38544` until a separate pin-bump PR.
-  **This spike does not bump Superpowers / ponytail / Advisor / ODW pins.**
-- Optional one-leaf path (Advisor [#11](https://github.com/atebites-hub/advisor/pull/11)
-  / [#13](https://github.com/atebites-hub/advisor/pull/13)): launch a one-leaf
-  `workflow()` first, then
+- Catalog Advisor pin **`bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3`**
+  (marketplace [#22](https://github.com/atebites-hub/atebites-plugins/pull/22)
+  matcher @ `8fc0bcf0…` + [#25](https://github.com/atebites-hub/atebites-plugins/pull/25)
+  docs @ `bdcf8d5d…`) includes the ZCode `.plugins[]` matcher (Advisor
+  [#12](https://github.com/atebites-hub/advisor/pull/12)) and one-leaf
+  launch-then `--run-dir` docs (Advisor
+  [#13](https://github.com/atebites-hub/advisor/pull/13)). **This spike
+  does not bump Superpowers / ponytail / Advisor / ODW pins.**
+- Optional one-leaf path: launch a one-leaf `workflow()` first, then
   `smoke-odw-one-leaf.sh --host <codex\|zcode> --run-dir /absolute/.odw/.../runs/run-ID`.
   Smoke does not auto-launch. Stay fail-closed.
 
@@ -59,7 +60,7 @@ Current catalog pins (cite only; do not change in this PR):
 | --- | --- |
 | Superpowers | `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` (v6.3.0) |
 | ponytail | `911022dc1fb868b42e006c1848aaf16b0867de2f` |
-| Advisor | `39bc5f1d6ce31265f0667f4c11d0b66a4fe38544` (tip after #12 is `8fc0bcf0…` — note only) |
+| Advisor | `bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3` (includes `.plugins[]` matcher + launch→`--run-dir` docs) |
 | ODW plugin | `9708a77aebe1b0b06b20150d5f799e4a28e5a14a` |
 
 ## Goal
@@ -123,9 +124,8 @@ Full steps live under `plugins/host-adapters/hosts/`. Shared sequence:
    (or equivalent host path), then passes `--run-dir` to Advisor's one-leaf
    smoke. This pack does not launch or attest.
 
-ZCode extra: doctor on Advisor tip after #12 reads `.plugins[]`. Until this
-catalog bumps Advisor, a seating box that still runs pin `39bc5f1d` will
-miss that matcher. Record that honestly; do not bump the gitlink here.
+ZCode extra: doctor on catalog pin `bdcf8d5d…` reads `.plugins[]`. One-leaf
+smoke is launch-then `--run-dir`. Do not bump the gitlink from this pack.
 
 ## Catalog posture
 

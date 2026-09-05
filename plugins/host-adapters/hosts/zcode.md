@@ -18,7 +18,7 @@ this pack.
 | --- | --- |
 | Superpowers | `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` (v6.3.0) |
 | ponytail | `911022dc1fb868b42e006c1848aaf16b0867de2f` |
-| Advisor | catalog `39bc5f1d6ce31265f0667f4c11d0b66a4fe38544` |
+| Advisor | catalog `bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3` |
 | ODW | `9708a77aebe1b0b06b20150d5f799e4a28e5a14a` |
 
 ```bash
@@ -27,13 +27,14 @@ git clone --recurse-submodules https://github.com/atebites-hub/atebites-plugins.
 git submodule update --init --recursive
 ```
 
-**Advisor matcher gap (honest):** catalog pin `39bc5f1d` is Advisor [#11](https://github.com/atebites-hub/advisor/pull/11)
-(ZCode apply/configure + one-leaf smoke). Doctor on that pin did **not**
-read ZCode `.plugins[]`. Advisor tip **after [#12](https://github.com/atebites-hub/advisor/pull/12)**
-(`8fc0bcf017fc19559e0117a47be5dec2558ed43a`) does. A seating box that
-still runs the catalog pin will miss that matcher. Record
-`not run — catalog pin lacks #12 matcher` rather than faking green. This
-PR does not bump the Advisor gitlink.
+Catalog Advisor pin `bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3` already
+includes the ZCode `.plugins[]` matcher (Advisor
+[#12](https://github.com/atebites-hub/advisor/pull/12), marketplace
+[#22](https://github.com/atebites-hub/atebites-plugins/pull/22)) and
+one-leaf launch-then `--run-dir` docs (Advisor
+[#13](https://github.com/atebites-hub/advisor/pull/13), marketplace
+[#25](https://github.com/atebites-hub/atebites-plugins/pull/25)). This
+pack cites that pin; it does not bump the gitlink.
 
 ## 2. Install / enable Factory defaults
 
@@ -100,7 +101,7 @@ $sol-advisor:advisor doctor --host zcode
 
 or `$advisor doctor --host zcode`.
 
-On Advisor tip after #12, `odw_list_is_compatible` reads `.plugins[]`
+On catalog pin `bdcf8d5d…`, `odw_list_is_compatible` reads `.plugins[]`
 with the same id/version/enabled mapping as Codex `.installed[]` /
 `.installedPlugins[]`. Disabled rows and 0.2.0 stay incompatible.
 

@@ -91,12 +91,15 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
       assert.match(text, /does not satisfy doctor alone/);
       assert.match(text, /--run-dir/);
       assert.match(text, /workflow MCP|workflow\(\)/);
+      assert.match(text, /bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3/);
+      assert.doesNotMatch(text, /39bc5f1d/);
+      assert.doesNotMatch(text, /catalog pin lacks #12|catalog stays 39bc5f1/i);
     }
 
     assert.match(codex, /\/hooks/);
     assert.match(codex, /user-gated|no bypass/);
     assert.match(zcode, /\.plugins\[\]\.id/);
-    assert.match(zcode, /after #12|#12/);
+    assert.match(zcode, /bdcf8d5d/);
 
     assert.match(checklist, /Cursor/);
     assert.match(checklist, /Claude/);
@@ -120,6 +123,9 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
     assert.match(spike, /No CE/);
     assert.match(spike, /taskboard \/ j-space|taskboard/);
     assert.match(spike, /does not bump/i);
+    assert.match(spike, /bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3/);
+    assert.doesNotMatch(spike, /39bc5f1d/);
+    assert.doesNotMatch(spike, /catalog stays 39bc5f1|tip after #12 is `8fc0bcf0/i);
   });
 
   it("stub script prints recipe steps, exits 0, and does not auto-trust or claim a pass", () => {

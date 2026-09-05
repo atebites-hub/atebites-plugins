@@ -48,12 +48,12 @@ Copied from Advisor — do not invent a second id:
 | --- | --- |
 | Canonical ODW id | `open-dynamic-workflows@open-dynamic-workflows` |
 | Required version | `0.3.0` (installed **and** enabled) |
-| ZCode list shape | `.plugins[].id` (Advisor tip after [#12](https://github.com/atebites-hub/advisor/pull/12)) |
+| ZCode list shape | `.plugins[].id` (in catalog pin `bdcf8d5d…` after Advisor [#12](https://github.com/atebites-hub/advisor/pull/12) / marketplace [#22](https://github.com/atebites-hub/atebites-plugins/pull/22)) |
 | Marketplace twin | `open-dynamic-workflows@atebites-plugins` — **does not satisfy doctor alone** |
+| One-leaf | launch `workflow()` first, then `--run-dir` (Advisor [#13](https://github.com/atebites-hub/advisor/pull/13) / marketplace [#25](https://github.com/atebites-hub/atebites-plugins/pull/25)) |
 
-This catalog's Advisor pin stays `39bc5f1d…` in this PR. Doctor on that pin
-does not yet read ZCode `.plugins[]`. Tip after #12 (`8fc0bcf0…`) does.
-Record the gap; do not bump pins here.
+Cite catalog Advisor pin `bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3`. This
+pack does not bump that gitlink.
 
 ## Not in this pack
 
