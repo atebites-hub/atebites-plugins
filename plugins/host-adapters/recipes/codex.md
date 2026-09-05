@@ -81,21 +81,67 @@ compatible is false. The twin `@atebites-plugins` does not count.
 
 ## 5. One-leaf (session-gated — no auto-fake PASS)
 
+**Launch first, then pass an absolute `--run-dir`.** This pack does not
+auto-launch. A scripted `PASS` without a live `workflow()` is fake.
+
 1. In a **live** Codex session, call `workflow()` with absolute `cwd`
-   (and a one-leaf script). This pack does not launch that call.
+   and a one-leaf script (immutable `routingPolicy` on the call).
 2. Bind `run_dir` to the exact absolute directory the tool returned.
-3. Inspect fail-closed:
+3. Inspect fail-closed with that path (Advisor checkout, not this pack):
 
 ```bash
-# from an Advisor checkout (not this pack)
 sh plugins/sol-advisor/scripts/smoke-odw-one-leaf.sh \
   --host codex \
-  --run-dir /absolute/.odw/<name>/runs/<runId>
+  --run-dir /absolute/one-leaf-cwd/.odw/<name>/runs/<runId>
 ```
 
-`--run-dir` **must** be absolute. Do not auto-launch a run. Do not
-invent `PASS`. Missing checkout, wrong ODW version, `compatible=false`,
-or `agent_count != 1` is a failure.
+`--run-dir` **must** be absolute. Missing checkout, wrong ODW version,
+`compatible=false`, or `agent_count != 1` is a failure.
 
-Lane B live smoke: record `not run — Lane B awaiting Jay credentials`
-until Jay credentials exist. Do not invent attestation.
+### Example shape (Harness seating-002) — not a catalog / Lane B claim
+
+Harness seating-002 produced a one-leaf smoke result at:
+
+```text
+…/one-leaf-cwd/.odw/seating-one-leaf/runs/run-mtoxds2b-c5361e
+```
+
+`routingPolicy` on that run:
+
+| Field | Value |
+| --- | --- |
+| `executor` | `codex` |
+| `model` | `gpt-5.3-codex-spark` |
+| `reasoningEffort` | `medium` |
+
+Example `workflow()` shape (live session; fill `cwd` and `script`):
+
+```js
+workflow({
+  cwd: '/absolute/one-leaf-cwd',
+  routingPolicy: {
+    executor: 'codex',
+    model: 'gpt-5.3-codex-spark',
+    reasoningEffort: 'medium',
+  },
+  script,
+})
+```
+
+Then inspect the directory the tool returned (absolute):
+
+```bash
+sh plugins/sol-advisor/scripts/smoke-odw-one-leaf.sh \
+  --host codex \
+  --run-dir /absolute/one-leaf-cwd/.odw/seating-one-leaf/runs/run-mtoxds2b-c5361e
+```
+
+On that box, Harness seating-002 `smoke-odw-one-leaf.sh` recorded PASS.
+That is an **example shape** for launch-then-`--run-dir`. It is **not** a
+Factory-default promotion, **not** a catalog Lane B attestation, and
+**not** a pass printed by this pack. Re-run on the current box; do not
+copy a historical run id and call it green.
+
+Lane B for this catalog: record
+`not run — Lane B awaiting Jay credentials` until Jay credentials exist.
+Do not invent attestation.

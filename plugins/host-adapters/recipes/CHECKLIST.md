@@ -50,9 +50,9 @@ Do **not** seat factory-policy (Upcoming / P2 spike only — see
 
 ## One-leaf ODW (optional, fail-closed)
 
-- [ ] Live session called `workflow()` (this pack did not auto-launch).
-- [ ] `--run-dir` is an **absolute** path to one run
-      (`/absolute/.odw/.../runs/run-ID`).
+- [ ] Live session called `workflow()` first (this pack did not auto-launch).
+- [ ] Then `--run-dir` is an **absolute** path to that run
+      (example shape only: `…/one-leaf-cwd/.odw/seating-one-leaf/runs/run-mtoxds2b-c5361e`).
 - [ ] Inspector / `smoke-odw-one-leaf.sh --host <codex|zcode> --run-dir …`
       accepted a completed one-leaf (`agent_count == 1`).
 - [ ] Missing checkout, wrong version, `compatible=false`, or a non-one-leaf

@@ -73,6 +73,13 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
     assert.match(codex, /Never.*--dangerously-bypass-hook-trust/s);
     assert.match(codex, /--run-dir/);
     assert.match(codex, /workflow\(\)/);
+    assert.match(codex, /seating-002/);
+    assert.match(codex, /run-mtoxds2b-c5361e/);
+    assert.match(codex, /gpt-5\.3-codex-spark/);
+    assert.match(codex, /reasoningEffort.*medium|medium/);
+    assert.match(codex, /[Ee]xample shape/);
+    assert.match(codex, /not a catalog \/ Lane B/);
+    assert.match(codex, /[Ll]aunch first|[Ll]aunch.*then/s);
 
     const zcode = readFileSync(join(pluginRoot, "recipes/zcode.md"), "utf8");
     assert.match(zcode, /advisor doctor --host zcode/);
@@ -112,6 +119,9 @@ describe("host-adapters P2–P3 spike (not a catalog / Factory default / bot)", 
     assert.match(spike, /dangerously-bypass-hook-trust/);
     assert.match(spike, /--run-dir/);
     assert.match(spike, /workflow\(\)/);
+    assert.match(spike, /seating-002/);
+    assert.match(spike, /run-mtoxds2b-c5361e/);
+    assert.match(spike, /gpt-5\.3-codex-spark/);
     assert.match(spike, /SPIKE-FACTORY-POLICY\.md/);
     assert.match(spike, /No CE/);
     assert.doesNotMatch(spike, /enabledPlugins.*host-adapters/);

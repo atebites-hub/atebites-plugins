@@ -141,10 +141,13 @@ Normative recipe: [`plugins/host-adapters/recipes/codex.md`](../plugins/host-ada
 6. `$advisor apply --host codex` (or `configure`) when settings are empty.
 7. `$advisor doctor --host codex` — read `odwPlugin.compatible` and hook
    trust. Do not treat JSON presence as Lane B.
-8. One-leaf (optional, fail-closed): in a **session**, call `workflow()`
-   with absolute `cwd`, then
-   `smoke-odw-one-leaf.sh --host codex --run-dir /absolute/...`.
-   The script must not auto-launch. This pack must not print `PASS`.
+8. One-leaf (optional, fail-closed): **launch** `workflow()` in a live
+   session (absolute `cwd` + `routingPolicy`), **then** inspect with
+   absolute `--run-dir`. Do not auto-launch. This pack must not print a
+   seating pass. Example shape (not a catalog / Lane B claim): Harness
+   seating-002 →
+   `…/one-leaf-cwd/.odw/seating-one-leaf/runs/run-mtoxds2b-c5361e` with
+   `routingPolicy` `codex` / `gpt-5.3-codex-spark` / `medium`.
 
 ## ZCode (current pain)
 

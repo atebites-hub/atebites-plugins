@@ -54,7 +54,7 @@ bash plugins/host-adapters/scripts/print-recipe.sh --host zcode
 bash plugins/host-adapters/scripts/print-checklist.sh
 ```
 
-Each prints `SPIKE stub` and does **not** print `PASS`.
+Each prints `SPIKE stub` and does **not** claim a seating pass.
 
 ## ODW 0.3.0 IDs
 
@@ -72,8 +72,13 @@ User-gated via `/hooks`. **Never** `--dangerously-bypass-hook-trust`.
 
 ## One-leaf
 
-Session-gated: call `workflow()` in a live session, then inspect with an
-**absolute** `--run-dir`. Do not auto-launch. Do not auto-fake `PASS`.
+Session-gated: **launch** `workflow()` in a live session, **then** inspect
+with an **absolute** `--run-dir`. Do not auto-launch. Do not auto-fake a
+seating pass. Codex example shape (not a catalog / Lane B claim): Harness
+seating-002 at
+`…/one-leaf-cwd/.odw/seating-one-leaf/runs/run-mtoxds2b-c5361e` with
+`routingPolicy` `codex` / `gpt-5.3-codex-spark` / `medium`. See
+[recipes/codex.md](recipes/codex.md).
 
 ## Opt-in (spike only)
 
