@@ -8,7 +8,7 @@ This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac /
 
 **Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Marketplace keeps their repos/submodules as catalog entries for optional install only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
 
-**Upcoming / P2 v1 warn-default (not a catalog plugin, not a Factory default).** `plugins/factory-policy/` is inline factory-policy (+ nested `memory-system`) to replace `reasoning-system` / `sequentialthinking`. It is **not** listed in host marketplaces, **not** factory-default, and **not** wired into project-factory `enabledPlugins`. Checkers for C3.1–C3.3, C5, and C6 default to **warn** (fail via config). C7 is a warn stub. Do not treat a skipped hook as a pass. See [docs/POLICY-V1.md](docs/POLICY-V1.md).
+**Upcoming / P2 v1 warn-default (catalog-listed for pin install, not a Factory default).** `plugins/factory-policy/` is inline factory-policy (+ nested `memory-system`) to replace `reasoning-system` / `sequentialthinking`. It is catalog-listed for pin install as `factory-policy@atebites-plugins` (v1 warn-default; not a Factory default). Still **not** a Factory story kept-list plugin and **not** wired into project-factory `enabledPlugins` until QA fail-mode VERDICT. Checkers for C3.1–C3.3, C5, and C6 default to **warn** (fail via config). C7 is a warn stub. Do not treat a skipped hook as a pass. See [docs/POLICY-V1.md](docs/POLICY-V1.md).
 
 **Upcoming / P2–P3 spike (not a catalog plugin, not a Factory default, not a bot).** `plugins/host-adapters/` is an inline SPIKE stub: docs+scripts for per-host install/seat of Factory defaults (Codex + ZCode first). It is **not** listed in host marketplaces, **not** factory-default, **not** wired into project-factory `enabledPlugins`, and **not** the Factory Harness bot (box installs/ops only). Scripts print `SPIKE stub` and do not seat, auto-trust, or attest. Rejected names: `factory-harness`, `factory-host-adapters`. See [docs/SPIKE-HOST-ADAPTERS.md](docs/SPIKE-HOST-ADAPTERS.md).
 
@@ -24,6 +24,7 @@ Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_sta
 | `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard); catalog-only, **not** a Factory default) |
 | `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork; catalog-only, **not** a Factory default) |
 | `superpowers` | Superpowers | [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; factory-default pin, not an atebites fork) |
+| `factory-policy` | factory-policy | inline `plugins/factory-policy` @ `0.1.0` (v1 warn-default; catalog-listed for pin install as `factory-policy@atebites-plugins`; **not** a Factory default) |
 
 Clone with submodules:
 
@@ -215,7 +216,7 @@ plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (non-Facto
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill (catalog-only; not Factory)
 plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite (non-Factory catalog)
 plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e082…; factory-default pin; no floating branch)
-plugins/factory-policy/           # inline v1 warn-default (P2); not a submodule; not a catalog plugin; not factory-default
+plugins/factory-policy/           # inline v1 warn-default (P2); catalog-listed for pin install; not a submodule; not factory-default
 plugins/host-adapters/            # inline SPIKE stub (P2–P3); docs+scripts; not a bot; not a catalog plugin; not factory-default
 plugins/linear-tracking/          # inline SPIKE stub (P2); not a submodule; not a catalog plugin; not factory-default
 ```
@@ -224,7 +225,7 @@ Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/pl
 
 Advisor checkout path is `plugins/advisor` (GitHub repo `atebites-hub/advisor`). Codex still points at the nested package `plugins/advisor/plugins/sol-advisor`; Cursor/Grok/ZCode use the submodule root. Catalog name is `advisor`. The pinned fork's `plugin.json` name and package coordinate remain `sol-advisor` until productize.
 
-Claude Code does not use those local paths. `/plugin marketplace add` clones this catalog without initializing git submodules, so gitlink directories have no `.claude-plugin/plugin.json`. The Claude catalog therefore uses GitHub plugin sources for ODW, ponytail, Advisor, and taskboard (`source: { "source": "github", "repo": "atebites-hub/..." }`), pointing at each fork root rather than a nested package. Superpowers uses `obra/superpowers` with `ref: v6.3.0` and SHA `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` so Claude does not float on `main`. j-space stays an in-repo wrap (`./plugins/j-space`); there is no atebites-hub/j-space plugin repo. Cursor, Grok, Codex, and ZCode stay local-path-only and use the wrap at `plugins/taskboard`, which points skills at `upstream/skills` and does not rewrite the Go binary.
+Claude Code does not use those local paths for submodule plugins. `/plugin marketplace add` clones this catalog without initializing git submodules, so gitlink directories have no `.claude-plugin/plugin.json`. The Claude catalog therefore uses GitHub plugin sources for ODW, ponytail, Advisor, and taskboard (`source: { "source": "github", "repo": "atebites-hub/..." }`), pointing at each fork root rather than a nested package. Superpowers uses `obra/superpowers` with `ref: v6.3.0` and SHA `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` so Claude does not float on `main`. j-space and factory-policy stay in-repo wraps (`./plugins/j-space`, `./plugins/factory-policy`); there is no separate atebites-hub plugin repo for either. Cursor, Grok, Codex, and ZCode stay local-path-only and use the wrap at `plugins/taskboard`, which points skills at `upstream/skills` and does not rewrite the Go binary.
 
 J-Space plugin manifests in this repo only expose the existing `j-space/SKILL.md` tree.
 

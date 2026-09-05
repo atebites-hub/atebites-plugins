@@ -6,7 +6,7 @@
 #   edit                 harness hook (default): src/** requires in_progress
 #                        memory that passes checkers. Fail-mode → exit 2.
 #
-# Not a Factory default. Not catalog-listed. No SPIKE-stub soft-pass.
+# Not a Factory default. Catalog-listed for pin install only. No SPIKE-stub soft-pass.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

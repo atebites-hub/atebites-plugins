@@ -4,7 +4,7 @@
     "name": "atebites-hub"
   },
   "metadata": {
-    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, and superpowers. All sources are in-repo paths so Cursor Import from Repo can index them."
+    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, and factory-policy (v1 warn-default; not a Factory default). All sources are in-repo paths so Cursor Import from Repo can index them."
   },
   "plugins": [
     {
@@ -36,6 +36,11 @@
       "name": "superpowers",
       "source": "plugins/superpowers",
       "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques."
+    },
+    {
+      "name": "factory-policy",
+      "source": "plugins/factory-policy",
+      "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT."
     }
   ]
 }

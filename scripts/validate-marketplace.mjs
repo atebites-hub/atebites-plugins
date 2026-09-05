@@ -5,7 +5,7 @@
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
  * schema. Cursor, Grok, Codex, and ZCode must list the catalog plugins with
  * local paths. Claude may use GitHub plugin sources for the four atebites-hub
- * forks and the Superpowers pin; j-space stays the in-repo wrap.
+ * forks and the Superpowers pin; j-space and factory-policy stay in-repo wraps.
  */
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -23,7 +23,12 @@ const EXPECTED = [
   "taskboard",
   "j-space",
   "superpowers",
+  "factory-policy",
 ];
+const CLAUDE_LOCAL_SOURCES = {
+  "j-space": "./plugins/j-space",
+  "factory-policy": "./plugins/factory-policy",
+};
 const SUPERPOWERS_PIN = {
   source: "github",
   repo: "obra/superpowers",
@@ -78,9 +83,10 @@ function assertLocal(name, source, label) {
 
 function assertClaudeSource(name, source) {
   assertForbiddenHosts(name, source, "Claude");
-  if (name === "j-space") {
-    if (source !== "./plugins/j-space") {
-      fail(`Claude j-space source must be ./plugins/j-space, got ${JSON.stringify(source)}`);
+  const localSource = CLAUDE_LOCAL_SOURCES[name];
+  if (localSource) {
+    if (source !== localSource) {
+      fail(`Claude ${name} source must be ${localSource}, got ${JSON.stringify(source)}`);
     }
     return;
   }

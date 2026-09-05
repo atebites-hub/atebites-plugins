@@ -1,6 +1,6 @@
 {
   "name": "factory-policy",
   "version": "0.1.0",
-  "description": "v1 warn-default factory-policy + nested memory-system. Not a Factory default. Not catalog-listed.",
+  "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install + nested memory-system.",
   "skills": "./skills"
 }

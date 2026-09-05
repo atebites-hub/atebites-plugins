@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "factory-policy",
   "version": "0.1.0",
-  "description": "v1 warn-default factory-policy (+ memory gate). Not a Factory default. Not catalog-listed.",
+  "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install (+ memory gate).",
   "author": {
     "name": "atebites-hub"
   },
