@@ -41,7 +41,7 @@ Pin bumps here only after fork CI + [smoke](FORK-MAINTENANCE.md#smoke-matrix). T
 
 ## P1 next
 
-1. **Lane B live smoke** after Harness refreshes the box to `cfd0de2` (Jay credentials). Factory QA Lane A APPROVE; live smoke still **not run — Lane B awaiting Jay credentials**. Marketplace pins still only after smoke.
+1. **Lane B live smoke** (Jay credentials) — box already at `cfd0de2`; Factory QA Lane A APPROVE; live smoke still **not run — Lane B awaiting Jay credentials**. Marketplace pins still only after smoke.
 2. **Marketplace pin bumps only after QA playtest / smoke.** Nested ODW `zcode-cli` pin on plugin `main` is `cfd0de2` (matches tip). Do not bump marketplace SHAs from this catalog. Record `not run — Lane B awaiting Jay credentials` instead of fake green.
 3. **Optional remaining sync dry-runs** (`workflow_dispatch` on each `sync-upstream.yml`). ODW-plugin `sync-nested-pins.yml` already opened and merged #15; ponytail dispatch exits with "nothing to sync".
 
