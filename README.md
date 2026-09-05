@@ -8,6 +8,8 @@ This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac /
 
 **Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Marketplace keeps their repos/submodules as catalog entries for optional install only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
 
+**Upcoming / P2 spike (not a catalog plugin, not a Factory default).** `plugins/factory-policy/` is an inline SPIKE stub: factory-policy (+ nested `memory-system`) to replace `reasoning-system` / `sequentialthinking`. It is **not** listed in host marketplaces, **not** factory-default, and **not** wired into project-factory `enabledPlugins`. Hooks/scripts print `SPIKE stub` and do not enforce C3–C7. See [docs/SPIKE-FACTORY-POLICY.md](docs/SPIKE-FACTORY-POLICY.md).
+
 Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_stack.md`](https://github.com/atebites-hub/PJTemplate/blob/main/docs/agents/agent_stack.md). Factory defaults are the Jay 2026-09-05 lock above, not the older PJTemplate keep/strip optional stack.
 
 | Plugin | Product | Source |
@@ -209,6 +211,7 @@ plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (non-Facto
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill (catalog-only; not Factory)
 plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite (non-Factory catalog)
 plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e082…; factory-default pin; no floating branch)
+plugins/factory-policy/           # inline SPIKE stub (P2); not a submodule; not a catalog plugin; not factory-default
 ```
 
 Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.

@@ -1,0 +1,23 @@
+{
+  "name": "factory-policy",
+  "version": "0.0.0-spike",
+  "description": "SPIKE stub: P2 factory-policy + nested memory-system. Not a Factory default until v1. Hooks do not enforce C3–C7.",
+  "author": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/atebites-plugins"
+  },
+  "homepage": "https://github.com/atebites-hub/atebites-plugins",
+  "repository": "https://github.com/atebites-hub/atebites-plugins",
+  "license": "MIT",
+  "keywords": ["factory-policy", "memory-system", "spike", "codex"],
+  "skills": "./skills",
+  "hooks": "./hooks/claude-codex-hooks.json",
+  "interface": {
+    "displayName": "factory-policy (SPIKE)",
+    "shortDescription": "SPIKE stub: memory ledger gate. Not a Factory default.",
+    "developerName": "atebites-hub",
+    "category": "Developer Tools",
+    "capabilities": ["Instructions"],
+    "websiteURL": "https://github.com/atebites-hub/atebites-plugins"
+  }
+}
