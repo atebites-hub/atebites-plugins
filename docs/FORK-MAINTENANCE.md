@@ -1,6 +1,6 @@
 # Fork maintenance
 
-atebites-hub forks in this marketplace follow the Project Factory fork-maintenance policy. factory-policy exists only as an in-repo **P2 v1 warn-default** plugin (`plugins/factory-policy/`) — not a catalog plugin, not a Factory default, not a submodule. host-adapters exists only as an in-repo **P2–P3 SPIKE stub** (`plugins/host-adapters/`) — docs+scripts, not a bot, not a catalog plugin, not a Factory default, not a submodule. It does not replace Factory Harness bot. GitNexus is still not vendored. The rules below are still binding.
+atebites-hub forks in this marketplace follow the Project Factory fork-maintenance policy. factory-policy exists as an in-repo **P2 v1 warn-default** plugin (`plugins/factory-policy/`) — catalog-listed for pin install as `factory-policy@atebites-plugins`, not a Factory default, not a submodule. host-adapters exists only as an in-repo **P2–P3 SPIKE stub** (`plugins/host-adapters/`) — docs+scripts, not a bot, not a catalog plugin, not a Factory default, not a submodule. It does not replace Factory Harness bot. GitNexus is still not vendored. The rules below are still binding.
 
 Owners: **Jaskarn**, **Factory Plugins bot**.
 

@@ -1,11 +1,13 @@
 # factory-policy v1 (warn-default)
 
-**Status:** v1 warn-default enforcement. **Not** a Factory default. **Not**
-listed in host catalogs. **Not** wired into project-factory `enabledPlugins`.
-No soft-pass: a skipped hook or warn-only finding is not a C3–C7 pass.
+**Status:** v1 warn-default enforcement. Catalog-listed for pin install as
+`factory-policy@atebites-plugins`. **Not a Factory default.** Not wired
+into project-factory `enabledPlugins`. No soft-pass: a skipped hook or
+warn-only finding is not a C3–C7 pass.
 
 Assistant seats the template; QA verifies before anyone dials fail or promotes
-this plugin to a catalog / Factory default.
+this plugin to a Factory default. Catalog listing is installability only
+until QA fail-mode VERDICT.
 
 SoT: `factory-01-policy-layer.md`, `policy-gate.md`, Build Sheet §5
 (PJTemplate handoff). Do not invent **C4**. C7 is a warn-only stub
@@ -77,7 +79,7 @@ Skip messages say `skipped (not a pass)`. Scripts do not print `SPIKE stub`.
 
 ## Out of scope (still)
 
-- Host catalog listing / Factory default / project-factory `enabledPlugins`
+- Factory default / project-factory `enabledPlugins` (catalog listing is pin-install only)
 - C7 full Approved-by git-history forge-check
 - F1 / D1 / J1 / S12
 - Inventing C4

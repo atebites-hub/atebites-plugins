@@ -38,11 +38,6 @@ function read(relPath) {
   return readFileSync(join(root, relPath), "utf8");
 }
 
-function catalogNames(relPath) {
-  const marketplace = JSON.parse(read(relPath));
-  return (marketplace.plugins || []).map((plugin) => plugin.name);
-}
-
 function run(command, args, options = {}) {
   return spawnSync(command, args, {
     encoding: "utf8",
@@ -60,16 +55,45 @@ function run(command, args, options = {}) {
   });
 }
 
-describe("factory-policy v1 (warn-default, not a catalog / Factory default)", () => {
-  it("is absent from every host marketplace catalog", () => {
+function catalogEntry(relPath, name) {
+  const marketplace = JSON.parse(read(relPath));
+  return (marketplace.plugins || []).find((plugin) => plugin.name === name);
+}
+
+function catalogSourcePath(entry) {
+  const source = entry?.source;
+  if (typeof source === "string") return source;
+  if (source && typeof source === "object" && typeof source.path === "string") {
+    return source.path;
+  }
+  return "";
+}
+
+describe("factory-policy v1 (warn-default, catalog-listed, not a Factory default)", () => {
+  it("is present in every host marketplace catalog with non-default wording", () => {
     for (const rel of CATALOGS) {
-      const names = catalogNames(rel);
-      assert.equal(
-        names.includes("factory-policy"),
-        false,
-        `${rel} must not list factory-policy`,
+      const entry = catalogEntry(rel, "factory-policy");
+      assert.ok(entry, `${rel} must list factory-policy`);
+      assert.match(
+        catalogSourcePath(entry),
+        /(?:^\.\/)?plugins\/factory-policy$/,
+        `${rel} factory-policy source must be the in-repo plugin path`,
+      );
+      const text = JSON.stringify(entry);
+      assert.match(text, /v1 warn-default/i, `${rel} must say v1 warn-default`);
+      assert.match(text, /not a Factory default/i, `${rel} must say not a Factory default`);
+      assert.doesNotMatch(
+        text,
+        /Factory-required|factory-default pin|Factory default pin/i,
+        `${rel} must not claim Factory-default beyond installability`,
       );
     }
+    const pluginJson = JSON.parse(read("plugins/factory-policy/plugin.json"));
+    assert.equal(pluginJson.version, "0.1.0");
+    assert.match(pluginJson.description, /v1 warn-default/i);
+    assert.match(pluginJson.description, /catalog-listed for pin install/i);
+    assert.match(pluginJson.description, /not a Factory default/i);
+    assert.doesNotMatch(pluginJson.description, /Not catalog-listed/);
   });
 
   it("does not appear in the Factory story kept list", () => {
@@ -81,6 +105,10 @@ describe("factory-policy v1 (warn-default, not a catalog / Factory default)", ()
     assert.match(index, /warn-default/);
     const factoryBlock = index.split("Upcoming / P2 v1")[1]?.split("Upcoming / P2–P3")[0] ?? "";
     assert.match(factoryBlock, /factory-policy/);
+    assert.match(factoryBlock, /catalog-listed for pin install/i);
+    assert.match(factoryBlock, /factory-policy@atebites-plugins/);
+    assert.match(factoryBlock, /not factory-default/i);
+    assert.match(factoryBlock, /enabledPlugins/);
     assert.doesNotMatch(factoryBlock, /inline SPIKE stub/);
   });
 
@@ -125,6 +153,8 @@ describe("factory-policy v1 (warn-default, not a catalog / Factory default)", ()
   it("v1 docs name the checks and retire SPIKE-stub-as-pass", () => {
     const v1 = read("docs/POLICY-V1.md");
     assert.match(v1, /v1 warn-default/i);
+    assert.match(v1, /catalog-listed for pin install/i);
+    assert.match(v1, /not a Factory default/i);
     assert.match(v1, /no soft-pass/i);
     assert.match(v1, /memory-system/);
     for (const id of CHECK_IDS) {
@@ -155,12 +185,16 @@ describe("factory-policy v1 (warn-default, not a catalog / Factory default)", ()
     }
   });
 
-  it("README Upcoming section mentions v1 without catalog install commands", () => {
+  it("README Upcoming section lists the pin without Factory-default install commands", () => {
     const readme = read("README.md");
     assert.match(readme, /Upcoming \/ P2 v1/);
     assert.match(readme, /plugins\/factory-policy/);
     assert.match(readme, /docs\/POLICY-V1\.md/);
     assert.match(readme, /warn-default/);
+    assert.match(readme, /catalog-listed for pin install/i);
+    assert.match(readme, /factory-policy@atebites-plugins/);
+    assert.match(readme, /not a Factory default/i);
+    assert.match(readme, /enabledPlugins/);
     assert.doesNotMatch(readme, /grok plugin install factory-policy --trust/);
     assert.doesNotMatch(readme, /\/plugin install factory-policy@atebites-plugins/);
     assert.doesNotMatch(readme, /codex plugin add factory-policy@atebites-plugins/);

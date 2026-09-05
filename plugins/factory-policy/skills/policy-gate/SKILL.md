@@ -23,7 +23,8 @@ prints `WARN [C3.2] …` and `Fix:` on stderr, exit 0. Fail-mode prints
 `[C3.2] …` + `Fix:` and exits 1 from `check-memory` (hook `edit` / Stop
 map that to exit 2). C7 is not implemented in v1 (warn stub only).
 
-This plugin is **not** a Factory default and is **not** catalog-listed.
+This plugin is **not** a Factory default. It is catalog-listed for pin install
+only (`factory-policy@atebites-plugins`).
 
 Ledger how-to: the nested `memory-system` skill. Template:
 [`../memory-system/assets/memory_template.md`](../memory-system/assets/memory_template.md).

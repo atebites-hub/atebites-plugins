@@ -3,8 +3,9 @@
 **v1 warn-default — not a Factory default.**
 
 Inline marketplace plugin in [atebites-plugins](https://github.com/atebites-hub/atebites-plugins).
-Not a submodule. Not listed in host catalogs. Not wired into project-factory
-`enabledPlugins`. Real checkers run for C3.1, C3.2, C3.3, C5, and C6. Default
+Not a submodule. Catalog-listed for pin install as `factory-policy@atebites-plugins`.
+Not a Factory default. Not wired into project-factory `enabledPlugins`. Real
+checkers run for C3.1, C3.2, C3.3, C5, and C6. Default
 mode is **warn** (stderr `WARN [C3.2] …` + `Fix:`, exit 0). Dial `fail` via
 config. C7 is a warn-only stub. Do not treat a skipped hook as a pass.
 
@@ -82,12 +83,13 @@ findings). Environment errors fail-open in hooks (one stderr line).
 
 ## Opt-in (not Factory-default)
 
-Hosts do not install this from the marketplace. After a local clone:
+Catalog pin: `factory-policy@atebites-plugins` (v1 warn-default; not a Factory
+default). Installability only — still not a Factory-wide `enabledPlugins`
+default. After a local clone:
 
 ```bash
 agent --plugin-dir "$PWD/plugins/factory-policy"
 bash plugins/factory-policy/scripts/policy-gate.sh check-memory docs/memories/YYYY-MM-DD-slug.md
 ```
 
-QA + Assistant template seating are required before this becomes a catalog
-plugin or a Factory default.
+QA fail-mode VERDICT is required before this becomes a Factory default.

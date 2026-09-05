@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, and superpowers. GitHub plugin sources for the four forks and the Superpowers pin; j-space is an in-repo wrap.",
+  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, and factory-policy (v1 warn-default; not a Factory default). GitHub plugin sources for the four forks and the Superpowers pin; j-space and factory-policy are in-repo wraps.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -58,6 +58,12 @@
         "ref": "v6.3.0",
         "sha": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"
       },
+      "category": "developer-tools"
+    },
+    {
+      "name": "factory-policy",
+      "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
+      "source": "./plugins/factory-policy",
       "category": "developer-tools"
     }
   ]

@@ -14,7 +14,13 @@ const EXPECTED_PLUGINS = [
   "taskboard",
   "j-space",
   "superpowers",
+  "factory-policy",
 ];
+
+const CLAUDE_LOCAL_SOURCES = {
+  "j-space": "./plugins/j-space",
+  "factory-policy": "./plugins/factory-policy",
+};
 
 /** Catalog slug → allowed plugin.json names (sol-advisor until productize). */
 const MANIFEST_NAMES = {
@@ -76,20 +82,21 @@ function assertLocalSource(pluginName, source) {
 
 function assertClaudeSource(pluginName, source) {
   assertForbiddenSourceHosts(pluginName, source);
-  if (pluginName === "j-space") {
+  const localSource = CLAUDE_LOCAL_SOURCES[pluginName];
+  if (localSource) {
     assert.equal(
       source,
-      "./plugins/j-space",
-      `j-space Claude source must stay the in-repo wrap, got ${sourceText(source)}`,
+      localSource,
+      `${pluginName} Claude source must stay the in-repo wrap, got ${sourceText(source)}`,
     );
-    const pluginJson = join(root, "plugins/j-space/.claude-plugin/plugin.json");
+    const pluginJson = join(root, localSource.replace(/^\.\//, ""), ".claude-plugin/plugin.json");
     assert.equal(
       existsSync(pluginJson),
       true,
-      "plugins/j-space/.claude-plugin/plugin.json must exist",
+      `${localSource}/.claude-plugin/plugin.json must exist`,
     );
     const manifest = JSON.parse(readFileSync(pluginJson, "utf8"));
-    assert.equal(manifest.name, "j-space");
+    assert.equal(manifest.name, pluginName);
     return;
   }
   if (pluginName === "superpowers") {
@@ -187,7 +194,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("Claude marketplace uses GitHub sources for forks and Superpowers, and a local wrap for j-space", () => {
+  it("Claude marketplace uses GitHub sources for forks and Superpowers, and local wraps for j-space and factory-policy", () => {
     const marketplace = readJson(".claude-plugin/marketplace.json");
     assert.ok(marketplace.$schema, "Claude marketplace needs $schema");
     assert.equal(marketplace.name, "atebites-plugins");
