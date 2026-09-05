@@ -13,6 +13,7 @@ Verified **2026-09-05** via GitHub API (`parent`, `fork`, `UPSTREAM.md`, compare
 | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | yes | yes | yes (workflow present) | Marketplace. GitHub rename `atebites-hub/sol-advisor` → `atebites-hub/advisor` (parent unchanged; old URL redirects). Catalog slug and checkout path are `advisor` / `plugins/advisor`. Upgrade: install `advisor` from this marketplace (was `sol-advisor`). Inner package path and coordinate stay `plugins/sol-advisor` / `sol-advisor@sol-advisor` until the productize scrub. Pin stays `a47ece9` (PR #6); `main` tip `a5d3fae` is UPSTREAM + artifact-cleanup only — not a pin bump. [PR #7](https://github.com/atebites-hub/advisor/pull/7) merged `UPSTREAM.md` + weekday `.github/workflows/sync-upstream.yml`. |
 | taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) | [tcarac/taskboard](https://github.com/tcarac/taskboard) | yes | yes | yes (workflow present) | Parent linked. [PR #1](https://github.com/atebites-hub/taskboard/pull/1) merged `UPSTREAM.md` + weekday `.github/workflows/sync-upstream.yml`. |
 | j-space | vendor only | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) | n/a | n/a | n/a | No atebites fork by design |
+| Superpowers | pin only (not an atebites fork) | [obra/superpowers](https://github.com/obra/superpowers) | n/a | n/a | n/a | Factory-default pin. [obra/superpowers](https://github.com/obra/superpowers) @ **v6.3.0** / `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`. Pending project-factory `enabledPlugins` wiring by Assistant. |
 
 ## Nested pins (ODW plugin)
 
@@ -36,10 +37,11 @@ This repo (`atebites-plugins`):
 | `plugins/advisor` | https://github.com/atebites-hub/advisor.git |
 | `plugins/taskboard/upstream` | https://github.com/atebites-hub/taskboard.git |
 | `plugins/j-space/vendor/j-space-cognition-suite` | https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6.git |
+| `plugins/superpowers` | https://github.com/obra/superpowers.git |
 
 The Advisor gitlink path is `plugins/advisor`. The nested Codex/ZCode package inside that checkout is still `plugins/advisor/plugins/sol-advisor` until productize.
 
-Pin bumps here only after fork CI + [smoke](FORK-MAINTENANCE.md#smoke-matrix). This index does not change SHAs.
+`plugins/superpowers` is the factory-default pin: commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` (annotated tag v6.3.0), not a floating `branch = main`. Project-factory `enabledPlugins` wiring is pending Assistant. Pin bumps here only after fork CI + [smoke](FORK-MAINTENANCE.md#smoke-matrix). This index does not change other marketplace SHAs.
 
 ## P1 next
 

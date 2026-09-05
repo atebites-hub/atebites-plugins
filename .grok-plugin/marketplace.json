@@ -1,6 +1,6 @@
 {
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Grok Build: open-dynamic-workflows, ponytail, Advisor, taskboard, and j-space. Local path sources only.",
+  "description": "atebites-hub plugin catalog for Grok Build: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, and superpowers. Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -45,6 +45,14 @@
       "category": "productivity",
       "source": { "type": "local", "path": "./plugins/j-space" },
       "keywords": ["j-space", "cognition", "workspace"]
+    },
+    {
+      "name": "superpowers",
+      "version": "6.3.0",
+      "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques.",
+      "category": "developer-tools",
+      "source": { "type": "local", "path": "./plugins/superpowers" },
+      "keywords": ["skills", "tdd", "debugging", "collaboration", "workflows"]
     }
   ],
   "version": 1
