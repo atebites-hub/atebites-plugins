@@ -10,8 +10,7 @@ description: >
 # linear-tracking (SPIKE stub)
 
 **Upcoming / not a Factory default. Not catalog-listed.** This skill is
-placement rules only. It is not a Linear API client and it does not
-install Linear Agent skills.
+placement rules only. It is not a Linear API client and it does not install Linear Agent skills.
 
 SoT: PJTemplate investigation `linear-driven-flow.md` §3 (cited by
 name; not on PJTemplate `main` as of 2026-09-05) plus the Jay lock:

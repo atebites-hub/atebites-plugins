@@ -83,17 +83,17 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(skill, /auto-delegate|auto-assign/);
     assert.match(skill, /fail closed/);
     assert.match(skill, /linear-driven-flow\.md/);
-    assert.match(skill, /does not install Linear Agent/);
+    assert.match(skill, /does not\s+install Linear Agent/);
     assert.doesNotMatch(skill, /Linear Agent skills are installed/);
   });
 
   it("names ownership, vendor-pin strategy, and required behaviors", () => {
     const spike = read("docs/SPIKE-LINEAR-TRACKING.md");
     assert.match(spike, /SPIKE/);
-    assert.match(spike, /no soft-pass/);
+    assert.match(spike, /no soft-pass/i);
     assert.match(spike, /vendored pin|vendor existing/i);
     assert.match(spike, /upstream maintain/i);
-    assert.match(spike, /not necessarily atebites-authored/i);
+    assert.match(spike, /not necessarily\s+atebites-authored/i);
     assert.match(spike, /linear-driven-flow\.md/);
     assert.match(spike, /list_issues/);
     assert.match(spike, /get_issue/);

@@ -8,8 +8,7 @@ skills are installed.
 This catalog spike scaffolds `plugins/linear-tracking/` as an **inline**
 upcoming stub (not a submodule), the same class as early factory-policy
 and host-adapters. Host marketplaces do **not** list it. Do not invent
-Linear API secrets. Do not treat the stub as a working tracker (no
-soft-pass).
+Linear API secrets. Do not treat the stub as a working tracker (no soft-pass).
 
 The pack name is **`linear-tracking`**. Jay lock (2026-09-05): **keep
 linear-tracking**. It replaces discarded `taskboard-workflow`. Factory
@@ -40,10 +39,10 @@ check. linear-tracking is how an agent **finds** the Linear issue and
 
 ## Pin strategy (prefer vendor + upstream maintain)
 
-Jay lock: prefer a **vendored pin of an existing skill/plugin**, then
-maintain that pin against upstream. The product does **not** have to be
-atebites-authored. Same class as the Superpowers pin-only submodule: pin
-a SHA after CI + smoke; do not float `main`.
+Jay lock: prefer a **vendored pin** of an existing skill/plugin and
+**upstream maintain** that pin (not necessarily atebites-authored). Same
+class as the Superpowers pin-only submodule: pin a SHA after CI + smoke;
+do not float `main`.
 
 | Option | When | This spike |
 | --- | --- | --- |
