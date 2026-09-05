@@ -1,0 +1,21 @@
+{
+  "name": "host-adapters",
+  "version": "0.0.0-spike",
+  "description": "SPIKE stub: Codex + ZCode Factory seating recipes. Not a Factory default. Not a bot. Hooks are not shipped.",
+  "author": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/atebites-plugins"
+  },
+  "homepage": "https://github.com/atebites-hub/atebites-plugins",
+  "repository": "https://github.com/atebites-hub/atebites-plugins",
+  "license": "MIT",
+  "keywords": ["host-adapters", "seating", "spike", "codex"],
+  "interface": {
+    "displayName": "host-adapters (SPIKE)",
+    "shortDescription": "SPIKE stub: seating recipes. Not a Factory default. Not a bot.",
+    "developerName": "atebites-hub",
+    "category": "Developer Tools",
+    "capabilities": ["Instructions"],
+    "websiteURL": "https://github.com/atebites-hub/atebites-plugins"
+  }
+}

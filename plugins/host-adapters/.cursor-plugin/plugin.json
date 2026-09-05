@@ -1,0 +1,13 @@
+{
+  "name": "host-adapters",
+  "displayName": "host-adapters (SPIKE)",
+  "version": "0.0.0-spike",
+  "description": "SPIKE stub: per-host Factory seating recipes. Not a Factory default. Not a bot. Not factory-harness.",
+  "author": {
+    "name": "atebites-hub"
+  },
+  "homepage": "https://github.com/atebites-hub/atebites-plugins",
+  "repository": "https://github.com/atebites-hub/atebites-plugins",
+  "license": "MIT",
+  "keywords": ["host-adapters", "seating", "spike"]
+}
