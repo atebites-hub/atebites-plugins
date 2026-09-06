@@ -19,7 +19,7 @@ this pack.
 | Superpowers | `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` (v6.3.0) |
 | ponytail | `911022dc1fb868b42e006c1848aaf16b0867de2f` |
 | Advisor | catalog `bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3` |
-| ODW | `a7a07a886cecf767246abf21f2baf2dd10473d17` |
+| ODW | `837e5cd43ab6ab09b38cbfe0460864bc5c7b1621` |
 
 ```bash
 git clone --recurse-submodules https://github.com/atebites-hub/atebites-plugins.git
