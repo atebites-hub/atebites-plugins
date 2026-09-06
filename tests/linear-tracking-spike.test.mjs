@@ -12,6 +12,16 @@ const VENDOR_PIN_SHA = "49f948faa9258a0c61caceaf225e179651397431";
 const VENDOR_SKILL_SHA256 =
   "ce0f39c95b6c9190f8ea33614393cdb556b2684dd8388ded394e9cb915f42601";
 
+/** #34 evidence SHAs — rejected as Factory pins (except interim skills HEAD). */
+const EVIDENCE_SHAS = {
+  "linear/cursor-plugin HEAD": "c2c4cb2ab23206c9219b0dd31c9571e4c922faeb",
+  "openai/plugins HEAD": "1e285826e604f66f7208f7ac4dba0fe8341d1f57",
+  "openai/plugins path": "33bd9529725fcee78c9e51fcbaa93cd963c3a47b",
+  "anthropics official HEAD": "85cce0381e7860082641b59d961a2b8c368b8b79",
+  "anthropics path": "ab2b6d0cad88ead3da5466ef2acef0c4a351971e",
+  "openai/skills path": "77963424cd7687fd52e5fcfdd3f08d826ab9b1ab",
+};
+
 const CATALOGS = [
   ".cursor-plugin/marketplace.json",
   ".grok-plugin/marketplace.json",
@@ -79,6 +89,9 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(readme, /[Nn]ot catalog-listed/);
     assert.match(readme, /upcoming/i);
     assert.match(readme, /[Dd]o not claim Linear Agent skills installed/);
+    assert.match(readme, /\*\*P N\*\*|\/ P N \//);
+    assert.match(readme, /interim/i);
+    assert.match(readme, /deprecated/i);
     assert.match(readme, new RegExp(VENDOR_PIN_SHA));
     assert.match(readme, /vendor\/linear/);
 
@@ -121,6 +134,16 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(spike, /[Nn]o invented Linear API secrets|Do not invent Linear API secrets/);
     assert.match(spike, new RegExp(VENDOR_PIN_SHA));
     assert.match(spike, /Vendored pin chosen|vendored pin chosen/i);
+    assert.match(spike, /\*\*P N\*\*/);
+    assert.match(spike, /interim/i);
+    assert.match(spike, /deprecated/i);
+    assert.match(spike, /not Superpowers-class|Not Superpowers-class/);
+    for (const [label, sha] of Object.entries(EVIDENCE_SHAS)) {
+      assert.match(spike, new RegExp(sha), `SPIKE must cite ${label}`);
+    }
+    assert.match(spike, /linear\/cursor-plugin/);
+    assert.match(spike, /anthropics\/claude-plugins-official/);
+    assert.match(spike, /do not fork|Do \*\*not\*\* copy those remotes/i);
   });
 
   it("vendors the openai/skills curated linear tree without rewriting it", () => {
@@ -130,6 +153,19 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(upstream, new RegExp(VENDOR_PIN_SHA));
     assert.match(upstream, /mcp\.linear\.app\/mcp/);
     assert.match(upstream, /no bundled skills/);
+    assert.match(upstream, /\*\*P N\*\*/);
+    assert.match(upstream, /interim/i);
+    assert.match(upstream, /deprecated/i);
+    assert.match(upstream, /not Superpowers-class|Not Superpowers-class|not a Superpowers-class/);
+    assert.match(upstream, /standalone OSI-licensed/);
+    assert.match(upstream, /Do \*\*not\*\*\s+copy the others into `\.gitmodules`/);
+    for (const [label, sha] of Object.entries(EVIDENCE_SHAS)) {
+      assert.match(upstream, new RegExp(sha), `UPSTREAM.md must cite ${label}`);
+    }
+    assert.match(upstream, /linear\/cursor-plugin/);
+    assert.match(upstream, /anthropics\/claude-plugins-official/);
+    assert.match(upstream, /no LICENSE/);
+    assert.match(upstream, /Lane B awaiting Jay credentials/);
 
     const vendorSkillPath = join(pluginRoot, "vendor/linear/SKILL.md");
     assert.equal(existsSync(vendorSkillPath), true);
@@ -155,6 +191,9 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
       ? read(".gitmodules")
       : "";
     assert.doesNotMatch(gitmodules, /linear-tracking/);
+    assert.doesNotMatch(gitmodules, /linear\/cursor-plugin/);
+    assert.doesNotMatch(gitmodules, /openai\/plugins/);
+    assert.doesNotMatch(gitmodules, /claude-plugins-official/);
   });
 
   it("ships thin host plugin.json placeholders without secrets or MCP schemas", () => {
@@ -191,5 +230,8 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.doesNotMatch(readme, /codex plugin add linear-tracking@atebites-plugins/);
     assert.doesNotMatch(readme, /\/plugins install linear-tracking/);
     assert.match(readme, /[Dd]o not claim Linear Agent skills installed/);
+    assert.match(readme, /\*\*P N\*\*/);
+    assert.match(readme, /interim/i);
+    assert.match(readme, /deprecated/);
   });
 });

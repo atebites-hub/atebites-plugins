@@ -1,15 +1,17 @@
 # linear-tracking
 
-**SPIKE — upcoming / not a Factory default. Not catalog-listed.**
+**SPIKE — upcoming / P N / not a Factory default. Not catalog-listed.**
 
-Vendored pin plus Factory placement overlay in
+Interim vendored skill body plus Factory placement overlay in
 [atebites-plugins](https://github.com/atebites-hub/atebites-plugins).
-Not a submodule of openai/skills. Not listed in host catalogs. Not
-wired into project-factory `enabledPlugins`. Replaces discarded
-`taskboard-workflow`. Do not claim Linear Agent skills installed.
+Not Superpowers-class. Not a submodule of openai/skills. Not listed
+in host catalogs. Not wired into project-factory `enabledPlugins`.
+Replaces discarded `taskboard-workflow`. Do not claim Linear Agent skills installed.
+Upstream openai/skills is **deprecated** — this pin
+is interim until a standalone OSI-licensed plugin appears.
 
 Normative scope: [`docs/SPIKE-LINEAR-TRACKING.md`](../../docs/SPIKE-LINEAR-TRACKING.md).
-Pin record: [`UPSTREAM.md`](UPSTREAM.md).
+Pin record + #34 rejection table: [`UPSTREAM.md`](UPSTREAM.md).
 
 Jay lock: keep the name **`linear-tracking`**. Vendor + upstream
 maintain (not necessarily atebites-authored).
@@ -23,10 +25,10 @@ maintain (not necessarily atebites-authored).
 | Local tree | `vendor/linear/` |
 | Transport | official Linear MCP `https://mcp.linear.app/mcp` (operator OAuth) |
 
-openai/skills is deprecated as a catalog; the curated `linear` skill is
-still the best pin-able MCP-CRUD workflow. The openai/plugins Linear
-package dropped its skill body (app connector only). Do not invent a
-Linear API client or secrets.
+openai/skills is **deprecated**; the curated `linear` skill is still
+the best interim MCP-CRUD **body** (not a Factory pin). Official
+`linear` host plugins are MCP wrappers or catalog subtrees — see
+`UPSTREAM.md`. Do not invent a Linear API client or secrets.
 
 ## What this is
 
@@ -66,4 +68,5 @@ agent --plugin-dir "$PWD/plugins/linear-tracking"
 ```
 
 A later PR is required before this becomes a catalog plugin or a
-Factory default.
+Factory default. Status stays **P N** until a standalone OSI-licensed
+upstream exists.
