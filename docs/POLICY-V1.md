@@ -53,6 +53,9 @@ Consumer overlay (later file wins as the resolved config):
 4. Or set `FACTORY_POLICY_CONFIG=/absolute/path/to.toml`
 5. CLI: `check_memory_policy.py --config PATH`
 
+Unit harnesses unset `$FACTORY_POLICY_CONFIG` (and related override env vars)
+in spawned children so a box-seated overlay cannot poison tests.
+
 Shipped default: `code = ["src/**"]`. Example consumer overlay for a
 `backend/**` layout (not a Factory default):
 

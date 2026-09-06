@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import io
 import json
+import os
 import sys
 import unittest
 from contextlib import redirect_stdout
@@ -42,7 +43,33 @@ def _ids(findings: list[cmp.Finding]) -> list[str]:
     return [finding.check_id for finding in findings]
 
 
-class CheckSemanticsTests(unittest.TestCase):
+_HARNESS_OVERRIDE_ENV = (
+    "FACTORY_POLICY_CONFIG",
+    "FACTORY_POLICY_SRC_CHANGED",
+    "FACTORY_POLICY_REPO_ROOT",
+    "GUARD_BASH_COMMAND",
+)
+
+
+class HarnessEnvTestCase(unittest.TestCase):
+    """Drop box-seated factory-policy overrides so unit tests are hermetic."""
+
+    def setUp(self) -> None:
+        super().setUp()
+        self._harness_env_saved = {
+            key: os.environ.pop(key)
+            for key in _HARNESS_OVERRIDE_ENV
+            if key in os.environ
+        }
+
+    def tearDown(self) -> None:
+        for key in _HARNESS_OVERRIDE_ENV:
+            os.environ.pop(key, None)
+        os.environ.update(self._harness_env_saved)
+        super().tearDown()
+
+
+class CheckSemanticsTests(HarnessEnvTestCase):
     def test_pass_all_default_warn(self) -> None:
         findings = cmp.check_memory(_read("pass-all.md"), _CONSUMER, _modes())
         self.assertEqual(findings, [])
@@ -103,7 +130,7 @@ class CheckSemanticsTests(unittest.TestCase):
         self.assertIn("not implemented", findings[0].message)
 
 
-class ConfigAndPathTests(unittest.TestCase):
+class ConfigAndPathTests(HarnessEnvTestCase):
     def test_shipped_config_defaults_warn(self) -> None:
         modes = cmp.load_modes(_SHIPPED)
         for check_id in ("C3.1", "C3.2", "C3.3", "C5", "C6"):
@@ -176,7 +203,14 @@ class ConfigAndPathTests(unittest.TestCase):
         self.assertEqual(fail.mode, "fail")
 
 
-class MainExitTests(unittest.TestCase):
+class MainExitTests(HarnessEnvTestCase):
+    def test_harness_scrubs_factory_policy_override_env(self) -> None:
+        for key in _HARNESS_OVERRIDE_ENV:
+            self.assertNotIn(key, os.environ)
+        self.assertEqual(cmp.resolve_config_path(_CONSUMER, None), cmp.SHIPPED_CONFIG)
+        self.assertEqual(cmp.main(["is-src-path", "src/x.py"]), cmp.EXIT_OK)
+        self.assertEqual(cmp.main(["is-src-path", "backend/foo.py"]), cmp.EXIT_VIOLATION)
+
     def test_usage_without_files(self) -> None:
         self.assertEqual(cmp.main(["--repo-root", str(_CONSUMER)]), cmp.EXIT_USAGE)
 
