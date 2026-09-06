@@ -54,12 +54,14 @@ factory_policy_run_checker() {
   python3 "$FACTORY_POLICY_CHECKER" --repo-root "$repo" "$@"
 }
 
+# True when $1 matches configured [paths].code globs (default src/**).
+# Name kept for callers; matching is no longer a hard-coded src case.
 factory_policy_path_is_src() {
   local path=$1
-  case "$path" in
-    src|src/*|*/src|*/src/*) return 0 ;;
-    *) return 1 ;;
-  esac
+  if ! command -v python3 >/dev/null 2>&1; then
+    return 1
+  fi
+  factory_policy_run_checker is-src-path "$path" >/dev/null
 }
 
 factory_policy_collect_changed_paths() {

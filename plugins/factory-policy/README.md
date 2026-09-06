@@ -52,6 +52,7 @@ checks `warn`).
 # Consumer repo
 cp path/to/factory-policy/config/policy.toml config/factory-policy.toml
 # edit modes: warn | fail | off
+# optional: widen [paths] code if durable edits live outside src/**
 
 # Or point at any TOML:
 export FACTORY_POLICY_CONFIG="$PWD/config/factory-policy.toml"
@@ -60,13 +61,24 @@ export FACTORY_POLICY_CONFIG="$PWD/config/factory-policy.toml"
 Search order: `--config`, `$FACTORY_POLICY_CONFIG`,
 `<repo>/config/factory-policy.toml`, then the shipped file.
 
+Default `[paths] code = ["src/**"]`. An overlay list **replaces** the shipped
+globs (it does not union unless you repeat `src/**`):
+
+```toml
+[paths]
+code = ["backend/**", "frontend/**", "src/**"]
+```
+
+Skip lines say `code paths … skipped (not a pass)`. A skip is not a pass.
+This plugin is still not a Factory default.
+
 ## Hooks / scripts
 
 | Script | Event | v1 |
 | --- | --- | --- |
-| `scripts/policy-gate.sh` | PreToolUse / `preToolUse` | `check-memory <path>` (0/1/2/3); `edit` reads stdin JSON, skips non-`src/**`, require in_progress memory. Warn → 0. Fail-mode → 2 |
-| `scripts/stop-verify.sh` | Stop / `stop` | Checkers when `src` changed; hop cap stub (TBD) |
-| `scripts/guard-bash.sh` | Tier 1 git | Staged `src/**` → same checkers (git exit 1 on fail); optional regex deny |
+| `scripts/policy-gate.sh` | PreToolUse / `preToolUse` | `check-memory <path>` (0/1/2/3); `edit` reads stdin JSON, skips paths outside `[paths].code` (default `src/**`), require in_progress memory. Warn → 0. Fail-mode → 2 |
+| `scripts/stop-verify.sh` | Stop / `stop` | Checkers when configured code paths changed; hop cap stub (TBD) |
+| `scripts/guard-bash.sh` | Tier 1 git | Staged code paths → same checkers (git exit 1 on fail); optional regex deny |
 
 JSON pointers: `hooks/claude-codex-hooks.json`, `hooks/cursor-hooks.json`.
 

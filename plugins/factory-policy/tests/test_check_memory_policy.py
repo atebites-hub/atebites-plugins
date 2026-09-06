@@ -16,6 +16,7 @@ _FIXTURES = Path(__file__).resolve().parent / "fixtures"
 _CONSUMER = _FIXTURES / "consumer"
 _MEMORIES = _CONSUMER / "docs" / "memories"
 _FAIL_ALL = _FIXTURES / "fail-all.toml"
+_CODE_BACKEND = _FIXTURES / "code-backend.toml"
 _SHIPPED = Path(__file__).resolve().parents[1] / "config" / "policy.toml"
 
 _spec = importlib.util.spec_from_file_location("check_memory_policy", _HELPER)
@@ -118,6 +119,36 @@ class ConfigAndPathTests(unittest.TestCase):
         self.assertTrue(cmp.is_src_path("/tmp/repo/src/pkg/mod.py"))
         self.assertFalse(cmp.is_src_path("docs/memories/pass-all.md"))
         self.assertFalse(cmp.is_src_path("src_notes.md"))
+        self.assertFalse(cmp.is_src_path("backend/foo.py"))
+
+    def test_shipped_code_globs_default_src(self) -> None:
+        self.assertEqual(cmp.load_code_globs(_SHIPPED), ["src/**"])
+
+    def test_overlay_without_paths_keeps_src_default(self) -> None:
+        self.assertEqual(cmp.load_code_globs(_FAIL_ALL), ["src/**"])
+
+    def test_overlay_code_globs_include_backend(self) -> None:
+        self.assertEqual(
+            cmp.load_code_globs(_CODE_BACKEND),
+            ["backend/**", "frontend/**", "src/**"],
+        )
+
+    def test_is_code_path_default_src_only(self) -> None:
+        globs = ["src/**"]
+        self.assertTrue(cmp.is_code_path("src/example.py", globs))
+        self.assertTrue(cmp.is_code_path("/tmp/repo/src/pkg/mod.py", globs))
+        self.assertTrue(cmp.is_code_path("src", globs))
+        self.assertFalse(cmp.is_code_path("backend/foo.py", globs))
+        self.assertFalse(cmp.is_code_path("docs/memories/pass-all.md", globs))
+        self.assertFalse(cmp.is_code_path("src_notes.md", globs))
+
+    def test_is_code_path_overlay_includes_backend(self) -> None:
+        globs = ["backend/**", "frontend/**", "src/**"]
+        self.assertTrue(cmp.is_code_path("backend/foo.py", globs))
+        self.assertTrue(cmp.is_code_path("frontend/app.js", globs))
+        self.assertTrue(cmp.is_code_path("src/example.py", globs))
+        self.assertFalse(cmp.is_code_path("docs/readme.md", globs))
+        self.assertFalse(cmp.is_code_path("qa/notes.md", globs))
 
     def test_extract_edit_path_tool_input(self) -> None:
         payload = {"tool_input": {"file_path": "src/example.py"}}
@@ -195,6 +226,24 @@ class MainExitTests(unittest.TestCase):
     def test_is_src_path_cli(self) -> None:
         self.assertEqual(cmp.main(["is-src-path", "src/x.py"]), cmp.EXIT_OK)
         self.assertEqual(cmp.main(["is-src-path", "README.md"]), cmp.EXIT_VIOLATION)
+        self.assertEqual(
+            cmp.main(["--config", str(_SHIPPED), "is-src-path", "backend/foo.py"]),
+            cmp.EXIT_VIOLATION,
+        )
+
+    def test_is_src_path_cli_respects_config_globs(self) -> None:
+        self.assertEqual(
+            cmp.main(["--config", str(_CODE_BACKEND), "is-src-path", "backend/foo.py"]),
+            cmp.EXIT_OK,
+        )
+        self.assertEqual(
+            cmp.main(["--config", str(_CODE_BACKEND), "is-src-path", "docs/x.md"]),
+            cmp.EXIT_VIOLATION,
+        )
+        self.assertEqual(
+            cmp.main(["--config", str(_CODE_BACKEND), "is-src-path", "src/example.py"]),
+            cmp.EXIT_OK,
+        )
 
 
 if __name__ == "__main__":

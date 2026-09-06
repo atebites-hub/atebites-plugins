@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it } from "node:test";
@@ -10,6 +11,7 @@ const pluginRoot = join(root, "plugins/factory-policy");
 const consumer = join(pluginRoot, "tests/fixtures/consumer");
 const memories = join(consumer, "docs/memories");
 const failAll = join(pluginRoot, "tests/fixtures/fail-all.toml");
+const codeBackend = join(pluginRoot, "tests/fixtures/code-backend.toml");
 const shipped = join(pluginRoot, "config/policy.toml");
 const gate = join(pluginRoot, "scripts/policy-gate.sh");
 const stopVerify = join(pluginRoot, "scripts/stop-verify.sh");
@@ -58,6 +60,33 @@ function run(command, args, options = {}) {
 function catalogEntry(relPath, name) {
   const marketplace = JSON.parse(read(relPath));
   return (marketplace.plugins || []).find((plugin) => plugin.name === name);
+}
+
+function git(args, cwd) {
+  return spawnSync("git", args, { cwd, encoding: "utf8" });
+}
+
+function makeConsumerGitRepo({ dirtyFiles = {}, overlayToml = null } = {}) {
+  const root = join(mkdtempSync(join(tmpdir(), "fp-code-")), "repo");
+  mkdirSync(root, { recursive: true });
+  cpSync(consumer, root, { recursive: true });
+  if (overlayToml) {
+    mkdirSync(join(root, "config"), { recursive: true });
+    writeFileSync(join(root, "config", "factory-policy.toml"), overlayToml);
+  }
+  const init = git(["init"], root);
+  assert.equal(init.status, 0, init.stderr);
+  assert.equal(git(["config", "user.email", "factory-policy@test.local"], root).status, 0);
+  assert.equal(git(["config", "user.name", "factory-policy-test"], root).status, 0);
+  assert.equal(git(["add", "-A"], root).status, 0);
+  const commit = git(["commit", "-m", "fixture"], root);
+  assert.equal(commit.status, 0, commit.stderr);
+  for (const [rel, contents] of Object.entries(dirtyFiles)) {
+    const full = join(root, rel);
+    mkdirSync(dirname(full), { recursive: true });
+    writeFileSync(full, contents);
+  }
+  return root;
 }
 
 function catalogSourcePath(entry) {
@@ -147,6 +176,8 @@ describe("factory-policy v1 (warn-default, catalog-listed, not a Factory default
     const toml = readFileSync(shipped, "utf8");
     assert.match(toml, /"C3\.1"\s*=\s*"warn"/);
     assert.match(toml, /C5\s*=\s*"warn"/);
+    assert.match(toml, /\[paths\]/);
+    assert.match(toml, /code\s*=\s*\[\s*"src\/\*\*"\s*\]/);
     assert.doesNotMatch(toml, /"C4"\s*=/);
   });
 
@@ -264,7 +295,7 @@ describe("factory-policy checker + policy-gate integration", () => {
       input: JSON.stringify({ tool_input: { file_path: "docs/agents/coding_standards.md" } }),
     });
     assert.equal(skip.status, 0, skip.stderr);
-    assert.match(skip.stderr, /not under src\/\*\*|skipped \(not a pass\)/);
+    assert.match(skip.stderr, /path not under code paths; skipped \(not a pass\)/);
 
     const empty = run("bash", [gate, "edit"], { input: "" });
     assert.equal(empty.status, 0, empty.stderr);
@@ -322,7 +353,7 @@ print(td / "consumer")
   it("stop-verify respects src-changed override and hop-cap stub", () => {
     const skipped = run("bash", [stopVerify], { srcChanged: 0 });
     assert.equal(skipped.status, 0, skipped.stderr);
-    assert.match(skipped.stderr, /skipped \(not a pass\)/);
+    assert.match(skipped.stderr, /code paths unchanged; skipped \(not a pass\)/);
     assert.doesNotMatch(skipped.stderr, /SPIKE stub/);
 
     const ran = run("bash", [stopVerify], { srcChanged: 1, config: shipped });
@@ -341,7 +372,150 @@ print(td / "consumer")
     const skipped = run("bash", [guardBash], { srcChanged: 0 });
     assert.equal(skipped.status, 0, skipped.stderr);
     assert.doesNotMatch(skipped.stderr, /SPIKE stub/);
-    assert.match(skipped.stderr, /skipped \(not a pass\)/);
+    assert.match(skipped.stderr, /no staged code paths; skipped \(not a pass\)/);
+  });
+
+  it("default code globs still skip backend/** and enter on src/**", () => {
+    const backendSkip = run("bash", [gate, "edit"], {
+      input: JSON.stringify({ tool_input: { file_path: "backend/foo.py" } }),
+      config: shipped,
+    });
+    assert.equal(backendSkip.status, 0, backendSkip.stderr);
+    assert.match(backendSkip.stderr, /path not under code paths; skipped \(not a pass\)/);
+    assert.doesNotMatch(backendSkip.stderr, /hop cap not implemented/);
+
+    const srcEnter = run("bash", [gate, "edit"], {
+      input: JSON.stringify({ tool_input: { file_path: "src/example.py" } }),
+      config: shipped,
+    });
+    assert.equal(srcEnter.status, 0, srcEnter.stderr);
+    assert.doesNotMatch(srcEnter.stderr, /skipped \(not a pass\)/);
+  });
+
+  it("overlay code globs enter checkers for backend/** and still skip docs", () => {
+    const backendEnter = run("bash", [gate, "edit"], {
+      input: JSON.stringify({ tool_input: { file_path: "backend/foo.py" } }),
+      config: codeBackend,
+    });
+    assert.equal(backendEnter.status, 0, backendEnter.stderr);
+    assert.doesNotMatch(backendEnter.stderr, /skipped \(not a pass\)/);
+
+    const docsSkip = run("bash", [gate, "edit"], {
+      input: JSON.stringify({ tool_input: { file_path: "docs/agents/coding_standards.md" } }),
+      config: codeBackend,
+    });
+    assert.equal(docsSkip.status, 0, docsSkip.stderr);
+    assert.match(docsSkip.stderr, /path not under code paths; skipped \(not a pass\)/);
+  });
+
+  it("stop-verify default skips backend-only git changes (not a pass)", () => {
+    const repo = makeConsumerGitRepo({
+      dirtyFiles: { "backend/foo.py": "# dogfood layout\n" },
+    });
+    const skipped = spawnSync("bash", [stopVerify], {
+      encoding: "utf8",
+      cwd: repo,
+      env: {
+        ...process.env,
+        FACTORY_POLICY_REPO_ROOT: repo,
+        FACTORY_POLICY_CONFIG: shipped,
+      },
+    });
+    assert.equal(skipped.status, 0, skipped.stderr);
+    assert.match(skipped.stderr, /code paths unchanged; skipped \(not a pass\)/);
+    assert.doesNotMatch(skipped.stderr, /hop cap not implemented/);
+  });
+
+  it("stop-verify overlay runs checkers when backend/** changes", () => {
+    const overlay = readFileSync(codeBackend, "utf8");
+    const repo = makeConsumerGitRepo({
+      dirtyFiles: { "backend/foo.py": "# dogfood layout\n" },
+      overlayToml: overlay,
+    });
+    const ran = spawnSync("bash", [stopVerify], {
+      encoding: "utf8",
+      cwd: repo,
+      env: {
+        ...process.env,
+        FACTORY_POLICY_REPO_ROOT: repo,
+      },
+    });
+    assert.equal(ran.status, 0, ran.stderr);
+    assert.match(ran.stderr, /hop cap not implemented/);
+    assert.doesNotMatch(ran.stderr, /skipped \(not a pass\)/);
+  });
+
+  it("stop-verify overlay still skips paths outside configured globs", () => {
+    const overlay = readFileSync(codeBackend, "utf8");
+    const repo = makeConsumerGitRepo({
+      dirtyFiles: { "qa/notes.md": "outside globs\n" },
+      overlayToml: overlay,
+    });
+    const skipped = spawnSync("bash", [stopVerify], {
+      encoding: "utf8",
+      cwd: repo,
+      env: {
+        ...process.env,
+        FACTORY_POLICY_REPO_ROOT: repo,
+      },
+    });
+    assert.equal(skipped.status, 0, skipped.stderr);
+    assert.match(skipped.stderr, /code paths unchanged; skipped \(not a pass\)/);
+    assert.doesNotMatch(skipped.stderr, /hop cap not implemented/);
+  });
+
+  it("stop-verify default still enters when src/** is dirty", () => {
+    const repo = makeConsumerGitRepo({
+      dirtyFiles: { "src/example.py": "# src still counts\n" },
+    });
+    const ran = spawnSync("bash", [stopVerify], {
+      encoding: "utf8",
+      cwd: repo,
+      env: {
+        ...process.env,
+        FACTORY_POLICY_REPO_ROOT: repo,
+        FACTORY_POLICY_CONFIG: shipped,
+      },
+    });
+    assert.equal(ran.status, 0, ran.stderr);
+    assert.match(ran.stderr, /hop cap not implemented/);
+  });
+
+  it("guard-bash overlay treats staged backend/** as code and skips docs", () => {
+    const overlay = readFileSync(codeBackend, "utf8");
+    const repo = makeConsumerGitRepo({
+      dirtyFiles: {
+        "backend/foo.py": "# staged backend\n",
+        "docs/agents/extra.md": "# not code\n",
+      },
+      overlayToml: overlay,
+    });
+    const addBackend = git(["add", "backend/foo.py"], repo);
+    assert.equal(addBackend.status, 0, addBackend.stderr);
+    const entered = spawnSync("bash", [guardBash], {
+      encoding: "utf8",
+      cwd: repo,
+      env: {
+        ...process.env,
+        FACTORY_POLICY_REPO_ROOT: repo,
+      },
+    });
+    assert.equal(entered.status, 0, entered.stderr);
+    assert.doesNotMatch(entered.stderr, /skipped \(not a pass\)/);
+
+    git(["reset", "HEAD", "backend/foo.py"], repo);
+    const addDocs = git(["add", "docs/agents/extra.md"], repo);
+    assert.equal(addDocs.status, 0, addDocs.stderr);
+    const skipped = spawnSync("bash", [guardBash], {
+      encoding: "utf8",
+      cwd: repo,
+      env: {
+        ...process.env,
+        FACTORY_POLICY_REPO_ROOT: repo,
+      },
+    });
+    assert.equal(skipped.status, 0, skipped.stderr);
+    assert.match(skipped.stderr, /no staged code paths; skipped \(not a pass\)/);
   });
 
   it("checker CLI matches policy-gate.md §2.1 exit codes", () => {

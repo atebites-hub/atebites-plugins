@@ -14,6 +14,7 @@ Exit codes (policy-gate.md §2.1):
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import os
 import re
@@ -21,6 +22,7 @@ import shlex
 import shutil
 import sys
 import tomllib
+from collections.abc import Sequence
 from pathlib import Path
 
 EXIT_OK = 0
@@ -39,6 +41,7 @@ CHECK_NAMES = {
 }
 VALID_MODES = ("warn", "fail", "off")
 DEFAULT_MODES = {check_id: "warn" for check_id in CHECK_IDS}
+DEFAULT_CODE_GLOBS = ("src/**",)
 ALLOWED_SCOPES = ("inline", "open-dynamic-workflows")
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
@@ -176,10 +179,43 @@ def command_resolves(first: str, repo_root: Path) -> bool:
     return shutil.which(first) is not None
 
 
+def _normalize_path(path: str) -> str:
+    normalized = path.replace("\\", "/").strip()
+    while normalized.startswith("./"):
+        normalized = normalized[2:]
+    return normalized
+
+
+def _path_candidates(path: str) -> list[str]:
+    parts = [
+        part for part in _normalize_path(path).split("/") if part not in ("", ".")
+    ]
+    return ["/".join(parts[index:]) for index in range(len(parts))]
+
+
+def _glob_matches(candidate: str, glob: str) -> bool:
+    pattern = glob.replace("\\", "/").strip()
+    if not pattern:
+        return False
+    if fnmatch.fnmatch(candidate, pattern):
+        return True
+    if pattern.endswith("/**") and candidate == pattern[:-3]:
+        return True
+    return False
+
+
+def is_code_path(path: str, globs: Sequence[str]) -> bool:
+    if not path or not globs:
+        return False
+    for candidate in _path_candidates(path):
+        for glob in globs:
+            if _glob_matches(candidate, glob):
+                return True
+    return False
+
+
 def is_src_path(path: str) -> bool:
-    normalized = path.replace("\\", "/")
-    parts = [part for part in normalized.split("/") if part not in ("", ".")]
-    return "src" in parts
+    return is_code_path(path, DEFAULT_CODE_GLOBS)
 
 
 def is_in_progress(text: str) -> bool:
@@ -239,7 +275,7 @@ def _apply_check_table(modes: dict[str, str], table: object, source: Path) -> No
         modes[key] = value
 
 
-def load_modes(config_path: Path) -> dict[str, str]:
+def _read_toml(config_path: Path) -> dict[str, object]:
     try:
         text = config_path.read_text(encoding="utf-8")
     except OSError as exc:
@@ -248,10 +284,35 @@ def load_modes(config_path: Path) -> dict[str, str]:
         data = tomllib.loads(text)
     except tomllib.TOMLDecodeError as exc:
         raise ValueError(f"unreadable config {config_path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ValueError(f"unreadable config {config_path}: root must be a table")
+    return data
+
+
+def load_modes(config_path: Path) -> dict[str, str]:
+    data = _read_toml(config_path)
     modes = _default_modes()
     if "checks" in data:
         _apply_check_table(modes, data["checks"], config_path)
     return modes
+
+
+def load_code_globs(config_path: Path) -> list[str]:
+    data = _read_toml(config_path)
+    raw_paths = data.get("paths")
+    if raw_paths is None:
+        return list(DEFAULT_CODE_GLOBS)
+    if not isinstance(raw_paths, dict):
+        raise ValueError(f"{config_path}: [paths] must be a table")
+    raw_code = raw_paths.get("code")
+    if raw_code is None:
+        return list(DEFAULT_CODE_GLOBS)
+    if not isinstance(raw_code, list):
+        raise ValueError(f"{config_path}: paths.code must be an array of globs")
+    globs = [str(item).strip() for item in raw_code if str(item).strip()]
+    if not globs:
+        return list(DEFAULT_CODE_GLOBS)
+    return globs
 
 
 def resolve_config_path(repo_root: Path, explicit: str | None) -> Path:
@@ -431,7 +492,7 @@ def missing_memory_finding(modes: dict[str, str]) -> Finding:
     severity = "fail" if any(modes.get(check_id) == "fail" for check_id in named) else "warn"
     return Finding(
         check_id="gate",
-        message="no in_progress memory under docs/memories/ while src/** is in play",
+        message="no in_progress memory under docs/memories/ while code paths are in play",
         fix="create docs/memories/YYYY-MM-DD-<slug>.md from the memory-system template and set state: in_progress",
         mode=severity,
     )
@@ -549,7 +610,13 @@ def main(argv: list[str] | None = None) -> int:
         if len(rest) != 2 or not rest[1]:
             _print_usage()
             return EXIT_USAGE
-        return EXIT_OK if is_src_path(rest[1]) else EXIT_VIOLATION
+        try:
+            config_path = resolve_config_path(repo_root, parsed.config)
+            globs = load_code_globs(config_path)
+        except (OSError, ValueError) as exc:
+            print(f"factory-policy: {exc}", file=sys.stderr)
+            return EXIT_ENV
+        return EXIT_OK if is_code_path(rest[1], globs) else EXIT_VIOLATION
     if rest and rest[0] == "list-in-progress":
         return _cmd_list_in_progress(repo_root)
     if rest and rest[0] == "gate-in-progress":

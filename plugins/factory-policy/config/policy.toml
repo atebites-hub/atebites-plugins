@@ -8,10 +8,12 @@
 # Assistant seats the project-factory template; QA verifies before fail-mode
 # promotion. Do not treat a warn-only exit 0 as "checks were skipped."
 #
-# Consumer overlay (copy/edit; later keys win):
+# Consumer overlay (copy/edit; later file wins as the resolved config):
 #   1. Copy this file to <repo>/config/factory-policy.toml
 #   2. Change selected checks to fail (or off)
-#   3. Or set FACTORY_POLICY_CONFIG=/absolute/path/to.toml
+#   3. Widen [paths].code if durable edits live outside src/** (replaces
+#      this list; include src/** if you still want it)
+#   4. Or set FACTORY_POLICY_CONFIG=/absolute/path/to.toml
 #
 # Search order: --config, $FACTORY_POLICY_CONFIG, <repo>/config/factory-policy.toml,
 # then this shipped file.
@@ -23,3 +25,8 @@
 C5 = "warn"
 C6 = "warn"
 C7 = "warn"
+
+[paths]
+# Trees that enter PreToolUse / stop-verify / guard-bash.
+# Default stays src/** (project-factory). Not a Factory default.
+code = ["src/**"]

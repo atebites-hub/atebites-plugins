@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # factory-policy v1 — Tier 1 git / optional regex deny (warn-default).
 #
-# When staged src/** exists, run the same C3.1–C3.3/C5/C6 checkers on
+# When staged code paths exist (default src/**), run the same C3.1–C3.3/C5/C6 checkers on
 # in_progress memories. Fail-mode → exit 1 (git hook block).
 # Optional: GUARD_BASH_COMMAND or $1 is a shell command to regex-deny.
 # Environment errors fail-open. No SPIKE-stub soft-pass.
@@ -42,7 +42,7 @@ if ! factory_policy_require_python; then
 fi
 
 if ! factory_policy_staged_src; then
-  printf 'factory-policy: no staged src/**; skipped (not a pass)\n' >&2
+  printf 'factory-policy: no staged code paths; skipped (not a pass)\n' >&2
   exit 0
 fi
 

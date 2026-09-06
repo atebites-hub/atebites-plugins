@@ -1,0 +1,4 @@
+# Consumer overlay: widen the code-path gate for non-src layouts.
+# Omitting [checks] keeps built-in warn defaults.
+[paths]
+code = ["backend/**", "frontend/**", "src/**"]

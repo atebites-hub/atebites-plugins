@@ -3,7 +3,7 @@
 #
 # Modes:
 #   check-memory <path>  checker exit contract 0/1/2/3 (policy-gate.md §2.1)
-#   edit                 harness hook (default): src/** requires in_progress
+#   edit                 harness hook (default): code paths (default src/**) require in_progress
 #                        memory that passes checkers. Fail-mode → exit 2.
 #
 # Not a Factory default. Catalog-listed for pin install only. No SPIKE-stub soft-pass.
@@ -18,8 +18,9 @@ usage() {
 usage: policy-gate.sh [edit]
        policy-gate.sh check-memory <path>
 
-edit (default): read harness stdin JSON; if the path is under src/**, require
-an in_progress docs/memories/ file that passes C3.1–C3.3/C5/C6. Warn → 0.
+edit (default): read harness stdin JSON; if the path matches [paths].code
+(default src/**), require an in_progress docs/memories/ file that passes
+C3.1–C3.3/C5/C6. Warn → 0.
 Fail-mode violation → 2 (hook block). Environment errors fail-open (0).
 
 check-memory: run checkers on <path> (exit 0 pass/warn, 1 fail, 2 usage, 3 env).
@@ -89,7 +90,7 @@ factory_policy_run_checker is-src-path "$edit_path"
 src_rc=$?
 set -e
 if [[ "$src_rc" -ne 0 ]]; then
-  printf 'factory-policy: path not under src/**; skipped (not a pass)\n' >&2
+  printf 'factory-policy: path not under code paths; skipped (not a pass)\n' >&2
   exit 0
 fi
 
