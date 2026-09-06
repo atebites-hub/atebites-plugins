@@ -3,7 +3,7 @@
 **Status:** Thin marketplace wrap chosen — **Upcoming / P N** /
 catalog-listed for pin install / not a Factory default.
 **Not** wired into project-factory `enabledPlugins`. **Not** a claim
-that GitNexus is Factory-installed. **Not** Dogfood Cursor HARD PASS /
+that GitNexus is Factory-installed. **Not** Dogfood Cursor live QA /
 Lane B. Not Superpowers-class.
 
 This catalog path keeps `plugins/gitnexus/` as an **upcoming** inline
@@ -133,7 +133,7 @@ No skills. No hooks. No secrets. No gitlink.
 - **No cyclomatic complexity gates.**
 - **No invented secrets.**
 - **No soft-pass.** Missing MCP is not "GitNexus works."
-- **No Dogfood Cursor HARD PASS / Lane B.**
+- **No Dogfood Cursor live QA / Lane B.**
 - **No claim that GitNexus editor skills/hooks are installed.**
 - **No full monorepo fork / gitlink / weekday sync.**
 - **No CE / taskboard / j-space.**

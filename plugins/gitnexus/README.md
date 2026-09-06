@@ -49,7 +49,7 @@ not a pass.
   (those float `@latest` inside the PolyForm-NC monorepo)
 - Superpowers / ponytail / Advisor / ODW / factory-policy pin bumps
 - CE, taskboard, j-space
-- Dogfood Cursor HARD PASS / Lane B attestation
+- Dogfood Cursor live QA / Lane B attestation
 
 ## Opt-in (upcoming only)
 

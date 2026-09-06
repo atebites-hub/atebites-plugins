@@ -109,6 +109,7 @@ describe("gitnexus P2 wrap (catalog-listed, not a Factory default)", () => {
     assert.match(readme, /enabledPlugins/);
     assert.doesNotMatch(readme, /HARD PASS/);
     assert.doesNotMatch(readme, /Lane B PASS/);
+    assert.match(readme, /Lane B/);
 
     const mcp = JSON.parse(readFileSync(join(pluginRoot, "mcp.json"), "utf8"));
     const claudeMcp = JSON.parse(readFileSync(join(pluginRoot, ".mcp.json"), "utf8"));
