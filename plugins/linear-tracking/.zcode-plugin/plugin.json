@@ -1,6 +1,6 @@
 {
   "name": "linear-tracking",
   "version": "0.0.0-spike",
-  "description": "SPIKE stub: Linear tracker placement. Upcoming / not a Factory default. Not catalog-listed.",
+  "description": "SPIKE vendored pin + Factory placement. Upcoming / not a Factory default. Not catalog-listed.",
   "skills": "./skills"
 }
