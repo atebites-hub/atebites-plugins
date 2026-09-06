@@ -9,9 +9,10 @@ description: >
 
 # linear-tracking
 
-**Upcoming / not a Factory default. Not catalog-listed.** Factory
-placement overlay on the vendored openai/skills curated `linear` pin.
-It is not a Linear API client and it does not install Linear Agent skills.
+**Upcoming / P N / not a Factory default. Not catalog-listed.** Factory
+placement overlay on the interim openai/skills curated `linear` pin
+(deprecated upstream; not Superpowers-class). It is not a Linear API
+client and it does not install Linear Agent skills.
 
 SoT: PJTemplate investigation `linear-driven-flow.md` §3 (cited by
 name; not on PJTemplate `main` as of 2026-09-05) plus the Jay lock:

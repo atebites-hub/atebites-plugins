@@ -1,15 +1,17 @@
 # SPIKE: linear-tracking (marketplace path)
 
-**Status:** Vendored pin chosen. Still SPIKE / Upcoming. **Not** a
-Factory default. **Not** catalog-listed. **Not** wired into
-project-factory `enabledPlugins`. **Not** a claim that Linear Agent
-skills are installed.
+**Status:** Vendored pin chosen — **interim** skill body only.
+Upcoming / **P N** / not a Factory default / not catalog-listed.
+**Not** wired into project-factory `enabledPlugins`. **Not** a claim
+that Linear Agent skills are installed. Not Superpowers-class.
 
 This catalog path keeps `plugins/linear-tracking/` as an **upcoming**
 inline wrap (not a submodule of openai/skills), the same class as
 host-adapters. Host marketplaces do **not** list it. Do not invent
 Linear API secrets. Do not treat missing MCP as a working tracker (no
-soft-pass).
+soft-pass). Candidate rejection table (why other remotes are not
+Factory pins): [`plugins/linear-tracking/UPSTREAM.md`](../plugins/linear-tracking/UPSTREAM.md)
+(absorbs [#34](https://github.com/atebites-hub/atebites-plugins/pull/34)).
 
 The pack name is **`linear-tracking`**. Jay lock (2026-09-05): **keep
 linear-tracking**. It replaces discarded `taskboard-workflow`. Factory
@@ -38,14 +40,15 @@ This spike does **not** change that plugin. C6 stays the memory citation
 check. linear-tracking is how an agent **finds** the Linear issue and
 **closes** it from a PR.
 
-## Pin (chosen)
+## Pin (chosen — interim / P N)
 
 Jay lock: prefer a **vendored pin** of an existing skill/plugin and
 **upstream maintain** that pin (not necessarily atebites-authored). Same
-class as the Superpowers pin-only submodule: pin a SHA after review; do
-not float `main`. openai/skills is a multi-skill repo, so this pin is a
-**vendored copy** of one skill folder plus `UPSTREAM.md`, not a gitlink
-of the whole repo.
+*intent* as the Superpowers pin-only submodule: record a SHA; do not
+float `main`. This is not Superpowers-class. openai/skills is a
+**deprecated** multi-skill repo, so this pin is a **vendored copy** of
+one skill folder plus `UPSTREAM.md`, not a gitlink of the whole repo.
+Replace when a standalone OSI-licensed plugin appears.
 
 | Field | Value |
 | --- | --- |
@@ -54,13 +57,24 @@ of the whole repo.
 | **SHA** | `49f948faa9258a0c61caceaf225e179651397431` (openai/skills `main` tip, 2026-09-06) |
 | **Local tree** | `plugins/linear-tracking/vendor/linear/` |
 | **Transport** | official Linear MCP `https://mcp.linear.app/mcp` (operator OAuth) |
+| **Class** | Upcoming / **P N** / interim skill body — not Factory default |
 
 openai/skills README is **deprecated** (points at openai/plugins). Still
-the best MCP-CRUD skill: official MCP URL, OAuth, tool names, no
-secrets. openai/plugins `plugins/linear` @
-`1e285826e604f66f7208f7ac4dba0fe8341d1f57` is an app-backed connector
-**with no bundled skills** — not clearly superior, not a skill pin.
-Rejected: atebites-authored Linear GraphQL/REST or baked
+the best MCP-CRUD **body**: official MCP URL, OAuth, tool names, no
+secrets. [#34](https://github.com/atebites-hub/atebites-plugins/pull/34)
+inspected the other remotes; none is a Factory pin:
+
+| Remote | Evidence SHA | Reject reason (not a Factory pin) |
+| --- | --- | --- |
+| `linear/cursor-plugin` | HEAD `c2c4cb2ab23206c9219b0dd31c9571e4c922faeb` | Cursor-only; **no LICENSE**; MCP wrapper, no placement |
+| `openai/plugins` `plugins/linear` | HEAD `1e285826e604f66f7208f7ac4dba0fe8341d1f57`; path `33bd9529725fcee78c9e51fcbaa93cd963c3a47b` | App-backed connector; **no bundled skills**; monorepo gitlink reject |
+| `anthropics/claude-plugins-official` `external_plugins/linear` | HEAD `85cce0381e7860082641b59d961a2b8c368b8b79`; path `ab2b6d0cad88ead3da5466ef2acef0c4a351971e` | Claude-only catalog subtree; no skills |
+| `openai/skills` curated `linear` | HEAD `49f948faa9258a0c61caceaf225e179651397431`; path `77963424cd7687fd52e5fcfdd3f08d826ab9b1ab` | **Interim body only** — deprecated repo; not a multi-host plugin |
+| Third-party GraphQL / `linear/linear` SDK | not selected | Would be an atebites Linear API client — rejected |
+
+Do **not** copy those remotes into `.gitmodules`. Factory Plugins bot:
+do not fork `linear/cursor-plugin` or gitlink the OpenAI/Anthropic
+catalogs. Rejected: atebites-authored Linear GraphQL/REST or baked
 `LINEAR_API_KEY`.
 
 The Factory skill **name stays `linear-tracking`**. The vendored body
@@ -95,10 +109,10 @@ progress notes. Still no invented secrets.
 
 ## Goal
 
-Give the marketplace an **upcoming-only** seat for the tracker that
-replaces `taskboard-workflow`, with a real vendor SHA, without
-promoting it, without a fake pin, and without soft-passing Linear as
-installed.
+Give the marketplace an **upcoming / P N** interim skill-body pin for
+the tracker that replaces `taskboard-workflow`, with a real vendor SHA,
+without promoting it, without claiming Superpowers-class seating, and
+without soft-passing Linear as installed.
 
 ## Layout
 
@@ -151,25 +165,25 @@ under Upcoming / P2 spike only.
 
 ## This pin vs later
 
-**In this PR (vendored pin, still upcoming):**
+**In this PR (interim vendor, still Upcoming / P N):**
 
-- Spike doc + plugin README labeled SPIKE / upcoming / not Factory-default
-- Vendor tree + `UPSTREAM.md` SHA
+- Spike doc + plugin README labeled SPIKE / upcoming / **P N** / not Factory-default
+- Vendor tree + `UPSTREAM.md` SHA + #34 rejection table
 - Skill: placement rules + pointer at the pin
 - Thin host manifests
 - README / FORK-INDEX **Upcoming / P2 spike** mention only
 
 **Later (not this PR):**
 
+- Standalone OSI-licensed plugin (then true-fork + weekday sync)
 - Operator OAuth to official Linear MCP (Jay credentials; Lane B)
 - Catalog entry or Factory-default promotion
 - project-factory `enabledPlugins`
 - Any Linear Agent / `@Cursor` automation (still operator-gated)
-- Pin bump after review if upstream skill body moves
 
 ## Success for this pin
 
-PR with this doc + vendor SHA + placement skill; SPIKE / upcoming-only
-labels; pin recorded (vendor + upstream maintain); three placement
-rules present; no catalog row; no Factory kept-list entry; no invented
-secrets; not merged as a Factory default.
+PR with this doc + vendor SHA + placement skill; Upcoming / **P N** /
+not Factory default / not catalog-listed; #34 remotes recorded as not
+Factory pins; three placement rules present; no catalog row; no Factory
+kept-list entry; no invented secrets; not merged as a Factory default.
