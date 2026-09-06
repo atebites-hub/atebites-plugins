@@ -3,7 +3,8 @@ name: policy-gate
 description: >
   Factory-policy memory field contract (C3.1 doc-cited, C3.2 scope-literal,
   C3.3 plan-filled, C5 gate-runnable, C6 issue-linked, C7 plan-approved).
-  Use when planning, before editing src/**, and when closing a task.
+  Use when planning, before editing configured code paths (default src/**),
+  and when closing a task.
   Native models reason; this skill does not call sequentialthinking.
 ---
 
@@ -84,11 +85,12 @@ the plan is missing or unsigned, stop for the human. Do not self-approve.
 
 ## When this applies
 
-Before editing `src/**` (`policy-gate.sh edit` / PreToolUse). At turn end
-(`stop-verify.sh`; hop cap TBD). At commit (`guard-bash.sh` on staged
-`src/**`).
+Before editing configured code paths (`policy-gate.sh edit` / PreToolUse;
+default `src/**`, widen `[paths] code` in `config/factory-policy.toml`).
+At turn end (`stop-verify.sh`; hop cap TBD). At commit (`guard-bash.sh` on
+staged code paths).
 
-Throwaway spikes that never land durable `src/**` do not need the ceremony.
+Throwaway spikes that never land durable code-path edits do not need the ceremony.
 Promote findings into a real memory before durable code lands.
 
 ## Out of contract

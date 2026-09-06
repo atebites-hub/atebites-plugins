@@ -54,12 +54,32 @@ factory_policy_run_checker() {
   python3 "$FACTORY_POLICY_CHECKER" --repo-root "$repo" "$@"
 }
 
+# 0 = enter checkers; 1 = caller should exit 0 after this printed.
+# rc 1 → honest skip. Any other non-zero → fail-open (not "not a code path").
+factory_policy_decide_code_path_gate() {
+  local rc=$1
+  local skip_msg=$2
+  case "$rc" in
+    0) return 0 ;;
+    1)
+      printf 'factory-policy: %s\n' "$skip_msg" >&2
+      return 1
+      ;;
+    *)
+      factory_policy_fail_open "could not read code-path config"
+      return 1
+      ;;
+  esac
+}
+
+# True when $1 matches configured [paths].code globs (default src/**).
+# Name kept for callers; matching is no longer a hard-coded src case.
 factory_policy_path_is_src() {
   local path=$1
-  case "$path" in
-    src|src/*|*/src|*/src/*) return 0 ;;
-    *) return 1 ;;
-  esac
+  if ! command -v python3 >/dev/null 2>&1; then
+    return 1
+  fi
+  factory_policy_run_checker is-src-path "$path" >/dev/null
 }
 
 factory_policy_collect_changed_paths() {
@@ -85,14 +105,7 @@ factory_policy_src_changed() {
     0|false|no) return 1 ;;
   esac
 
-  local path
-  while IFS= read -r path; do
-    [[ -z "$path" ]] && continue
-    if factory_policy_path_is_src "$path"; then
-      return 0
-    fi
-  done < <(factory_policy_collect_changed_paths)
-  return 1
+  factory_policy_collect_changed_paths | factory_policy_run_checker any-code-path >/dev/null
 }
 
 factory_policy_staged_src() {
@@ -102,7 +115,7 @@ factory_policy_staged_src() {
     0|false|no) return 1 ;;
   esac
 
-  local repo path
+  local repo
   repo="$(factory_policy_repo_root)"
   if ! command -v git >/dev/null 2>&1; then
     return 1
@@ -110,11 +123,6 @@ factory_policy_staged_src() {
   if ! git -C "$repo" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     return 1
   fi
-  while IFS= read -r path; do
-    [[ -z "$path" ]] && continue
-    if factory_policy_path_is_src "$path"; then
-      return 0
-    fi
-  done < <(git -C "$repo" diff --name-only --cached 2>/dev/null || true)
-  return 1
+  { git -C "$repo" diff --name-only --cached 2>/dev/null || true; } \
+    | factory_policy_run_checker any-code-path >/dev/null
 }

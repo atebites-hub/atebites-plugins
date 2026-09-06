@@ -1,0 +1,3 @@
+# Overlay that replaces shipped src/** (does not union).
+[paths]
+code = ["backend/**"]

@@ -44,12 +44,22 @@ Shipped file: [`plugins/factory-policy/config/policy.toml`](../plugins/factory-p
 
 Default every named check to `warn`. Modes: `warn` | `fail` | `off`.
 
-Consumer overlay (later file wins for listed keys):
+Consumer overlay (later file wins as the resolved config):
 
 1. Copy the shipped file to `<repo>/config/factory-policy.toml`
 2. Change selected checks to `fail` (or `off`)
-3. Or set `FACTORY_POLICY_CONFIG=/absolute/path/to.toml`
-4. CLI: `check_memory_policy.py --config PATH`
+3. Optionally set `[paths] code` if durable edits live outside `src/**`
+   (the list replaces the shipped globs; include `src/**` if you still want it)
+4. Or set `FACTORY_POLICY_CONFIG=/absolute/path/to.toml`
+5. CLI: `check_memory_policy.py --config PATH`
+
+Shipped default: `code = ["src/**"]`. Example consumer overlay for a
+`backend/**` layout (not a Factory default):
+
+```toml
+[paths]
+code = ["backend/**", "frontend/**", "src/**"]
+```
 
 ## Checker exit contract (policy-gate.md §2.1)
 
@@ -71,11 +81,12 @@ policy violation.
 | Script | Role |
 | --- | --- |
 | `scripts/check_memory_policy.py` | Field checkers + `extract-path` / `gate-in-progress` |
-| `scripts/policy-gate.sh` | `check-memory <path>` and `edit` (stdin JSON → path; non-`src/**` skipped) |
-| `scripts/stop-verify.sh` | Recheck in_progress memories when `src` changed; hop cap stub (TBD) |
-| `scripts/guard-bash.sh` | Tier 1: staged `src/**` → same checkers; optional regex deny |
+| `scripts/policy-gate.sh` | `check-memory <path>` and `edit` (stdin JSON → path; outside `[paths].code` skipped) |
+| `scripts/stop-verify.sh` | Recheck in_progress memories when configured code paths changed; hop cap stub (TBD) |
+| `scripts/guard-bash.sh` | Tier 1: staged code paths → same checkers; optional regex deny |
 
-Skip messages say `skipped (not a pass)`. Scripts do not print `SPIKE stub`.
+Skip messages say `code paths … skipped (not a pass)`. A skip is not a pass.
+Scripts do not print `SPIKE stub`.
 
 ## Out of scope (still)
 

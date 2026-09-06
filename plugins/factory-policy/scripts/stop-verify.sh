@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # factory-policy v1 — Stop / stop verify (warn-default).
 #
-# When src/** changed, re-check in_progress memories (C3.1–C3.3, C5, C6).
+# When configured code paths changed (default src/**), re-check
+# in_progress memories (C3.1–C3.3, C5, C6).
 # Hop-cap numeric limit is TBD — this script runs checkers once and does not
 # invent a hop number. Fail-mode violation → exit 2 (hook block).
 # Environment errors fail-open. No SPIKE-stub soft-pass.
@@ -15,8 +16,12 @@ if ! factory_policy_require_python; then
   exit 0
 fi
 
-if ! factory_policy_src_changed; then
-  printf 'factory-policy: src/** unchanged; skipped (not a pass)\n' >&2
+set +e
+factory_policy_src_changed
+changed_rc=$?
+set -e
+if ! factory_policy_decide_code_path_gate "$changed_rc" \
+  "code paths unchanged; skipped (not a pass)"; then
   exit 0
 fi
 
