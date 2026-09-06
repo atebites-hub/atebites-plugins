@@ -17,6 +17,7 @@ _CONSUMER = _FIXTURES / "consumer"
 _MEMORIES = _CONSUMER / "docs" / "memories"
 _FAIL_ALL = _FIXTURES / "fail-all.toml"
 _CODE_BACKEND = _FIXTURES / "code-backend.toml"
+_CODE_BACKEND_ONLY = _FIXTURES / "code-backend-only.toml"
 _SHIPPED = Path(__file__).resolve().parents[1] / "config" / "policy.toml"
 
 _spec = importlib.util.spec_from_file_location("check_memory_policy", _HELPER)
@@ -244,6 +245,40 @@ class MainExitTests(unittest.TestCase):
             cmp.main(["--config", str(_CODE_BACKEND), "is-src-path", "src/example.py"]),
             cmp.EXIT_OK,
         )
+
+    def test_any_code_path_cli(self) -> None:
+        with mock.patch("sys.stdin", io.StringIO("docs/x.md\nbackend/foo.py\n")):
+            self.assertEqual(
+                cmp.main(["--config", str(_CODE_BACKEND), "any-code-path"]),
+                cmp.EXIT_OK,
+            )
+        with mock.patch("sys.stdin", io.StringIO("docs/x.md\nqa/notes.md\n")):
+            self.assertEqual(
+                cmp.main(["--config", str(_CODE_BACKEND), "any-code-path"]),
+                cmp.EXIT_VIOLATION,
+            )
+        with mock.patch("sys.stdin", io.StringIO("backend/foo.py\n")):
+            self.assertEqual(
+                cmp.main(["--config", str(_SHIPPED), "any-code-path"]),
+                cmp.EXIT_VIOLATION,
+            )
+        with mock.patch("sys.stdin", io.StringIO("src/x.py\n")):
+            self.assertEqual(
+                cmp.main(["--config", str(_SHIPPED), "any-code-path"]),
+                cmp.EXIT_OK,
+            )
+        with mock.patch("sys.stdin", io.StringIO("src/example.py\n")):
+            self.assertEqual(
+                cmp.main(["--config", str(_CODE_BACKEND_ONLY), "any-code-path"]),
+                cmp.EXIT_VIOLATION,
+            )
+        with mock.patch("sys.stdin", io.StringIO("src/x.py\n")):
+            self.assertEqual(
+                cmp.main(
+                    ["--config", str(_FIXTURES / "no-such.toml"), "any-code-path"]
+                ),
+                cmp.EXIT_ENV,
+            )
 
 
 if __name__ == "__main__":

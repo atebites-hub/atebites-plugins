@@ -16,8 +16,12 @@ if ! factory_policy_require_python; then
   exit 0
 fi
 
-if ! factory_policy_src_changed; then
-  printf 'factory-policy: code paths unchanged; skipped (not a pass)\n' >&2
+set +e
+factory_policy_src_changed
+changed_rc=$?
+set -e
+if ! factory_policy_decide_code_path_gate "$changed_rc" \
+  "code paths unchanged; skipped (not a pass)"; then
   exit 0
 fi
 

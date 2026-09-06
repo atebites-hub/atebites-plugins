@@ -12,6 +12,7 @@ const consumer = join(pluginRoot, "tests/fixtures/consumer");
 const memories = join(consumer, "docs/memories");
 const failAll = join(pluginRoot, "tests/fixtures/fail-all.toml");
 const codeBackend = join(pluginRoot, "tests/fixtures/code-backend.toml");
+const codeBackendOnly = join(pluginRoot, "tests/fixtures/code-backend-only.toml");
 const shipped = join(pluginRoot, "config/policy.toml");
 const gate = join(pluginRoot, "scripts/policy-gate.sh");
 const stopVerify = join(pluginRoot, "scripts/stop-verify.sh");
@@ -479,6 +480,49 @@ print(td / "consumer")
     });
     assert.equal(ran.status, 0, ran.stderr);
     assert.match(ran.stderr, /hop cap not implemented/);
+  });
+
+  it("overlay that omits src/** does not treat src as code", () => {
+    const srcSkip = run("bash", [gate, "edit"], {
+      input: JSON.stringify({ tool_input: { file_path: "src/example.py" } }),
+      config: codeBackendOnly,
+    });
+    assert.equal(srcSkip.status, 0, srcSkip.stderr);
+    assert.match(srcSkip.stderr, /path not under code paths; skipped \(not a pass\)/);
+
+    const backendEnter = run("bash", [gate, "edit"], {
+      input: JSON.stringify({ tool_input: { file_path: "backend/foo.py" } }),
+      config: codeBackendOnly,
+    });
+    assert.equal(backendEnter.status, 0, backendEnter.stderr);
+    assert.doesNotMatch(backendEnter.stderr, /skipped \(not a pass\)/);
+  });
+
+  it("broken code-path config fail-opens instead of claiming a non-code skip", () => {
+    const missing = join(pluginRoot, "tests/fixtures/no-such.toml");
+    const edit = run("bash", [gate, "edit"], {
+      input: JSON.stringify({ tool_input: { file_path: "src/example.py" } }),
+      config: missing,
+    });
+    assert.equal(edit.status, 0, edit.stderr);
+    assert.match(edit.stderr, /fail-open/);
+    assert.doesNotMatch(edit.stderr, /path not under code paths/);
+
+    const repo = makeConsumerGitRepo({
+      dirtyFiles: { "src/example.py": "# still src\n" },
+    });
+    const stopped = spawnSync("bash", [stopVerify], {
+      encoding: "utf8",
+      cwd: repo,
+      env: {
+        ...process.env,
+        FACTORY_POLICY_REPO_ROOT: repo,
+        FACTORY_POLICY_CONFIG: missing,
+      },
+    });
+    assert.equal(stopped.status, 0, stopped.stderr);
+    assert.match(stopped.stderr, /fail-open/);
+    assert.doesNotMatch(stopped.stderr, /code paths unchanged/);
   });
 
   it("guard-bash overlay treats staged backend/** as code and skips docs", () => {

@@ -41,8 +41,12 @@ if ! factory_policy_require_python; then
   exit 0
 fi
 
-if ! factory_policy_staged_src; then
-  printf 'factory-policy: no staged code paths; skipped (not a pass)\n' >&2
+set +e
+factory_policy_staged_src
+staged_rc=$?
+set -e
+if ! factory_policy_decide_code_path_gate "$staged_rc" \
+  "no staged code paths; skipped (not a pass)"; then
   exit 0
 fi
 

@@ -89,8 +89,8 @@ set +e
 factory_policy_run_checker is-src-path "$edit_path"
 src_rc=$?
 set -e
-if [[ "$src_rc" -ne 0 ]]; then
-  printf 'factory-policy: path not under code paths; skipped (not a pass)\n' >&2
+if ! factory_policy_decide_code_path_gate "$src_rc" \
+  "path not under code paths; skipped (not a pass)"; then
   exit 0
 fi
 

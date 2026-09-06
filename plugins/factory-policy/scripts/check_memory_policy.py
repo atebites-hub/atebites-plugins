@@ -504,10 +504,32 @@ def _print_usage() -> None:
         "<memory.md> [memory.md ...]\n"
         "       check_memory_policy.py extract-path\n"
         "       check_memory_policy.py is-src-path <path>\n"
+        "       check_memory_policy.py any-code-path\n"
         "       check_memory_policy.py list-in-progress [--repo-root DIR]\n"
         "       check_memory_policy.py gate-in-progress [--repo-root DIR] [--config PATH]",
         file=sys.stderr,
     )
+
+
+def _cmd_any_code_path(
+    argv: list[str], repo_root: Path, explicit_config: str | None
+) -> int:
+    if argv:
+        _print_usage()
+        return EXIT_USAGE
+    try:
+        config_path = resolve_config_path(repo_root, explicit_config)
+        globs = load_code_globs(config_path)
+    except (OSError, ValueError) as exc:
+        print(f"factory-policy: {exc}", file=sys.stderr)
+        return EXIT_ENV
+    for line in sys.stdin.read().splitlines():
+        path = line.strip()
+        if not path:
+            continue
+        if is_code_path(path, globs):
+            return EXIT_OK
+    return EXIT_VIOLATION
 
 
 def _cmd_extract_path(argv: list[str]) -> int:
@@ -617,6 +639,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"factory-policy: {exc}", file=sys.stderr)
             return EXIT_ENV
         return EXIT_OK if is_code_path(rest[1], globs) else EXIT_VIOLATION
+    if rest and rest[0] == "any-code-path":
+        return _cmd_any_code_path(rest[1:], repo_root, parsed.config)
     if rest and rest[0] == "list-in-progress":
         return _cmd_list_in_progress(repo_root)
     if rest and rest[0] == "gate-in-progress":
