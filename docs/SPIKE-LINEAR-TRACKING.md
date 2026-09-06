@@ -1,6 +1,9 @@
 # SPIKE: linear-tracking (marketplace path)
 
-**Status:** SPIKE. Ownership + pin strategy + stub skill.
+**Status:** SPIKE landed
+([#30](https://github.com/atebites-hub/atebites-plugins/pull/30)).
+Pin is **P N** / blocked — no maintainable vendor SHA.
+See [PIN-LINEAR-TRACKING.md](PIN-LINEAR-TRACKING.md).
 **Not** a Factory default. **Not** catalog-listed. **Not** wired into
 project-factory `enabledPlugins`. **Not** a claim that Linear Agent
 skills are installed.
@@ -46,7 +49,7 @@ do not float `main`.
 
 | Option | When | This spike |
 | --- | --- | --- |
-| **Preferred: vendor existing skill/plugin** | An upstream Linear skill/plugin already covers MCP workflow | Do **not** invent a SHA. Do **not** vendor a tree yet. |
+| **Preferred: vendor existing skill/plugin** | An upstream Linear skill/plugin already covers MCP workflow | Do **not** invent a SHA. Do **not** vendor a tree yet. 2026-09-06: **no** Superpowers-class candidate — pin **P N** / blocked ([PIN-LINEAR-TRACKING.md](PIN-LINEAR-TRACKING.md)). |
 | **Thin atebites wrap** | Upstream is not already a multi-host plugin (j-space / taskboard wrap pattern) | Wrap exposes the vendored skill + this placement skill. Wrap does not invent a Linear API. |
 | **Rejected: atebites-authored Linear client** | No suitable upstream | Do not write GraphQL/REST wrappers or bake `LINEAR_API_KEY`. |
 
@@ -152,10 +155,17 @@ Until promotion: document under Upcoming / P2 spike only.
 - Thin host manifests
 - README / FORK-INDEX **Upcoming / P2 spike** mention only
 
-**Later (not this PR):**
+**Later (pin — blocked; not this spike):**
 
-- Choose and pin an upstream skill/plugin SHA (vendor + maintain)
-- Thin wrap only if hosts need it
+Investigation (2026-09-06) found **no** Superpowers-class upstream.
+Official `linear` plugins are host MCP wrappers (Cursor / Codex /
+Claude catalogs), not Factory placement. Do **not** invent a SHA.
+Exact blockers + Factory Plugins bot next actions:
+[PIN-LINEAR-TRACKING.md](PIN-LINEAR-TRACKING.md).
+
+- Vendor SHA only after a standalone OSI-licensed upstream exists and
+  CI + smoke pass
+- Thin wrap only if hosts need it and no vendor repo appears
 - Operator OAuth to official Linear MCP (Jay credentials; Lane B)
 - Catalog entry or Factory-default promotion
 - project-factory `enabledPlugins`

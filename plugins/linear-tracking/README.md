@@ -13,7 +13,9 @@ Normative spike scope: [`docs/SPIKE-LINEAR-TRACKING.md`](../../docs/SPIKE-LINEAR
 Jay lock: keep the name **`linear-tracking`**. Prefer a **vendored pin
 of an existing skill/plugin** and maintain that pin against upstream
 (not necessarily atebites-authored). This stub does not vendor a tree
-and does not invent a SHA.
+and does not invent a SHA. Pin readiness (2026-09-06): **P N** /
+blocked. Official `linear` plugins are host MCP wrappers, not a
+Factory pin. See [`docs/PIN-LINEAR-TRACKING.md`](../../docs/PIN-LINEAR-TRACKING.md).
 
 ## What this is
 
