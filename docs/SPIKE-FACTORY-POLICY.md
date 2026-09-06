@@ -124,7 +124,7 @@ default, fail via config. See [POLICY-V1.md](POLICY-V1.md).
 - project-factory `enabledPlugins`
 - Separate factory-policy git repo / submodule
 - Grok/ZCode/Hermes hook adapters
-- linear-tracking pin; GitNexus wrap
+- linear-tracking pin (see [SPIKE-LINEAR-TRACKING.md](SPIKE-LINEAR-TRACKING.md)); GitNexus wrap started (see [SPIKE-GITNEXUS.md](SPIKE-GITNEXUS.md))
 - C7 Approved-by git-history check
 - Pin bumps of Superpowers / ponytail / Advisor / ODW
 

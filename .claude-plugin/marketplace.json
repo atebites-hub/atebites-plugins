@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, and factory-policy (v1 warn-default; not a Factory default). GitHub plugin sources for the four forks and the Superpowers pin; j-space and factory-policy are in-repo wraps.",
+  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). GitHub plugin sources for the four forks and the Superpowers pin; j-space, factory-policy, and gitnexus are in-repo wraps.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -64,6 +64,12 @@
       "name": "factory-policy",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
       "source": "./plugins/factory-policy",
+      "category": "developer-tools"
+    },
+    {
+      "name": "gitnexus",
+      "description": "Upcoming / P N wrap; not a Factory default. Catalog-listed for pin install. Pins gitnexus@1.6.7.",
+      "source": "./plugins/gitnexus",
       "category": "developer-tools"
     }
   ]

@@ -4,7 +4,7 @@
     "name": "atebites-hub"
   },
   "metadata": {
-    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, and factory-policy (v1 warn-default; not a Factory default). All sources are in-repo paths so Cursor Import from Repo can index them."
+    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). All sources are in-repo paths so Cursor Import from Repo can index them."
   },
   "plugins": [
     {
@@ -41,6 +41,11 @@
       "name": "factory-policy",
       "source": "plugins/factory-policy",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT."
+    },
+    {
+      "name": "gitnexus",
+      "source": "plugins/gitnexus",
+      "description": "Upcoming / P N wrap; not a Factory default. Catalog-listed for pin install. Pins gitnexus@1.6.7."
     }
   ]
 }

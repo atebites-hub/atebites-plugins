@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gitnexus",
+  "version": "0.1.0",
+  "description": "Upcoming / P N; not a Factory default. Catalog-listed for pin install. Pins gitnexus@1.6.7.",
+  "author": {
+    "name": "atebites-hub"
+  },
+  "homepage": "https://github.com/atebites-hub/atebites-plugins",
+  "repository": "https://github.com/atebites-hub/atebites-plugins",
+  "license": "MIT",
+  "keywords": ["gitnexus", "mcp", "wrap", "p-n"]
+}

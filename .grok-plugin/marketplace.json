@@ -1,6 +1,6 @@
 {
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Grok Build: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, and factory-policy (v1 warn-default; not a Factory default). Local path sources only.",
+  "description": "atebites-hub plugin catalog for Grok Build: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -61,6 +61,14 @@
       "category": "developer-tools",
       "source": { "type": "local", "path": "./plugins/factory-policy" },
       "keywords": ["factory-policy", "memory-system", "v1", "warn-default"]
+    },
+    {
+      "name": "gitnexus",
+      "version": "0.1.0",
+      "description": "Upcoming / P N wrap; not a Factory default. Catalog-listed for pin install. Pins gitnexus@1.6.7.",
+      "category": "developer-tools",
+      "source": { "type": "local", "path": "./plugins/gitnexus" },
+      "keywords": ["gitnexus", "mcp", "wrap", "p-n"]
     }
   ],
   "version": 1
