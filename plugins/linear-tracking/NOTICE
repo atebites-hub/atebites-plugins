@@ -1,0 +1,9 @@
+linear-tracking vendors the Apache-2.0 curated Linear skill from
+https://github.com/openai/skills
+(path skills/.curated/linear/, pin 49f948faa9258a0c61caceaf225e179651397431).
+
+See vendor/linear/LICENSE.txt.
+
+The Factory placement skill (skills/linear-tracking/SKILL.md) and host
+manifests in this directory are part of atebites-plugins (MIT) and do
+not change the vendored skill body.

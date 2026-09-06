@@ -1,7 +1,7 @@
 {
   "name": "linear-tracking",
   "version": "0.0.0-spike",
-  "description": "SPIKE stub: Linear tracker placement. Upcoming / not a Factory default. Not catalog-listed.",
+  "description": "SPIKE vendored pin + Factory placement. Upcoming / not a Factory default. Not catalog-listed.",
   "author": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -13,7 +13,7 @@
   "skills": "./skills",
   "interface": {
     "displayName": "linear-tracking (SPIKE)",
-    "shortDescription": "SPIKE stub: find issue, Closes BLA-n. Not a Factory default.",
+    "shortDescription": "SPIKE vendored pin: find issue, Closes BLA-n. Not a Factory default.",
     "developerName": "atebites-hub",
     "category": "Developer Tools",
     "capabilities": ["Instructions"],

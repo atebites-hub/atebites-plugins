@@ -7,15 +7,21 @@ description: >
   session that has a Linear issue and when opening a PR.
 ---
 
-# linear-tracking (SPIKE stub)
+# linear-tracking
 
-**Upcoming / not a Factory default. Not catalog-listed.** This skill is
-placement rules only. It is not a Linear API client and it does not install Linear Agent skills.
+**Upcoming / not a Factory default. Not catalog-listed.** Factory
+placement overlay on the vendored openai/skills curated `linear` pin.
+It is not a Linear API client and it does not install Linear Agent skills.
 
 SoT: PJTemplate investigation `linear-driven-flow.md` §3 (cited by
 name; not on PJTemplate `main` as of 2026-09-05) plus the Jay lock:
-keep `linear-tracking`; prefer a vendored upstream pin, not necessarily
+keep `linear-tracking`; vendored upstream pin, not necessarily
 atebites-authored.
+
+Vendored MCP-CRUD body: `vendor/linear/SKILL.md` (openai/skills
+`skills/.curated/linear/` @ `49f948faa9258a0c61caceaf225e179651397431`).
+Follow that skill for issue/project/comment workflow. These three
+placement rules win when they conflict.
 
 Transport: official Linear MCP at `https://mcp.linear.app/mcp` (OAuth).
 Cite tool **names** only. Do not bake schemas. Do not invent API

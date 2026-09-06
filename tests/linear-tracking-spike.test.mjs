@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,6 +7,10 @@ import { describe, it } from "node:test";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pluginRoot = join(root, "plugins/linear-tracking");
+
+const VENDOR_PIN_SHA = "49f948faa9258a0c61caceaf225e179651397431";
+const VENDOR_SKILL_SHA256 =
+  "ce0f39c95b6c9190f8ea33614393cdb556b2684dd8388ded394e9cb915f42601";
 
 const CATALOGS = [
   ".cursor-plugin/marketplace.json",
@@ -40,6 +45,10 @@ function catalogNames(relPath) {
   return (marketplace.plugins || []).map((plugin) => plugin.name);
 }
 
+function sha256File(absPath) {
+  return createHash("sha256").update(readFileSync(absPath)).digest("hex");
+}
+
 describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
   it("is absent from every host marketplace catalog", () => {
     for (const rel of CATALOGS) {
@@ -62,7 +71,7 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(index, /SPIKE-LINEAR-TRACKING\.md/);
   });
 
-  it("ships the inline stub with SPIKE labels and placement skill", () => {
+  it("ships the placement skill with SPIKE labels and the three rules", () => {
     assert.equal(existsSync(join(pluginRoot, "README.md")), true);
     const readme = readFileSync(join(pluginRoot, "README.md"), "utf8");
     assert.match(readme, /SPIKE/);
@@ -70,6 +79,8 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(readme, /[Nn]ot catalog-listed/);
     assert.match(readme, /upcoming/i);
     assert.match(readme, /[Dd]o not claim Linear Agent skills installed/);
+    assert.match(readme, new RegExp(VENDOR_PIN_SHA));
+    assert.match(readme, /vendor\/linear/);
 
     const skillPath = join(pluginRoot, "skills/linear-tracking/SKILL.md");
     assert.equal(existsSync(skillPath), true);
@@ -84,10 +95,12 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(skill, /fail closed/);
     assert.match(skill, /linear-driven-flow\.md/);
     assert.match(skill, /does not\s+install Linear Agent/);
+    assert.match(skill, /vendor\/linear\/SKILL\.md/);
+    assert.match(skill, new RegExp(VENDOR_PIN_SHA));
     assert.doesNotMatch(skill, /Linear Agent skills are installed/);
   });
 
-  it("names ownership, vendor-pin strategy, and required behaviors", () => {
+  it("records the vendor pin SHA and required behaviors", () => {
     const spike = read("docs/SPIKE-LINEAR-TRACKING.md");
     assert.match(spike, /SPIKE/);
     assert.match(spike, /no soft-pass/i);
@@ -106,7 +119,42 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
     assert.match(spike, /No CE|CE \/ taskboard|taskboard \/ CE/);
     assert.match(spike, /does not change that plugin|does \*\*not\*\* change that plugin/);
     assert.match(spike, /[Nn]o invented Linear API secrets|Do not invent Linear API secrets/);
-    assert.doesNotMatch(spike, /@[0-9a-f]{40}/);
+    assert.match(spike, new RegExp(VENDOR_PIN_SHA));
+    assert.match(spike, /Vendored pin chosen|vendored pin chosen/i);
+  });
+
+  it("vendors the openai/skills curated linear tree without rewriting it", () => {
+    const upstream = readFileSync(join(pluginRoot, "UPSTREAM.md"), "utf8");
+    assert.match(upstream, /https:\/\/github\.com\/openai\/skills/);
+    assert.match(upstream, /skills\/\.curated\/linear/);
+    assert.match(upstream, new RegExp(VENDOR_PIN_SHA));
+    assert.match(upstream, /mcp\.linear\.app\/mcp/);
+    assert.match(upstream, /no bundled skills/);
+
+    const vendorSkillPath = join(pluginRoot, "vendor/linear/SKILL.md");
+    assert.equal(existsSync(vendorSkillPath), true);
+    assert.equal(sha256File(vendorSkillPath), VENDOR_SKILL_SHA256);
+    const vendorSkill = readFileSync(vendorSkillPath, "utf8");
+    assert.match(vendorSkill, /^name: linear$/m);
+    assert.match(vendorSkill, /list_issues/);
+    assert.match(vendorSkill, /list_my_issues/);
+    assert.match(vendorSkill, /get_issue/);
+    assert.match(vendorSkill, /mcp\.linear\.app\/mcp/);
+    assert.doesNotMatch(vendorSkill, /inputSchema/);
+    for (const pattern of SECRET_PATTERNS) {
+      assert.doesNotMatch(vendorSkill, pattern);
+    }
+
+    assert.equal(existsSync(join(pluginRoot, "vendor/linear/LICENSE.txt")), true);
+    assert.equal(existsSync(join(pluginRoot, "NOTICE")), true);
+    const notice = readFileSync(join(pluginRoot, "NOTICE"), "utf8");
+    assert.match(notice, /Apache-2\.0|Apache License/);
+    assert.match(notice, new RegExp(VENDOR_PIN_SHA));
+
+    const gitmodules = existsSync(join(root, ".gitmodules"))
+      ? read(".gitmodules")
+      : "";
+    assert.doesNotMatch(gitmodules, /linear-tracking/);
   });
 
   it("ships thin host plugin.json placeholders without secrets or MCP schemas", () => {
@@ -130,6 +178,7 @@ describe("linear-tracking P2 spike (not a catalog / Factory default)", () => {
       assert.doesNotMatch(skill, pattern);
     }
     assert.equal(existsSync(join(pluginRoot, "mcp.json")), false);
+    assert.equal(existsSync(join(pluginRoot, ".mcp.json")), false);
   });
 
   it("README Upcoming section mentions the spike without catalog install commands", () => {

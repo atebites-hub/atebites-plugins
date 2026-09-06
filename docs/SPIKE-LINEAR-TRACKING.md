@@ -1,14 +1,15 @@
 # SPIKE: linear-tracking (marketplace path)
 
-**Status:** SPIKE. Ownership + pin strategy + stub skill.
-**Not** a Factory default. **Not** catalog-listed. **Not** wired into
+**Status:** Vendored pin chosen. Still SPIKE / Upcoming. **Not** a
+Factory default. **Not** catalog-listed. **Not** wired into
 project-factory `enabledPlugins`. **Not** a claim that Linear Agent
 skills are installed.
 
-This catalog spike scaffolds `plugins/linear-tracking/` as an **inline**
-upcoming stub (not a submodule), the same class as early factory-policy
-and host-adapters. Host marketplaces do **not** list it. Do not invent
-Linear API secrets. Do not treat the stub as a working tracker (no soft-pass).
+This catalog path keeps `plugins/linear-tracking/` as an **upcoming**
+inline wrap (not a submodule of openai/skills), the same class as
+host-adapters. Host marketplaces do **not** list it. Do not invent
+Linear API secrets. Do not treat missing MCP as a working tracker (no
+soft-pass).
 
 The pack name is **`linear-tracking`**. Jay lock (2026-09-05): **keep
 linear-tracking**. It replaces discarded `taskboard-workflow`. Factory
@@ -37,39 +38,40 @@ This spike does **not** change that plugin. C6 stays the memory citation
 check. linear-tracking is how an agent **finds** the Linear issue and
 **closes** it from a PR.
 
-## Pin strategy (prefer vendor + upstream maintain)
+## Pin (chosen)
 
 Jay lock: prefer a **vendored pin** of an existing skill/plugin and
 **upstream maintain** that pin (not necessarily atebites-authored). Same
-class as the Superpowers pin-only submodule: pin a SHA after CI + smoke;
-do not float `main`.
+class as the Superpowers pin-only submodule: pin a SHA after review; do
+not float `main`. openai/skills is a multi-skill repo, so this pin is a
+**vendored copy** of one skill folder plus `UPSTREAM.md`, not a gitlink
+of the whole repo.
 
-| Option | When | This spike |
-| --- | --- | --- |
-| **Preferred: vendor existing skill/plugin** | An upstream Linear skill/plugin already covers MCP workflow | Do **not** invent a SHA. Do **not** vendor a tree yet. |
-| **Thin atebites wrap** | Upstream is not already a multi-host plugin (j-space / taskboard wrap pattern) | Wrap exposes the vendored skill + this placement skill. Wrap does not invent a Linear API. |
-| **Rejected: atebites-authored Linear client** | No suitable upstream | Do not write GraphQL/REST wrappers or bake `LINEAR_API_KEY`. |
+| Field | Value |
+| --- | --- |
+| **Upstream** | https://github.com/openai/skills |
+| **Path** | `skills/.curated/linear/` |
+| **SHA** | `49f948faa9258a0c61caceaf225e179651397431` (openai/skills `main` tip, 2026-09-06) |
+| **Local tree** | `plugins/linear-tracking/vendor/linear/` |
+| **Transport** | official Linear MCP `https://mcp.linear.app/mcp` (operator OAuth) |
 
-Candidate **transport** (not a skill, not selected as a pin): official
-Linear MCP at `https://mcp.linear.app/mcp` (OAuth). Operator authenticates
-in the host. This repo stores no API keys.
+openai/skills README is **deprecated** (points at openai/plugins). Still
+the best MCP-CRUD skill: official MCP URL, OAuth, tool names, no
+secrets. openai/plugins `plugins/linear` @
+`1e285826e604f66f7208f7ac4dba0fe8341d1f57` is an app-backed connector
+**with no bundled skills** — not clearly superior, not a skill pin.
+Rejected: atebites-authored Linear GraphQL/REST or baked
+`LINEAR_API_KEY`.
 
-Candidate **upstream skills** (examples only; no SHA; not selected):
+The Factory skill **name stays `linear-tracking`**. The vendored body
+stays named `linear`. Placement overlay wins on the three rules.
 
-- Existing Linear MCP workflow skills (for example the openai/skills
-  curated `linear` skill) — CRUD against official MCP. They are **not**
-  Factory placement and are **not** claimed installed here.
-- A later Linear-authored skill, if one ships as a pin-able plugin.
-
-The Factory skill **name stays `linear-tracking`** even if the body is
-mostly a vendored pin plus a thin placement overlay.
-
-Do not claim any of those candidates are Factory-installed.
+Do not claim the vendored skill is Factory-installed.
 
 ## Required behaviors (investigation §3)
 
-Normative for the stub skill. Short. Tool **names** only — do not bake
-MCP schemas.
+Normative for the placement skill. Short. Tool **names** only — do not
+bake MCP schemas.
 
 1. **Session start — find the issue.** Use official Linear MCP
    `list_issues`, `list_my_issues`, and/or `get_issue` to locate the
@@ -88,20 +90,23 @@ MCP schemas.
    (human assigns or mentions). This catalog does **not** install Linear
    Agent skills.
 
-Optional later (not this stub): `update_issue` status, `create_comment`
+Optional later (not this pin): `update_issue` status, `create_comment`
 progress notes. Still no invented secrets.
 
 ## Goal
 
 Give the marketplace an **upcoming-only** seat for the tracker that
-replaces `taskboard-workflow`, without promoting it, without a fake pin,
-and without soft-passing Linear as installed.
+replaces `taskboard-workflow`, with a real vendor SHA, without
+promoting it, without a fake pin, and without soft-passing Linear as
+installed.
 
 ## Layout
 
 ```text
 plugins/linear-tracking/
   README.md                      # upcoming / not Factory-default / not catalog-listed
+  UPSTREAM.md                    # pin URL + SHA
+  NOTICE                         # Apache-2.0 vendor attribution
   plugin.json                    # thin placeholder
   .cursor-plugin/plugin.json
   .claude-plugin/plugin.json
@@ -109,15 +114,17 @@ plugins/linear-tracking/
   .grok-plugin/plugin.json
   .zcode-plugin/plugin.json
   skills/linear-tracking/SKILL.md
+  vendor/linear/                 # openai/skills curated linear @ 49f948fa…
 ```
 
-No MCP config with secrets. No vendor tree. No gitlink.
+No MCP config with secrets. No gitlink.
 
-## In scope (this spike)
+## In scope (this pin PR)
 
 - Binding spike doc at `docs/SPIKE-LINEAR-TRACKING.md`
-- Inline stub under `plugins/linear-tracking/` (not a submodule)
-- Skill stub with the three placement rules
+- Vendored copy of openai/skills `skills/.curated/linear/` @
+  `49f948faa9258a0c61caceaf225e179651397431`
+- Factory placement skill with the three rules
 - Thin host `plugin.json` placeholders pointing at `./skills`
 - README / FORK-INDEX **Upcoming / P2 spike** mention only
 
@@ -134,36 +141,35 @@ No MCP config with secrets. No vendor tree. No gitlink.
 - **No taskboard / CE / j-space** as defaults or as this plugin's
   dependencies. Do not reintroduce `taskboard-workflow`.
 - **No GitNexus wrap** in this PR.
-- **No vendor SHA / submodule** until a later pin PR after CI + smoke.
 
 ## Catalog posture
 
-Host `marketplace.json` files still list exactly the six catalog plugins.
-`plugins/linear-tracking/` is in-tree so a later PR can point sources at
-it or replace the stub with a vendored pin, without a catalog row today.
-Until promotion: document under Upcoming / P2 spike only.
+Host `marketplace.json` files still list the existing catalog plugins
+only. `plugins/linear-tracking/` is in-tree so a later PR can point
+sources at it, without a catalog row today. Until promotion: document
+under Upcoming / P2 spike only.
 
-## Stub vs later
+## This pin vs later
 
-**In this PR (stub):**
+**In this PR (vendored pin, still upcoming):**
 
 - Spike doc + plugin README labeled SPIKE / upcoming / not Factory-default
-- Skill: placement rules only
+- Vendor tree + `UPSTREAM.md` SHA
+- Skill: placement rules + pointer at the pin
 - Thin host manifests
 - README / FORK-INDEX **Upcoming / P2 spike** mention only
 
 **Later (not this PR):**
 
-- Choose and pin an upstream skill/plugin SHA (vendor + maintain)
-- Thin wrap only if hosts need it
 - Operator OAuth to official Linear MCP (Jay credentials; Lane B)
 - Catalog entry or Factory-default promotion
 - project-factory `enabledPlugins`
 - Any Linear Agent / `@Cursor` automation (still operator-gated)
+- Pin bump after review if upstream skill body moves
 
-## Success for this spike
+## Success for this pin
 
-PR with this doc + stub skill; SPIKE / upcoming-only labels; pin
-strategy recorded (vendor + upstream maintain); three placement rules
-present; no catalog row; no Factory kept-list entry; no invented
+PR with this doc + vendor SHA + placement skill; SPIKE / upcoming-only
+labels; pin recorded (vendor + upstream maintain); three placement
+rules present; no catalog row; no Factory kept-list entry; no invented
 secrets; not merged as a Factory default.
