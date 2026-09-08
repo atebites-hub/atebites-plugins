@@ -110,6 +110,20 @@ class CheckSemanticsTests(HarnessEnvTestCase):
         findings = cmp.check_memory(_read("fail-c5-unresolvable.md"), _CONSUMER, _modes())
         self.assertEqual(_ids(findings), ["C5"])
 
+    def test_c5_backticked_gate_with_following_sentence(self) -> None:
+        memory = _read("pass-all.md").replace(
+            "Gate: scripts/ok-gate.sh",
+            "Gate: `scripts/ok-gate.sh`. Risks locked by tests.",
+        )
+        self.assertEqual(cmp.check_memory(memory, _CONSUMER, _modes()), [])
+
+    def test_c5_backticks_do_not_hide_missing_command(self) -> None:
+        memory = _read("pass-all.md").replace(
+            "Gate: scripts/ok-gate.sh",
+            "Gate: `scripts/missing-gate.sh`. Run `scripts/ok-gate.sh` later.",
+        )
+        self.assertEqual(_ids(cmp.check_memory(memory, _CONSUMER, _modes())), ["C5"])
+
     def test_fail_c6_issue_linked(self) -> None:
         findings = cmp.check_memory(_read("fail-c6.md"), _CONSUMER, _modes())
         self.assertEqual(_ids(findings), ["C6"])

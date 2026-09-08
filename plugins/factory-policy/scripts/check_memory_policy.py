@@ -155,7 +155,9 @@ def _is_plan_filled(raw: str) -> bool:
 
 
 def _first_gate_token(gate_body: str) -> str:
-    body = gate_body.strip().strip("`")
+    body = gate_body.strip()
+    span = re.match(r"`([^`]+)`", body)
+    body = span.group(1) if span else body.strip("`")
     if not body:
         return ""
     try:
