@@ -82,6 +82,11 @@ This plugin is still not a Factory default.
 
 JSON pointers: `hooks/claude-codex-hooks.json`, `hooks/cursor-hooks.json`.
 
+ZCode uses `hooks/zcode-hooks.json`, registered by its plugin manifest,
+with native `process` handlers and `timeoutMs`. Enable `hooks.enabled`
+in the host's user configuration for these handlers to run. A skills-only
+installation does not provide PreToolUse or Stop enforcement.
+
 Checker: `scripts/check_memory_policy.py` (structured `[C3.2]` / `WARN [C3.2]`
 findings). Environment errors fail-open in hooks (one stderr line).
 `check-memory` uses the §2.1 contract (missing python → 3).

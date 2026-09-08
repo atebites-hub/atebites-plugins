@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "process",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/policy-gate.sh",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "process",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/stop-verify.sh",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    ]
+  }
+}
