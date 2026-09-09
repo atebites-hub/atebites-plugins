@@ -252,6 +252,30 @@ describe("factory-policy v1 (warn-default, catalog-listed, not a Factory default
 });
 
 describe("factory-policy checker + policy-gate integration", () => {
+  it("ZCode registers process hooks that preserve fail-mode exits", () => {
+    const manifest = JSON.parse(read("plugins/factory-policy/.zcode-plugin/plugin.json"));
+    assert.equal(typeof manifest.hooks, "string", "ZCode must register policy hooks");
+    const hooks = JSON.parse(readFileSync(join(pluginRoot, manifest.hooks), "utf8")).hooks;
+    const repo = makeConsumerGitRepo();
+    const memory = join(repo, "docs/memories/pass-all.md");
+    writeFileSync(memory, readFileSync(memory, "utf8").replace("- **Scope**: inline", "- **Scope**: invalid"));
+    for (const event of ["PreToolUse", "Stop"]) {
+      const hook = hooks[event][0].hooks[0];
+      assert.equal(hook.type, "process");
+      const command = hook.command.replace("${CLAUDE_PLUGIN_ROOT}", pluginRoot);
+      const result = run(command, [], {
+        cwd: repo,
+        config: failAll,
+        srcChanged: 1,
+        env: { FACTORY_POLICY_REPO_ROOT: repo },
+        input: JSON.stringify({ tool_name: "Edit", tool_input: { file_path: "src/example.py" } }),
+      });
+      assert.equal(result.status, 2, `${event}: ${result.stderr}`);
+      assert.match(result.stderr, /\[C3\.2\]/);
+      assert.match(result.stderr, /Fix:/);
+    }
+  });
+
   it("runs plugin unit tests", () => {
     const discover = spawnSync(
       "python3",

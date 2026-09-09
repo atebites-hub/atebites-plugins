@@ -4,7 +4,8 @@
 
 Inline marketplace plugin in [atebites-plugins](https://github.com/atebites-hub/atebites-plugins).
 Not a submodule. Catalog-listed for pin install as `factory-policy@atebites-plugins`.
-Not a Factory default. Not wired into project-factory `enabledPlugins`. Real
+Not a Factory-wide acceptance claim. Project Factory seats it in
+`enabledPlugins` as a warn-default template pin. Real
 checkers run for C3.1, C3.2, C3.3, C5, and C6. Default
 mode is **warn** (stderr `WARN [C3.2] …` + `Fix:`, exit 0). Dial `fail` via
 config. C7 is a warn-only stub. Do not treat a skipped hook as a pass.
@@ -81,6 +82,11 @@ This plugin is still not a Factory default.
 | `scripts/guard-bash.sh` | Tier 1 git | Staged code paths → same checkers (git exit 1 on fail); optional regex deny |
 
 JSON pointers: `hooks/claude-codex-hooks.json`, `hooks/cursor-hooks.json`.
+
+ZCode uses `hooks/zcode-hooks.json`, registered by its plugin manifest,
+with native `process` handlers and `timeoutMs`. Enable `hooks.enabled`
+in the host's user configuration for these handlers to run. A skills-only
+installation does not provide PreToolUse or Stop enforcement.
 
 Checker: `scripts/check_memory_policy.py` (structured `[C3.2]` / `WARN [C3.2]`
 findings). Environment errors fail-open in hooks (one stderr line).

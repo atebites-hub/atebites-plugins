@@ -1,8 +1,9 @@
 # factory-policy v1 (warn-default)
 
 **Status:** v1 warn-default enforcement. Catalog-listed for pin install as
-`factory-policy@atebites-plugins`. **Not a Factory default.** Not wired
-into project-factory `enabledPlugins`. No soft-pass: a skipped hook or
+`factory-policy@atebites-plugins`. **Not a Factory default** beyond the
+explicit warn-default template pin: project-factory currently seats it in
+`enabledPlugins`. This is not Factory-wide fail-mode acceptance. No soft-pass: a skipped hook or
 warn-only finding is not a C3–C7 pass.
 
 Assistant seats the template; QA verifies before anyone dials fail or promotes
@@ -93,7 +94,7 @@ Scripts do not print `SPIKE stub`.
 
 ## Out of scope (still)
 
-- Factory default / project-factory `enabledPlugins` (catalog listing is pin-install only)
+- Factory-wide default promotion or consumer `enabledPlugins` changes (owned by each consumer)
 - C7 full Approved-by git-history forge-check
 - F1 / D1 / J1 / S12
 - Inventing C4
