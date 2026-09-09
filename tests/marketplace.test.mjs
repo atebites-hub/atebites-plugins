@@ -15,11 +15,13 @@ const EXPECTED_PLUGINS = [
   "j-space",
   "superpowers",
   "factory-policy",
+  "gitnexus",
 ];
 
 const CLAUDE_LOCAL_SOURCES = {
   "j-space": "./plugins/j-space",
   "factory-policy": "./plugins/factory-policy",
+  gitnexus: "./plugins/gitnexus",
 };
 
 /** Catalog slug → allowed plugin.json names (sol-advisor until productize). */
@@ -194,7 +196,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("Claude marketplace uses GitHub sources for forks and Superpowers, and local wraps for j-space and factory-policy", () => {
+  it("Claude marketplace uses GitHub sources for forks and Superpowers, and local wraps for j-space, factory-policy, and gitnexus", () => {
     const marketplace = readJson(".claude-plugin/marketplace.json");
     assert.ok(marketplace.$schema, "Claude marketplace needs $schema");
     assert.equal(marketplace.name, "atebites-plugins");

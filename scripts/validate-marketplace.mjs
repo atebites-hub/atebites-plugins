@@ -5,7 +5,7 @@
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
  * schema. Cursor, Grok, Codex, and ZCode must list the catalog plugins with
  * local paths. Claude may use GitHub plugin sources for the four atebites-hub
- * forks and the Superpowers pin; j-space and factory-policy stay in-repo wraps.
+ * forks and the Superpowers pin; j-space, factory-policy, and gitnexus stay in-repo wraps.
  */
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -24,10 +24,12 @@ const EXPECTED = [
   "j-space",
   "superpowers",
   "factory-policy",
+  "gitnexus",
 ];
 const CLAUDE_LOCAL_SOURCES = {
   "j-space": "./plugins/j-space",
   "factory-policy": "./plugins/factory-policy",
+  gitnexus: "./plugins/gitnexus",
 };
 const SUPERPOWERS_PIN = {
   source: "github",

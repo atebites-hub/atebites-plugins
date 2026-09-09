@@ -1,0 +1,11 @@
+This directory is an atebites-plugins MIT wrap. It does not vendor the
+GitNexus source tree or the npm package tarball.
+
+The spawned MCP server is the npm package `gitnexus` (pin 1.6.7),
+published from https://github.com/abhigyanpatwari/GitNexus
+under PolyForm Noncommercial License 1.0.0.
+
+Required Notice: Copyright Abhigyan Patwari (https://github.com/abhigyanpatwari/GitNexus)
+
+Operators who run `npx -y gitnexus@1.6.7 mcp` accept upstream's license.
+This wrap does not relicense GitNexus.

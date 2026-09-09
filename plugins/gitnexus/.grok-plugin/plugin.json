@@ -1,0 +1,14 @@
+{
+  "name": "gitnexus",
+  "version": "0.1.0",
+  "description": "Upcoming / P N; not a Factory default. Catalog-listed for pin install. Pins gitnexus@1.6.7.",
+  "author": {
+    "name": "atebites-hub",
+    "url": "https://github.com/atebites-hub/atebites-plugins"
+  },
+  "homepage": "https://github.com/atebites-hub/atebites-plugins",
+  "repository": "https://github.com/atebites-hub/atebites-plugins",
+  "license": "MIT",
+  "keywords": ["gitnexus", "mcp", "wrap", "p-n", "grok"],
+  "mcpServers": "./mcp.json"
+}
