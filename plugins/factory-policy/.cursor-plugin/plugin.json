@@ -1,7 +1,7 @@
 {
   "name": "factory-policy",
   "displayName": "factory-policy (v1 warn-default)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install + nested memory-system.",
   "author": {
     "name": "atebites-hub"

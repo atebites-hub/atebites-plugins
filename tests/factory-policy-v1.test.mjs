@@ -135,7 +135,7 @@ describe("factory-policy v1 (warn-default, catalog-listed, not a Factory default
       );
     }
     const pluginJson = JSON.parse(read("plugins/factory-policy/plugin.json"));
-    assert.equal(pluginJson.version, "0.1.0");
+    assert.equal(pluginJson.version, "0.1.1");
     assert.match(pluginJson.description, /v1 warn-default/i);
     assert.match(pluginJson.description, /catalog-listed for pin install/i);
     assert.match(pluginJson.description, /not a Factory default/i);
