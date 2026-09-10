@@ -24,7 +24,7 @@ case "${host}" in
       'Does not auto-trust /hooks. Does not launch a run. No soft-pass.' \
       '' \
       '1. Pin SHA — catalog pins only (do not bump from this pack)' \
-      '   Superpowers b36e0829… / ponytail 911022dc… / Advisor bdcf8d5d… / ODW 837e5cd…' \
+      '   Superpowers b36e0829… / ponytail 911022dc… / Advisor bdcf8d5d… / ODW ed26656…' \
       '2. Install/enable Factory defaults (codex plugin add …@atebites-plugins)' \
       '   Seat ponytail at intensity full (PONYTAIL_DEFAULT_MODE=full / defaultMode full / /ponytail full). Never lite.' \
       '3. advisor doctor --host codex' \
