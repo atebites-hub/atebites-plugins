@@ -21,8 +21,9 @@
       "name": "ponytail",
       "version": "4.9.0",
       "source": {
-        "source": "local",
-        "path": "./plugins/ponytail"
+        "source": "url",
+        "url": "https://github.com/atebites-hub/ponytail.git",
+        "sha": "4416c4dc06feef1541f446022670c04c3c014699"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -73,8 +74,9 @@
       "name": "superpowers",
       "version": "6.3.0",
       "source": {
-        "source": "local",
-        "path": "./plugins/superpowers"
+        "source": "url",
+        "url": "https://github.com/obra/superpowers.git",
+        "sha": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -84,7 +86,7 @@
     },
     {
       "name": "factory-policy",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
       "source": {
         "source": "local",

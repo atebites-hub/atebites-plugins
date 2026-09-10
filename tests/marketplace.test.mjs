@@ -207,10 +207,18 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
     }
   });
 
-  it("Codex marketplace uses local sources, not remote git URLs", () => {
+  it("Codex marketplace pins fork sources instead of installing empty gitlink folders", () => {
     const marketplace = readJson(".agents/plugins/marketplace.json");
     assertCatalogPlugins(marketplace, "Codex");
+    const forks = {
+      superpowers: { url: "https://github.com/obra/superpowers.git", sha: "b36e0829c6d0140e93cfef2ca599b1b07d4a7797" },
+      ponytail: { url: "https://github.com/atebites-hub/ponytail.git", sha: "4416c4dc06feef1541f446022670c04c3c014699" },
+    };
     for (const entry of marketplace.plugins) {
+      if (forks[entry.name]) {
+        assert.deepEqual(entry.source, { source: "url", ...forks[entry.name] });
+        continue;
+      }
       assert.equal(entry.source?.source, "local", `${entry.name} Codex source.source`);
       assertLocalSource(entry.name, entry.source);
       const rel = resolveLocalPath(entry.source);

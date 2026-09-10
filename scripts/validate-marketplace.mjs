@@ -3,8 +3,9 @@
  * Validate host marketplace catalogs.
  *
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
- * schema. Cursor, Grok, Codex, and ZCode must list the catalog plugins with
- * local paths. Claude may use GitHub plugin sources for the four atebites-hub
+ * schema. Cursor, Grok, and ZCode use local paths. Codex uses pinned URL
+ * sources for standalone skill forks, avoiding uninitialized gitlinks.
+ * Claude may use GitHub plugin sources for the four atebites-hub
  * forks and the Superpowers pin; j-space, factory-policy, and gitnexus stay in-repo wraps.
  */
 import Ajv from "ajv";
@@ -196,6 +197,18 @@ for (const entry of claude.plugins) {
 const codex = readJson(".agents/plugins/marketplace.json");
 assertCatalog(codex, "Codex");
 for (const entry of codex.plugins) {
+  const fork = {
+    superpowers: { url: "https://github.com/obra/superpowers.git", sha: SUPERPOWERS_PIN.sha },
+    ponytail: { url: "https://github.com/atebites-hub/ponytail.git", sha: "4416c4dc06feef1541f446022670c04c3c014699" },
+  }[entry.name];
+  if (fork) {
+    const source = entry.source;
+    if (source?.source !== "url" || source.url !== fork.url || source.sha !== fork.sha) {
+      fail(`Codex ${entry.name} must use its reviewed pinned URL source`);
+    }
+    assertForbiddenHosts(entry.name, source, "Codex");
+    continue;
+  }
   if (entry.source?.source !== "local") {
     fail(`Codex ${entry.name} source.source must be local`);
   }

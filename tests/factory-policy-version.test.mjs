@@ -10,4 +10,6 @@ test('factory-policy patch release is consistent across native manifests and cat
   }
   const catalog = JSON.parse(fs.readFileSync('marketplace.json'));
   assert.equal(catalog.plugins.find(p => p.name === 'factory-policy').version, expected);
+  const codex = JSON.parse(fs.readFileSync('.agents/plugins/marketplace.json'));
+  assert.equal(codex.plugins.find(p => p.name === 'factory-policy').version, expected);
 });
