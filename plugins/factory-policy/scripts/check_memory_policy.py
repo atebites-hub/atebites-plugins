@@ -237,6 +237,13 @@ def cites_issue(text: str) -> bool:
 def extract_edit_path(payload: object) -> str | None:
     if not isinstance(payload, dict):
         return None
+    # Cursor preToolUse includes reads. A path alone does not imply a write.
+    # Unknown tools retain the previous behavior; do not exempt shell commands.
+    tool = payload.get("tool_name", payload.get("toolName", ""))
+    if isinstance(tool, str) and tool.casefold() in {
+        "read", "read_file", "view_file", "glob", "grep", "ls", "list_dir",
+    }:
+        return None
     nested_keys = ("tool_input", "toolInput", "input")
     path_keys = ("file_path", "filePath", "path", "file")
     for nested_key in nested_keys:
@@ -433,6 +440,14 @@ def check_memory(
                 gate_match = _GATE_RE.search(evaluation)
                 gate_body = gate_match.group(1) if gate_match else ""
                 first = _first_gate_token(gate_body)
+                # Preserve real dot-ending filenames and explicitly quoted tokens.
+                # Only reinterpret an unquoted, unresolvable terminal full stop.
+                if (
+                    first.endswith(".")
+                    and not gate_body.lstrip().startswith(("`", "'", '"'))
+                    and not command_resolves(first, repo_root)
+                ):
+                    first = first[:-1]
                 if not gate_match or not command_resolves(first, repo_root):
                     findings.append(
                         _finding(
