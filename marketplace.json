@@ -56,7 +56,7 @@
     },
     {
       "name": "factory-policy",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "source": "./plugins/factory-policy",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
       "category": "developer-tools",

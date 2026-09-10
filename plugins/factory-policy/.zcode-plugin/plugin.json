@@ -1,6 +1,6 @@
 {
   "name": "factory-policy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install + nested memory-system.",
   "skills": "./skills",
   "hooks": "./hooks/zcode-hooks.json"
