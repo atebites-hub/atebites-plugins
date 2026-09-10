@@ -61,7 +61,7 @@ Current catalog pins (cite only; do not change in this PR):
 | Superpowers | `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` (v6.3.0) |
 | ponytail | `911022dc1fb868b42e006c1848aaf16b0867de2f` |
 | Advisor | `bdcf8d5d226e2bf5448f43fb09f87d0d089dc7e3` (includes `.plugins[]` matcher + launch→`--run-dir` docs) |
-| ODW plugin | `ed26656632a326d8f1c67d6c1a66509a9a883059` |
+| ODW plugin | `cc2be9b62cbe2fb48d7b6bd4d7453f1f4d45b2f0` |
 
 ## Goal
 
