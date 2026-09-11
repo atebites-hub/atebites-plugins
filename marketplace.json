@@ -8,11 +8,16 @@
   "plugins": [
     {
       "name": "open-dynamic-workflows",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "source": "./plugins/open-dynamic-workflows",
       "description": "Dynamic workflow orchestration for ZCode — fan a deterministic script out across many zcode subagents.",
       "category": "developer-tools",
-      "keywords": ["workflow", "orchestration", "subagent", "zcode"]
+      "keywords": [
+        "workflow",
+        "orchestration",
+        "subagent",
+        "zcode"
+      ]
     },
     {
       "name": "ponytail",
@@ -20,7 +25,11 @@
       "source": "./plugins/ponytail",
       "description": "Forces the laziest solution that works. YAGNI, stdlib first, one line over fifty.",
       "category": "productivity",
-      "keywords": ["yagni", "minimalism", "productivity"]
+      "keywords": [
+        "yagni",
+        "minimalism",
+        "productivity"
+      ]
     },
     {
       "name": "advisor",
@@ -28,7 +37,11 @@
       "source": "./plugins/advisor",
       "description": "Advisor routing with strict ZCode runtime attestation.",
       "category": "developer-tools",
-      "keywords": ["advisor", "routing", "zcode"]
+      "keywords": [
+        "advisor",
+        "routing",
+        "zcode"
+      ]
     },
     {
       "name": "taskboard",
@@ -36,7 +49,11 @@
       "source": "./plugins/taskboard",
       "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill.",
       "category": "productivity",
-      "keywords": ["taskboard", "kanban", "coordination"]
+      "keywords": [
+        "taskboard",
+        "kanban",
+        "coordination"
+      ]
     },
     {
       "name": "j-space",
@@ -44,7 +61,11 @@
       "source": "./plugins/j-space",
       "description": "Inference-time workspace control for long-horizon work: selective loading, ledger at seams, named verification, and recovery.",
       "category": "productivity",
-      "keywords": ["j-space", "cognition", "workspace"]
+      "keywords": [
+        "j-space",
+        "cognition",
+        "workspace"
+      ]
     },
     {
       "name": "superpowers",
@@ -52,7 +73,13 @@
       "source": "./plugins/superpowers",
       "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques.",
       "category": "developer-tools",
-      "keywords": ["skills", "tdd", "debugging", "collaboration", "workflows"]
+      "keywords": [
+        "skills",
+        "tdd",
+        "debugging",
+        "collaboration",
+        "workflows"
+      ]
     },
     {
       "name": "factory-policy",
@@ -60,7 +87,12 @@
       "source": "./plugins/factory-policy",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
       "category": "developer-tools",
-      "keywords": ["factory-policy", "memory-system", "v1", "warn-default"]
+      "keywords": [
+        "factory-policy",
+        "memory-system",
+        "v1",
+        "warn-default"
+      ]
     },
     {
       "name": "gitnexus",
@@ -68,7 +100,12 @@
       "source": "./plugins/gitnexus",
       "description": "Upcoming / P N wrap; not a Factory default. Catalog-listed for pin install. Pins gitnexus@1.6.7.",
       "category": "developer-tools",
-      "keywords": ["gitnexus", "mcp", "wrap", "p-n"]
+      "keywords": [
+        "gitnexus",
+        "mcp",
+        "wrap",
+        "p-n"
+      ]
     }
   ],
   "version": 1

@@ -5,7 +5,8 @@
  * Cursor `.cursor-plugin/marketplace.json` is checked against the official
  * schema. Cursor, Grok, and ZCode use local paths. Codex uses pinned URL
  * sources for standalone skill forks, avoiding uninitialized gitlinks.
- * Claude may use GitHub plugin sources for the four atebites-hub
+ * Claude and Codex use pinned native-only ODW subdirectories.
+ * Claude may use GitHub plugin sources for the three atebites-hub
  * forks and the Superpowers pin; j-space, factory-policy, and gitnexus stay in-repo wraps.
  */
 import Ajv from "ajv";
@@ -39,11 +40,22 @@ const SUPERPOWERS_PIN = {
   sha: "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
 };
 const CLAUDE_GITHUB_REPOS = {
-  "open-dynamic-workflows": "atebites-hub/open-dynamic-workflows-plugin",
   ponytail: "atebites-hub/ponytail",
   advisor: "atebites-hub/advisor",
   taskboard: "atebites-hub/taskboard",
 };
+
+function assertNativeOdw(source, host) {
+  const expected = {
+    source: "git-subdir",
+    url: "https://github.com/atebites-hub/open-dynamic-workflows-plugin.git",
+    path: `./native/${host}/open-dynamic-workflows`,
+    sha: "ab6b611268cc9fd752e4e377ab25e909c5a0e23d",
+  };
+  if (JSON.stringify(source) !== JSON.stringify(expected)) {
+    fail(`${host} ODW must pin its native-only package: ${JSON.stringify(expected)}`);
+  }
+}
 
 /** Catalog slug → allowed plugin.json names (sol-advisor until productize). */
 const MANIFEST_NAMES = {
@@ -86,6 +98,10 @@ function assertLocal(name, source, label) {
 
 function assertClaudeSource(name, source) {
   assertForbiddenHosts(name, source, "Claude");
+  if (name === "open-dynamic-workflows") {
+    assertNativeOdw(source, "claude");
+    return;
+  }
   const localSource = CLAUDE_LOCAL_SOURCES[name];
   if (localSource) {
     if (source !== localSource) {
@@ -197,6 +213,10 @@ for (const entry of claude.plugins) {
 const codex = readJson(".agents/plugins/marketplace.json");
 assertCatalog(codex, "Codex");
 for (const entry of codex.plugins) {
+  if (entry.name === "open-dynamic-workflows") {
+    assertNativeOdw(entry.source, "codex");
+    continue;
+  }
   const fork = {
     superpowers: { url: "https://github.com/obra/superpowers.git", sha: SUPERPOWERS_PIN.sha },
     ponytail: { url: "https://github.com/atebites-hub/ponytail.git", sha: "4416c4dc06feef1541f446022670c04c3c014699" },
