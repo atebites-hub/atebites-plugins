@@ -9,12 +9,15 @@
   "plugins": [
     {
       "name": "open-dynamic-workflows",
-      "description": "Dynamic workflow orchestration — workflow MCP tool and authoring skill. Omitted executor runs on claude.",
+      "description": "Native orchestration guidance only: ultracode. Preserves the selected model; no workflow MCP on this host.",
       "source": {
-        "source": "github",
-        "repo": "atebites-hub/open-dynamic-workflows-plugin"
+        "source": "git-subdir",
+        "url": "https://github.com/atebites-hub/open-dynamic-workflows-plugin.git",
+        "path": "./native/claude/open-dynamic-workflows",
+        "sha": "ab6b611268cc9fd752e4e377ab25e909c5a0e23d"
       },
-      "category": "developer-tools"
+      "category": "developer-tools",
+      "version": "0.4.0"
     },
     {
       "name": "ponytail",
