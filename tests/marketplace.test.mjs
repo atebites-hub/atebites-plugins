@@ -16,12 +16,14 @@ const EXPECTED_PLUGINS = [
   "superpowers",
   "factory-policy",
   "gitnexus",
+  "impeccable",
 ];
 
 const CLAUDE_LOCAL_SOURCES = {
   "j-space": "./plugins/j-space",
   "factory-policy": "./plugins/factory-policy",
   gitnexus: "./plugins/gitnexus",
+  impeccable: "./plugins/impeccable",
 };
 
 /** Catalog slug → allowed plugin.json names (sol-advisor until productize). */

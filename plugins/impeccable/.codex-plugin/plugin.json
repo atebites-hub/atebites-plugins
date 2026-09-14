@@ -1,0 +1,23 @@
+{
+  "name": "impeccable",
+  "version": "4.1.0",
+  "description": "Pinned Impeccable 4.1.0 frontend design skill. Skill-only package; no automatic hooks or MCP server.",
+  "author": {
+    "name": "atebites-hub"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Impeccable",
+    "shortDescription": "Pinned frontend design guidance",
+    "developerName": "atebites-hub",
+    "longDescription": "Pinned Impeccable 4.1.0 design guidance with its original reference material and context loader. No automatic hooks or MCP server are registered.",
+    "category": "Productivity",
+    "defaultPrompt": [
+      "Review this interface with Impeccable."
+    ],
+    "capabilities": [
+      "Skills"
+    ]
+  },
+  "license": "Apache-2.0"
+}

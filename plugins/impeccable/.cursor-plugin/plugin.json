@@ -1,0 +1,10 @@
+{
+  "name": "impeccable",
+  "version": "4.1.0",
+  "description": "Pinned Impeccable 4.1.0 frontend design skill. Skill-only package; no automatic hooks or MCP server.",
+  "author": {
+    "name": "atebites-hub"
+  },
+  "license": "Apache-2.0",
+  "skills": "./skills/"
+}

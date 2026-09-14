@@ -241,7 +241,20 @@ Submodule and nested-fork status: [docs/FORK-INDEX.md](docs/FORK-INDEX.md). Bind
 
 This catalog is MIT. Submodule plugins keep their own licenses (MIT for ODW, ponytail, Advisor, taskboard, and Superpowers; Apache-2.0 for J-Space — see `plugins/j-space/NOTICE`). The linear-tracking vendor pin is Apache-2.0 (openai/skills curated `linear` — see `plugins/linear-tracking/NOTICE`). The gitnexus wrap manifests are MIT; the spawned npm package `gitnexus@1.6.7` is PolyForm-Noncommercial-1.0.0 (see `plugins/gitnexus/NOTICE`).
 
-## Validate
+## Impeccable design guidance
+
+`impeccable` is now a skill-only catalog package, pinned to upstream
+`pbakaus/impeccable` `skill-v4.1.0` / `2c33196c51ac52e47691384e61d89f1218d8d21d`.
+It includes the Apache-2.0 license, unchanged skill resources and a checked file
+hash inventory. It registers no automatic hooks or MCP server. The template's
+locked Impeccable detector remains separate from this guidance package.
+
+Claude: `/plugin install impeccable@atebites-plugins`. Codex uses the catalog
+entry; Cursor/Grok/ZCode use the same in-repo package. Refresh the existing
+marketplace before installation. Package/schema/context-loader smoke does not
+claim full live activation in every harness.
+
+## Validate the catalog
 
 ```bash
 npm install

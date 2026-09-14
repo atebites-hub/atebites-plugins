@@ -27,11 +27,13 @@ const EXPECTED = [
   "superpowers",
   "factory-policy",
   "gitnexus",
+  "impeccable",
 ];
 const CLAUDE_LOCAL_SOURCES = {
   "j-space": "./plugins/j-space",
   "factory-policy": "./plugins/factory-policy",
   gitnexus: "./plugins/gitnexus",
+  impeccable: "./plugins/impeccable",
 };
 const SUPERPOWERS_PIN = {
   source: "github",
