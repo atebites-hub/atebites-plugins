@@ -131,6 +131,16 @@
         "wrap",
         "p-n"
       ]
+    },
+    {
+      "name": "impeccable",
+      "version": "4.1.0",
+      "source": {
+        "type": "local",
+        "path": "./plugins/impeccable"
+      },
+      "description": "Pinned Impeccable 4.1.0 frontend design skill. Skill-only package; no automatic hooks or MCP server.",
+      "category": "productivity"
     }
   ],
   "version": 1

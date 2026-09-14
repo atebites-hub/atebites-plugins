@@ -74,6 +74,13 @@
       "description": "Upcoming / P N wrap; not a Factory default. Catalog-listed for pin install. Pins gitnexus@1.6.7.",
       "source": "./plugins/gitnexus",
       "category": "developer-tools"
+    },
+    {
+      "name": "impeccable",
+      "version": "4.1.0",
+      "source": "./plugins/impeccable",
+      "description": "Pinned Impeccable 4.1.0 frontend design skill. Skill-only package; no automatic hooks or MCP server.",
+      "category": "productivity"
     }
   ]
 }
