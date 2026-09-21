@@ -1,6 +1,6 @@
 {
   "name": "factory-policy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install + nested memory-system.",
   "author": {
     "name": "atebites-hub",
@@ -9,7 +9,12 @@
   "homepage": "https://github.com/atebites-hub/atebites-plugins",
   "repository": "https://github.com/atebites-hub/atebites-plugins",
   "license": "MIT",
-  "keywords": ["factory-policy", "memory-system", "v1", "codex"],
+  "keywords": [
+    "factory-policy",
+    "memory-system",
+    "v1",
+    "codex"
+  ],
   "skills": "./skills",
   "hooks": "./hooks/claude-codex-hooks.json",
   "interface": {
@@ -17,7 +22,9 @@
     "shortDescription": "v1 warn-default memory ledger gate. Not a Factory default.",
     "developerName": "atebites-hub",
     "category": "Developer Tools",
-    "capabilities": ["Instructions"],
+    "capabilities": [
+      "Instructions"
+    ],
     "websiteURL": "https://github.com/atebites-hub/atebites-plugins"
   }
 }

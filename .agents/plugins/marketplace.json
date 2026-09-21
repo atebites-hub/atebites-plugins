@@ -5,20 +5,16 @@
   },
   "plugins": [
     {
-      "name": "open-dynamic-workflows",
-      "version": "0.4.0",
+      "name": "native-orchestration",
       "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/atebites-hub/open-dynamic-workflows-plugin.git",
-        "path": "./native/codex/open-dynamic-workflows",
-        "sha": "ab6b611268cc9fd752e4e377ab25e909c5a0e23d"
+        "source": "local",
+        "path": "./plugins/native-orchestration"
       },
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Developer Tools",
-      "description": "Native orchestration guidance only: ultra. Preserves the selected model; no workflow MCP on this host."
+      "category": "Developer Tools"
     },
     {
       "name": "ponytail",
@@ -40,19 +36,6 @@
       "source": {
         "source": "local",
         "path": "./plugins/advisor/plugins/sol-advisor"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "taskboard",
-      "version": "1.0.0",
-      "source": {
-        "source": "local",
-        "path": "./plugins/taskboard"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -89,7 +72,7 @@
     },
     {
       "name": "factory-policy",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
       "source": {
         "source": "local",
