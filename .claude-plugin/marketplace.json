@@ -1,23 +1,18 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Claude Code: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). GitHub plugin sources for the four forks and the Superpowers pin; j-space, factory-policy, and gitnexus are in-repo wraps.",
+  "description": "atebites-hub plugin catalog for Claude Code: native-orchestration, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). GitHub plugin sources for the four forks and the Superpowers pin; j-space, factory-policy, and gitnexus are in-repo wraps.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
   },
   "plugins": [
     {
-      "name": "open-dynamic-workflows",
-      "description": "Native orchestration guidance only: ultracode. Preserves the selected model; no workflow MCP on this host.",
-      "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/atebites-hub/open-dynamic-workflows-plugin.git",
-        "path": "./native/claude/open-dynamic-workflows",
-        "sha": "ab6b611268cc9fd752e4e377ab25e909c5a0e23d"
-      },
-      "category": "developer-tools",
-      "version": "0.4.0"
+      "name": "native-orchestration",
+      "description": "Skill-only guidance for host-native orchestration; replaces retired ODW without a workflow engine or MCP server.",
+      "version": "0.1.0",
+      "source": "./plugins/native-orchestration",
+      "category": "developer-tools"
     },
     {
       "name": "ponytail",
@@ -67,7 +62,8 @@
       "name": "factory-policy",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
       "source": "./plugins/factory-policy",
-      "category": "developer-tools"
+      "category": "developer-tools",
+      "version": "0.1.2"
     },
     {
       "name": "gitnexus",

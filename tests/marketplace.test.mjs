@@ -8,7 +8,7 @@ import { spawnSync } from "node:child_process";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const EXPECTED_PLUGINS = [
-  "open-dynamic-workflows",
+  "native-orchestration",
   "ponytail",
   "advisor",
   "taskboard",
@@ -20,6 +20,7 @@ const EXPECTED_PLUGINS = [
 ];
 
 const CLAUDE_LOCAL_SOURCES = {
+  "native-orchestration": "./plugins/native-orchestration",
   "j-space": "./plugins/j-space",
   "factory-policy": "./plugins/factory-policy",
   gitnexus: "./plugins/gitnexus",
@@ -52,14 +53,6 @@ const CLAUDE_GITHUB_REPOS = {
   taskboard: "atebites-hub/taskboard",
 };
 
-function assertNativeOdw(source, host) {
-  assert.deepEqual(source, {
-    source: "git-subdir",
-    url: "https://github.com/atebites-hub/open-dynamic-workflows-plugin.git",
-    path: `./native/${host}/open-dynamic-workflows`,
-    sha: "ab6b611268cc9fd752e4e377ab25e909c5a0e23d",
-  });
-}
 
 function readJson(relPath) {
   const full = join(root, relPath);
@@ -94,10 +87,6 @@ function assertLocalSource(pluginName, source) {
 
 function assertClaudeSource(pluginName, source) {
   assertForbiddenSourceHosts(pluginName, source);
-  if (pluginName === "open-dynamic-workflows") {
-    assertNativeOdw(source, "claude");
-    return;
-  }
   const localSource = CLAUDE_LOCAL_SOURCES[pluginName];
   if (localSource) {
     assert.equal(
@@ -233,10 +222,7 @@ describe("Grok, Claude, Codex, and ZCode catalogs", () => {
         assert.deepEqual(entry.source, { source: "url", ...forks[entry.name] });
         continue;
       }
-      if (entry.name === "open-dynamic-workflows") {
-        assertNativeOdw(entry.source, "codex");
-        continue;
-      }
+
       assert.equal(entry.source?.source, "local", `${entry.name} Codex source.source`);
       assertLocalSource(entry.name, entry.source);
       const rel = resolveLocalPath(entry.source);

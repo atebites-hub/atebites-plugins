@@ -1,3 +1,7 @@
+> **Retired setup recipe (2026-09-21):** do not follow the ODW/custom-CLI
+> installation steps below. They are historical. Use the skill-only
+> `native-orchestration` catalog package and official host software.
+
 # ZCode seating recipe (SPIKE)
 
 **Not production seating. Not a Factory default. Not a bot.**

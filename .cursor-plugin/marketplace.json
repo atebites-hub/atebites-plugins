@@ -4,13 +4,13 @@
     "name": "atebites-hub"
   },
   "metadata": {
-    "description": "atebites-hub plugin catalog: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). All sources are in-repo paths so Cursor Import from Repo can index them."
+    "description": "atebites-hub plugin catalog: native-orchestration, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). All sources are in-repo paths so Cursor Import from Repo can index them."
   },
   "plugins": [
     {
-      "name": "open-dynamic-workflows",
-      "source": "plugins/open-dynamic-workflows/plugins/open-dynamic-workflows",
-      "description": "Dynamic workflow orchestration — workflow MCP tool, authoring skill, and /workflows command."
+      "name": "native-orchestration",
+      "description": "Skill-only guidance for host-native orchestration; replaces retired ODW without a workflow engine or MCP server.",
+      "source": "plugins/native-orchestration"
     },
     {
       "name": "ponytail",

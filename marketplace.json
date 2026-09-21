@@ -1,23 +1,17 @@
 {
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for ZCode: open-dynamic-workflows, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). Local path sources only.",
+  "description": "atebites-hub plugin catalog for ZCode: native-orchestration, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
   },
   "plugins": [
     {
-      "name": "open-dynamic-workflows",
-      "version": "0.4.0",
-      "source": "./plugins/open-dynamic-workflows",
-      "description": "Dynamic workflow orchestration for ZCode — fan a deterministic script out across many zcode subagents.",
-      "category": "developer-tools",
-      "keywords": [
-        "workflow",
-        "orchestration",
-        "subagent",
-        "zcode"
-      ]
+      "name": "native-orchestration",
+      "description": "Skill-only guidance for host-native orchestration; replaces retired ODW without a workflow engine or MCP server.",
+      "version": "0.1.0",
+      "source": "./plugins/native-orchestration",
+      "category": "developer-tools"
     },
     {
       "name": "ponytail",
@@ -83,7 +77,7 @@
     },
     {
       "name": "factory-policy",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "source": "./plugins/factory-policy",
       "description": "v1 warn-default; not a Factory default. Catalog-listed for pin install until QA fail-mode VERDICT.",
       "category": "developer-tools",

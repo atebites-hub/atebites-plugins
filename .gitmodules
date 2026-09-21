@@ -1,7 +1,3 @@
-[submodule "plugins/open-dynamic-workflows"]
-	path = plugins/open-dynamic-workflows
-	url = https://github.com/atebites-hub/open-dynamic-workflows-plugin.git
-	branch = main
 [submodule "plugins/ponytail"]
 	path = plugins/ponytail
 	url = https://github.com/atebites-hub/ponytail.git

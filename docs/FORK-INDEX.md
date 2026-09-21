@@ -1,3 +1,5 @@
+> **2026-09-21 retirement:** ODW and custom zcode-cli forks are no longer catalog dependencies. The historical pin/sync notes below do not authorize rebuilding them. Use the inline native-orchestration skill.
+
 # Fork maintenance index
 
 Status of every marketplace submodule and nested fork against [FORK-MAINTENANCE.md](FORK-MAINTENANCE.md).

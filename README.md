@@ -4,7 +4,7 @@ Multi-host plugin marketplace for **atebites-hub**. Cursor Import from Repo only
 
 This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac / imsai-sh originals, whenever a fork exists. J-Space has no atebites-hub fork; that one submodule is the upstream Apache-2.0 suite.
 
-**Factory story (Jay 2026-09-05).** Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Ponytail is **Factory-required** @ `4416c4dc` (fork [#5](https://github.com/atebites-hub/ponytail/pull/5) Retriever docs sync; matches tip), intensity **full** always (never lite). Advisor is Factory @ `296cd0b9`. ODW is Factory-required @ `cc2be9b6` (plugin [#21](https://github.com/atebites-hub/open-dynamic-workflows-plugin/pull/21) merge; nested zcode tip `46b7240` / core `c4fbd882`; native alignment unproven until QA). Project Factory currently enables Superpowers, ponytail, and its warn-default factory-policy template pin; Advisor and ODW remain intended but are not enabled in the seed.
+**Factory story (Jay 2026-09-05).** Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Ponytail is **Factory-required** @ `4416c4dc` (fork [#5](https://github.com/atebites-hub/ponytail/pull/5) Retriever docs sync; matches tip), intensity **full** always (never lite). Advisor is Factory @ `296cd0b9`. ODW and the custom ZCode CLI are retired (2026-09-21); native-orchestration is the skill-only replacement. Project Factory currently enables Superpowers, ponytail, and its warn-default factory-policy template pin; Advisor remains intended but are not enabled in the seed.
 
 **Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Marketplace keeps their repos/submodules as catalog entries for optional install only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
 
@@ -20,7 +20,7 @@ Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_sta
 
 | Plugin | Product | Source |
 | --- | --- | --- |
-| `open-dynamic-workflows` | Open Dynamic Workflows | [atebites-hub/open-dynamic-workflows-plugin](https://github.com/atebites-hub/open-dynamic-workflows-plugin) (Factory-required @ `cc2be9b6` after [#21](https://github.com/atebites-hub/open-dynamic-workflows-plugin/pull/21); nested zcode tip `46b7240` / core `c4fbd882`; native alignment unproven until QA) |
+| `native-orchestration` | Inline skill-only native host routing | No workflow runtime or custom CLI |
 | `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) (**Factory-required** @ `4416c4dc` after [#5](https://github.com/atebites-hub/ponytail/pull/5); intensity **full** always, never lite) |
 | `advisor` | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) (Factory @ `296cd0b9`; renamed from `atebites-hub/sol-advisor`; parent [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) unchanged) |
 | `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard); catalog-only, **not** a Factory default) |
@@ -57,8 +57,7 @@ Cursor CLI (`agent`) does not install from this marketplace the way Grok/Codex d
 git clone --recurse-submodules https://github.com/atebites-hub/atebites-plugins.git
 cd atebites-plugins
 
-node plugins/open-dynamic-workflows/scripts/install-cursor-cli.mjs
-agent mcp enable open-dynamic-workflows
+agent --plugin-dir "$PWD/plugins/native-orchestration"
 
 agent --plugin-dir "$PWD/plugins/ponytail"
 
@@ -76,7 +75,7 @@ The install script still lives at `plugins/advisor/plugins/sol-advisor/scripts/i
 
 ```bash
 grok plugin marketplace add atebites-hub/atebites-plugins
-grok plugin install open-dynamic-workflows --trust
+grok plugin install native-orchestration --trust
 grok plugin install ponytail --trust
 grok plugin install advisor --trust
 grok plugin install taskboard --trust
@@ -103,7 +102,7 @@ If this marketplace is already added, refresh it so the catalog plugins appear:
 Or remove the marketplace and add it again. Then install any catalog plugin:
 
 ```text
-/plugin install open-dynamic-workflows@atebites-plugins
+/plugin install native-orchestration@atebites-plugins
 ```
 
 ```text
@@ -130,7 +129,7 @@ Or remove the marketplace and add it again. Then install any catalog plugin:
 
 ```bash
 codex plugin marketplace add atebites-hub/atebites-plugins
-codex plugin add open-dynamic-workflows@atebites-plugins
+codex plugin add native-orchestration@atebites-plugins
 codex plugin add ponytail@atebites-plugins
 codex plugin add advisor@atebites-plugins
 codex plugin add taskboard@atebites-plugins
@@ -147,7 +146,7 @@ Open a new Codex thread. Trust lifecycle hooks from `/hooks` where a plugin ship
 ```
 
 ```text
-/plugins install open-dynamic-workflows
+/plugins install native-orchestration
 ```
 
 ```text
@@ -211,7 +210,7 @@ DSH-only ports are out of scope. Superpowers is the factory-default pin (obra/su
 .claude-plugin/marketplace.json   # Claude Code (GitHub plugin sources for forks + Superpowers pin; j-space local wrap)
 .agents/plugins/marketplace.json  # Codex (local path sources)
 marketplace.json                  # ZCode
-plugins/open-dynamic-workflows/   # submodule: atebites-hub/open-dynamic-workflows-plugin
+plugins/native-orchestration/   # inline skill-only native routing
 plugins/ponytail/                 # submodule: atebites-hub/ponytail
 plugins/advisor/                  # submodule: atebites-hub/advisor (GitHub rename from sol-advisor)
 plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap (catalog-only; not Factory)
@@ -225,7 +224,6 @@ plugins/linear-tracking/          # upcoming vendored pin (P2); not a catalog pl
 plugins/gitnexus/                 # upcoming thin MCP wrap (P2); catalog-listed for pin install; pins gitnexus@1.6.7; not factory-default
 ```
 
-Cursor `source` for ODW is the nested package `plugins/open-dynamic-workflows/plugins/open-dynamic-workflows` (it has `.cursor-plugin/plugin.json`, skills, and MCP). Grok uses that same nested package because Grok rejected `source: "./"` on the ODW repo. Codex/ZCode ODW sources are the submodule root, which already has those hosts' manifests.
 
 Advisor checkout path is `plugins/advisor` (GitHub repo `atebites-hub/advisor`). Codex still points at the nested package `plugins/advisor/plugins/sol-advisor`; Cursor/Grok/ZCode use the submodule root. Catalog name is `advisor`. The pinned fork's `plugin.json` name and package coordinate remain `sol-advisor` until productize.
 
@@ -260,3 +258,16 @@ claim full live activation in every harness.
 npm install
 npm test
 ```
+
+## Native orchestration replaces ODW
+
+`native-orchestration` is a skill-only package. It routes to the current host's
+native facilities, explicitly including Antigravity 2.0 and Antigravity CLI.
+It has no MCP server, runtime, CLI dependency, automatic hooks, or cross-host
+executor. ODW and the atebites-hub/kingsword09 ZCode CLI are retired; old release
+and QA notes remain historical evidence, not installation instructions.
+
+Use official ZCode Desktop for its native `/workflow`. Its bundled headless CLI
+and the source-built official CLI are distinct distributions; a missing TUI or
+login failure is a vendor/runtime blocker, not a reason to resurrect the fork.
+The 150% Coding Plan allowance has not been verified for standalone CLI use.
