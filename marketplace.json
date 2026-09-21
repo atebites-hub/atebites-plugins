@@ -1,6 +1,6 @@
 {
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for ZCode: native-orchestration, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). Local path sources only.",
+  "description": "atebites-hub plugin catalog for ZCode: native-orchestration, ponytail, Advisor, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -35,18 +35,6 @@
         "advisor",
         "routing",
         "zcode"
-      ]
-    },
-    {
-      "name": "taskboard",
-      "version": "1.0.0",
-      "source": "./plugins/taskboard",
-      "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill.",
-      "category": "productivity",
-      "keywords": [
-        "taskboard",
-        "kanban",
-        "coordination"
       ]
     },
     {

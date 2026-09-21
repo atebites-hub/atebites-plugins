@@ -11,7 +11,6 @@ const EXPECTED_PLUGINS = [
   "native-orchestration",
   "ponytail",
   "advisor",
-  "taskboard",
   "j-space",
   "superpowers",
   "factory-policy",
@@ -50,7 +49,6 @@ const FORBIDDEN_SOURCE_HOSTS = [
 const CLAUDE_GITHUB_REPOS = {
   ponytail: "atebites-hub/ponytail",
   advisor: "atebites-hub/advisor",
-  taskboard: "atebites-hub/taskboard",
 };
 
 

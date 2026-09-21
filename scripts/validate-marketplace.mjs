@@ -22,7 +22,6 @@ const EXPECTED = [
   "native-orchestration",
   "ponytail",
   "advisor",
-  "taskboard",
   "j-space",
   "superpowers",
   "factory-policy",
@@ -45,7 +44,6 @@ const SUPERPOWERS_PIN = {
 const CLAUDE_GITHUB_REPOS = {
   ponytail: "atebites-hub/ponytail",
   advisor: "atebites-hub/advisor",
-  taskboard: "atebites-hub/taskboard",
 };
 
 

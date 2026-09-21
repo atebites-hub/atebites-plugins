@@ -1,6 +1,6 @@
 {
   "name": "atebites-plugins",
-  "description": "atebites-hub plugin catalog for Grok Build: native-orchestration, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). Local path sources only.",
+  "description": "atebites-hub plugin catalog for Grok Build: native-orchestration, ponytail, Advisor, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). Local path sources only.",
   "owner": {
     "name": "atebites-hub",
     "url": "https://github.com/atebites-hub/atebites-plugins"
@@ -44,21 +44,6 @@
         "advisor",
         "routing",
         "grok"
-      ]
-    },
-    {
-      "name": "taskboard",
-      "version": "1.0.0",
-      "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill.",
-      "category": "productivity",
-      "source": {
-        "type": "local",
-        "path": "./plugins/taskboard"
-      },
-      "keywords": [
-        "taskboard",
-        "kanban",
-        "coordination"
       ]
     },
     {

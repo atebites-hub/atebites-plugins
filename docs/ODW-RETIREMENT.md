@@ -23,3 +23,10 @@ Official ZCode Desktop 3.14.1's bundled CLI lacks @zcode/tui. Its headless login
 and 150% allowance are unresolved; source build instructions do not establish
 that a complete vendor CLI binary is distributed. Do not restore the retired
 fork to mask this vendor packaging boundary.
+
+## Taskboard retirement (2026-09-21)
+
+Taskboard is also removed from all five catalogs, including its plugin/MCP
+manifests and upstream gitlink. Factory already prohibited its hooks and default
+activation; setup now records strip explicitly. No task database or standalone
+Taskboard installation was deleted.

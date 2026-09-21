@@ -44,19 +44,6 @@
       "category": "Productivity"
     },
     {
-      "name": "taskboard",
-      "version": "1.0.0",
-      "source": {
-        "source": "local",
-        "path": "./plugins/taskboard"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "j-space",
       "version": "3.7.0",
       "source": {

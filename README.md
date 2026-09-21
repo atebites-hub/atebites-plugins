@@ -6,7 +6,7 @@ This catalog uses **atebites-hub forks**, not DietrichGebert / xz1220 / tcarac /
 
 **Factory story (Jay 2026-09-05).** Superpowers is the factory-default pin: a pin-only submodule of [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`), not an atebites fork. Ponytail is **Factory-required** @ `4416c4dc` (fork [#5](https://github.com/atebites-hub/ponytail/pull/5) Retriever docs sync; matches tip), intensity **full** always (never lite). Advisor is Factory @ `296cd0b9`. ODW and the custom ZCode CLI are retired (2026-09-21); native-orchestration is the skill-only replacement. Project Factory currently enables Superpowers, ponytail, and its warn-default factory-policy template pin; Advisor remains intended but are not enabled in the seed.
 
-**Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Marketplace keeps their repos/submodules as catalog entries for optional install only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
+**Discarded from Factory.** taskboard and j-space are the same class as CE: not Factory defaults, not wired into project-factory, discarded from the Factory story. Not optional defaults. Not factory-default candidates. Taskboard is also removed from the marketplace as of 2026-09-21. J-Space remains an optional catalog entry only. **CE** (Compound Engineering / `compound-engineering`) is discarded entirely: no default, no thin opt-in, no marketplace CE entry.
 
 **Upcoming / P2 v1 warn-default (catalog-listed for pin install, not a Factory default).** `plugins/factory-policy/` is inline factory-policy (+ nested `memory-system`) to replace `reasoning-system` / `sequentialthinking`. It is catalog-listed for pin install as `factory-policy@atebites-plugins` (v1 warn-default; not a Factory default). Project Factory explicitly seats it in `enabledPlugins` as a warn-default template pin. That seating is not a Factory-wide fail-mode VERDICT or kept-list promotion. Checkers for C3.1–C3.3, C5, and C6 default to **warn** (fail via config). C7 is a warn stub. Do not treat a skipped hook as a pass. See [docs/POLICY-V1.md](docs/POLICY-V1.md).
 
@@ -23,7 +23,6 @@ Which agent plugins belong here is defined by [PJTemplate `docs/agents/agent_sta
 | `native-orchestration` | Inline skill-only native host routing | No workflow runtime or custom CLI |
 | `ponytail` | Ponytail | [atebites-hub/ponytail](https://github.com/atebites-hub/ponytail) (**Factory-required** @ `4416c4dc` after [#5](https://github.com/atebites-hub/ponytail/pull/5); intensity **full** always, never lite) |
 | `advisor` | Advisor | [atebites-hub/advisor](https://github.com/atebites-hub/advisor) (Factory @ `296cd0b9`; renamed from `atebites-hub/sol-advisor`; parent [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) unchanged) |
-| `taskboard` | Taskboard | [atebites-hub/taskboard](https://github.com/atebites-hub/taskboard) (upstream [tcarac/taskboard](https://github.com/tcarac/taskboard); catalog-only, **not** a Factory default) |
 | `j-space` | J-Space | [Tiger3807861189/J-Space-Cognition-Suite-V3.6](https://github.com/Tiger3807861189/J-Space-Cognition-Suite-V3.6) (Apache-2.0; no atebites-hub fork; catalog-only, **not** a Factory default) |
 | `superpowers` | Superpowers | [obra/superpowers](https://github.com/obra/superpowers) @ v6.3.0 (`b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; factory-default pin, not an atebites fork) |
 | `factory-policy` | factory-policy | inline `plugins/factory-policy` @ `0.1.0` (v1 warn-default; catalog-listed for pin install as `factory-policy@atebites-plugins`; **not** a Factory default) |
@@ -49,7 +48,7 @@ Dashboard → **Plugins** → **Import from Repo** → paste:
 https://github.com/atebites-hub/atebites-plugins
 ```
 
-Then install the Factory story plugins: **open-dynamic-workflows**, **ponytail**, **advisor**, **superpowers**. **taskboard** and **j-space** remain catalog entries for optional install only (not Factory defaults; not wired into project-factory). There is no CE plugin. The catalog slug was `sol-advisor` before the GitHub rename.
+Use **native-orchestration**, **ponytail**, **advisor**, and **superpowers** as appropriate. Taskboard and ODW are retired; **j-space** remains optional and outside Factory defaults. There is no CE plugin. The catalog slug was `sol-advisor` before the GitHub rename.
 
 Cursor CLI (`agent`) does not install from this marketplace the way Grok/Codex do. Use each plugin's own installer or `--plugin-dir` after a submodule clone:
 
@@ -64,12 +63,11 @@ agent --plugin-dir "$PWD/plugins/ponytail"
 sh plugins/advisor/plugins/sol-advisor/scripts/install-cursor.sh
 agent --plugin-dir "$HOME/.cursor/plugins/local/sol-advisor"
 
-agent --plugin-dir "$PWD/plugins/taskboard"
 agent --plugin-dir "$PWD/plugins/j-space"
 agent --plugin-dir "$PWD/plugins/superpowers"
 ```
 
-The install script still lives at `plugins/advisor/plugins/sol-advisor/scripts/install-cursor.sh` and still symlinks to `~/.cursor/plugins/local/sol-advisor` until the Advisor productize scrub lands. You can also clone [atebites-hub/advisor](https://github.com/atebites-hub/advisor) and point `--plugin-dir` at that checkout. Taskboard still needs the `taskboard` binary on `PATH` (`brew tap tcarac/taskboard && brew install taskboard` or `make build` in the fork).
+The install script still lives at `plugins/advisor/plugins/sol-advisor/scripts/install-cursor.sh` and still symlinks to `~/.cursor/plugins/local/sol-advisor` until the Advisor productize scrub lands. You can also clone [atebites-hub/advisor](https://github.com/atebites-hub/advisor) and point `--plugin-dir` at that checkout.
 
 ## Grok Build
 
@@ -78,7 +76,6 @@ grok plugin marketplace add atebites-hub/atebites-plugins
 grok plugin install native-orchestration --trust
 grok plugin install ponytail --trust
 grok plugin install advisor --trust
-grok plugin install taskboard --trust
 grok plugin install j-space --trust
 grok plugin install superpowers --trust
 ```
@@ -114,7 +111,6 @@ Or remove the marketplace and add it again. Then install any catalog plugin:
 ```
 
 ```text
-/plugin install taskboard@atebites-plugins
 ```
 
 ```text
@@ -132,7 +128,6 @@ codex plugin marketplace add atebites-hub/atebites-plugins
 codex plugin add native-orchestration@atebites-plugins
 codex plugin add ponytail@atebites-plugins
 codex plugin add advisor@atebites-plugins
-codex plugin add taskboard@atebites-plugins
 codex plugin add j-space@atebites-plugins
 codex plugin add superpowers@atebites-plugins
 ```
@@ -158,7 +153,6 @@ Open a new Codex thread. Trust lifecycle hooks from `/hooks` where a plugin ship
 ```
 
 ```text
-/plugins install taskboard
 ```
 
 ```text
@@ -185,7 +179,7 @@ pi install git:github.com/atebites-hub/ponytail
 pi install git:github.com/obra/superpowers
 ```
 
-Restart Hermes after installing. `open-dynamic-workflows`, Advisor, taskboard, j-space, and gitnexus do not ship Hermes/Pi marketplace manifests here. Use the Cursor/Grok/Claude/Codex/ZCode catalogs above, or install from the plugin repos listed in the table. taskboard and j-space are catalog-only (not Factory); gitnexus is catalog-listed for pin install only (Upcoming / P N; not Factory); CE is not in this marketplace.
+Restart Hermes after installing. Advisor, j-space, and gitnexus do not ship Hermes/Pi marketplace manifests here. Use the Cursor/Grok/Claude/Codex/ZCode catalogs above, or install from the plugin repos listed in the table. Taskboard is retired; j-space is catalog-only (not Factory); gitnexus is catalog-listed for pin install only (Upcoming / P N; not Factory); CE is not in this marketplace.
 
 ## Not a plugin: CE
 
@@ -200,7 +194,7 @@ Out of this marketplace. It scores how transcripts look (logprob preference); it
 | Framework | https://github.com/llm-as-a-verifier/llm-as-a-verifier |
 | TurboAgent proxy | https://github.com/llm-as-a-verifier/TurboAgent |
 
-DSH-only ports are out of scope. Superpowers is the factory-default pin (obra/superpowers @ v6.3.0 / `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`). taskboard and j-space are catalog-only (discarded from Factory). CE is not in this marketplace.
+DSH-only ports are out of scope. Superpowers is the factory-default pin (obra/superpowers @ v6.3.0 / `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`). Taskboard is retired; j-space is catalog-only (discarded from Factory). CE is not in this marketplace.
 
 ## Layout
 
@@ -213,8 +207,6 @@ marketplace.json                  # ZCode
 plugins/native-orchestration/   # inline skill-only native routing
 plugins/ponytail/                 # submodule: atebites-hub/ponytail
 plugins/advisor/                  # submodule: atebites-hub/advisor (GitHub rename from sol-advisor)
-plugins/taskboard/                # thin Cursor/Grok/Codex/ZCode wrap (catalog-only; not Factory)
-plugins/taskboard/upstream/       # submodule: atebites-hub/taskboard (non-Factory catalog)
 plugins/j-space/                  # thin multi-host wrap of the J-Space skill (catalog-only; not Factory)
 plugins/j-space/vendor/j-space-cognition-suite/  # submodule: upstream Apache-2.0 suite (non-Factory catalog)
 plugins/superpowers/              # submodule: obra/superpowers @ v6.3.0 (b36e082…; factory-default pin; no floating branch)
@@ -227,7 +219,7 @@ plugins/gitnexus/                 # upcoming thin MCP wrap (P2); catalog-listed 
 
 Advisor checkout path is `plugins/advisor` (GitHub repo `atebites-hub/advisor`). Codex still points at the nested package `plugins/advisor/plugins/sol-advisor`; Cursor/Grok/ZCode use the submodule root. Catalog name is `advisor`. The pinned fork's `plugin.json` name and package coordinate remain `sol-advisor` until productize.
 
-Claude Code does not use those local paths for submodule plugins. `/plugin marketplace add` clones this catalog without initializing git submodules, so gitlink directories have no `.claude-plugin/plugin.json`. The Claude catalog therefore uses GitHub plugin sources for ODW, ponytail, Advisor, and taskboard (`source: { "source": "github", "repo": "atebites-hub/..." }`), pointing at each fork root rather than a nested package. Superpowers uses `obra/superpowers` with `ref: v6.3.0` and SHA `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` so Claude does not float on `main`. j-space, factory-policy, and gitnexus stay in-repo wraps (`./plugins/j-space`, `./plugins/factory-policy`, `./plugins/gitnexus`); there is no separate atebites-hub plugin repo for those three. Cursor, Grok, Codex, and ZCode stay local-path-only and use the wrap at `plugins/taskboard`, which points skills at `upstream/skills` and does not rewrite the Go binary.
+Claude Code does not use those local paths for submodule plugins. `/plugin marketplace add` clones this catalog without initializing git submodules, so gitlink directories have no `.claude-plugin/plugin.json`. The Claude catalog therefore uses GitHub plugin sources for ponytail and Advisor (`source: { "source": "github", "repo": "atebites-hub/..." }`), pointing at each fork root rather than a nested package. Superpowers uses `obra/superpowers` with `ref: v6.3.0` and SHA `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` so Claude does not float on `main`. j-space, factory-policy, and gitnexus stay in-repo wraps (`./plugins/j-space`, `./plugins/factory-policy`, `./plugins/gitnexus`); there is no separate atebites-hub plugin repo for those three. Cursor, Grok, Codex, and ZCode stay local-path-only.
 
 J-Space plugin manifests in this repo only expose the existing `j-space/SKILL.md` tree.
 
@@ -237,7 +229,7 @@ Submodule and nested-fork status: [docs/FORK-INDEX.md](docs/FORK-INDEX.md). Bind
 
 ## Licenses
 
-This catalog is MIT. Submodule plugins keep their own licenses (MIT for ODW, ponytail, Advisor, taskboard, and Superpowers; Apache-2.0 for J-Space — see `plugins/j-space/NOTICE`). The linear-tracking vendor pin is Apache-2.0 (openai/skills curated `linear` — see `plugins/linear-tracking/NOTICE`). The gitnexus wrap manifests are MIT; the spawned npm package `gitnexus@1.6.7` is PolyForm-Noncommercial-1.0.0 (see `plugins/gitnexus/NOTICE`).
+This catalog is MIT. Submodule plugins keep their own licenses (MIT for ponytail, Advisor, and Superpowers; Apache-2.0 for J-Space — see `plugins/j-space/NOTICE`). The linear-tracking vendor pin is Apache-2.0 (openai/skills curated `linear` — see `plugins/linear-tracking/NOTICE`). The gitnexus wrap manifests are MIT; the spawned npm package `gitnexus@1.6.7` is PolyForm-Noncommercial-1.0.0 (see `plugins/gitnexus/NOTICE`).
 
 ## Impeccable design guidance
 

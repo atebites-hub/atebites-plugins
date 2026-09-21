@@ -4,7 +4,7 @@
     "name": "atebites-hub"
   },
   "metadata": {
-    "description": "atebites-hub plugin catalog: native-orchestration, ponytail, Advisor, taskboard, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). All sources are in-repo paths so Cursor Import from Repo can index them."
+    "description": "atebites-hub plugin catalog: native-orchestration, ponytail, Advisor, j-space, superpowers, factory-policy (v1 warn-default; not a Factory default), and gitnexus (Upcoming / P N wrap; not a Factory default). All sources are in-repo paths so Cursor Import from Repo can index them."
   },
   "plugins": [
     {
@@ -21,11 +21,6 @@
       "name": "advisor",
       "source": "plugins/advisor",
       "description": "Advisor skills, slash commands, and doctor. Strict delegation stays disabled until runtime evidence matches the Advisor contract."
-    },
-    {
-      "name": "taskboard",
-      "source": "plugins/taskboard",
-      "description": "Per-repo Taskboard coordination: sprint tickets, local SQLite board, and the taskboard-workflow skill."
     },
     {
       "name": "j-space",
