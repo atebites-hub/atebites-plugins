@@ -19,8 +19,8 @@ Validation: marketplace schema checks, package/skill validation, 61 Node tests,
 43 factory-policy Python tests, and the skill-only/no-MCP catalog check passed.
 These are package/policy checks, not live qualification of every native engine.
 
-Official ZCode Desktop 3.14.1's bundled CLI lacks @zcode/tui. Its headless login
-and 150% allowance are unresolved; source build instructions do not establish
+Official ZCode Desktop 3.14.1's bundled CLI lacks @zcode/tui. Its stock headless login and bounded prompt smoke now pass;
+the 150% allowance remains unverified; source build instructions do not establish
 that a complete vendor CLI binary is distributed. Do not restore the retired
 fork to mask this vendor packaging boundary.
 
