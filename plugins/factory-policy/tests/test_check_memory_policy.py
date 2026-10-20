@@ -74,6 +74,10 @@ class CheckSemanticsTests(HarnessEnvTestCase):
         findings = cmp.check_memory(_read("pass-all.md"), _CONSUMER, _modes())
         self.assertEqual(findings, [])
 
+    def test_pass_native_scope(self) -> None:
+        memory = _read("pass-odw.md").replace("open-dynamic-workflows", "native-orchestration")
+        self.assertEqual(cmp.check_memory(memory, _CONSUMER, _modes()), [])
+
     def test_pass_odw_scope(self) -> None:
         findings = cmp.check_memory(_read("pass-odw.md"), _CONSUMER, _modes())
         self.assertEqual(findings, [])

@@ -42,7 +42,7 @@ CHECK_NAMES = {
 VALID_MODES = ("warn", "fail", "off")
 DEFAULT_MODES = {check_id: "warn" for check_id in CHECK_IDS}
 DEFAULT_CODE_GLOBS = ("src/**",)
-ALLOWED_SCOPES = ("inline", "open-dynamic-workflows")
+ALLOWED_SCOPES = ("inline", "native-orchestration", "open-dynamic-workflows")
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 SHIPPED_CONFIG = PLUGIN_ROOT / "config" / "policy.toml"
@@ -384,7 +384,7 @@ def check_memory(
                     "C3.2",
                     mode_c32,
                     "Scope is missing because '## Task (TCREI)' is absent",
-                    "add ## Task (TCREI) and set `- **Scope**: inline` or `open-dynamic-workflows`",
+                    "add ## Task (TCREI) and set `- **Scope**: inline` or `native-orchestration`",
                 )
             )
         else:
@@ -395,8 +395,8 @@ def check_memory(
                     _finding(
                         "C3.2",
                         mode_c32,
-                        "Scope must be exactly inline or open-dynamic-workflows",
-                        "set `- **Scope**: inline` or `- **Scope**: open-dynamic-workflows`",
+                        "Scope must be inline or native-orchestration (legacy open-dynamic-workflows records remain valid)",
+                        "set `- **Scope**: inline` or `- **Scope**: native-orchestration`",
                     )
                 )
 

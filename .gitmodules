@@ -1,7 +1,3 @@
-[submodule "plugins/open-dynamic-workflows"]
-	path = plugins/open-dynamic-workflows
-	url = https://github.com/atebites-hub/open-dynamic-workflows-plugin.git
-	branch = main
 [submodule "plugins/ponytail"]
 	path = plugins/ponytail
 	url = https://github.com/atebites-hub/ponytail.git
@@ -9,10 +5,6 @@
 [submodule "plugins/advisor"]
 	path = plugins/advisor
 	url = https://github.com/atebites-hub/advisor.git
-	branch = main
-[submodule "plugins/taskboard/upstream"]
-	path = plugins/taskboard/upstream
-	url = https://github.com/atebites-hub/taskboard.git
 	branch = main
 [submodule "plugins/j-space/vendor/j-space-cognition-suite"]
 	path = plugins/j-space/vendor/j-space-cognition-suite

@@ -1,0 +1,10 @@
+{
+  "name": "native-orchestration",
+  "version": "0.1.0",
+  "description": "Skill-only guidance for host-native orchestration; replaces retired ODW without a workflow engine or MCP server.",
+  "author": {
+    "name": "atebites-hub"
+  },
+  "license": "MIT",
+  "skills": "./skills/"
+}

@@ -1,3 +1,9 @@
+## 0.1.2 — 2026-09-21
+
+Accept `native-orchestration` task scope for host-native delegation. Preserve
+legacy `open-dynamic-workflows` scope only for historical records; diagnostics
+recommend the new scope. No hook, approval, or policy enforcement is weakened.
+
 # factory-policy releases
 
 ## 0.1.1
